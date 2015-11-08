@@ -22,6 +22,14 @@
 	
 	<!--Body-->
 	<body>
+    	
+    	<!--Terminal-->
+    	<article id="terminal">
+        	
+        	<i>jmportfolio</i>:~ <b>guest</b>$ <span class="cursor blink">&nbsp;</span>
+        	
+    	</article>
+    	
 	</body>
 	
 </html>

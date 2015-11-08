@@ -1,0 +1,44 @@
+/*
+ * LESS-module: Terminal.
+ * Styles for all terminal components;
+ * type, background, colors, margins etc.
+ */
+
+// Body
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    color: @color-text;
+    background: @color-background;
+}
+
+// Terminal
+#terminal {
+    -webkit-font-smoothing: subpixel-antialiased;
+    color: @color-text;
+    font-size: @font-medium;
+    padding: @padding-terminal;
+    .font-terminal();
+    
+    // Commands
+    i {
+        font-style: normal;
+        color: @color-command;
+    }
+    
+    // Highlighted text
+    b {
+        font-weight: normal;
+        color: @color-highlight;
+    }
+    
+    // Cursor
+    .cursor {
+        background: fade(@color-text, @fade-cursor);
+        
+        // Blinking cursor
+        &.blink { .animation-cursor(); }
+    }
+}

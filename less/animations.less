@@ -1,0 +1,14 @@
+/*
+ * LESS-module: Animations.
+ * Defines keyframes and CSS animations.
+ */
+ 
+// Blinking cursor keyframes
+@keyframes cursor {
+    50% { background: transparent; }
+}
+
+// Blinking cursor animation
+.animation-cursor {
+    animation: cursor 1s infinite normal forwards steps(1);
+}
