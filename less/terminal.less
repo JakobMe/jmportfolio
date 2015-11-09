@@ -95,8 +95,11 @@ body {
         overflow: hidden;
         margin: 0 0 (2 * @font-medium) 0;
         
-        // Last paragraph/output
+        // Last paragraph/output/section
         &:last-child { margin: 0; }
+        
+        // Empty element
+        &:empty { display: none; margin: 0; }
     }
     
     // Cursor
@@ -109,7 +112,8 @@ body {
     
     // Input
     #input {
-        display: inline-block;
+        display: inline;
+        word-break: break-all;
         font-size: 0;
         .font-terminal();
         

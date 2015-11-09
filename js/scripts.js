@@ -63,18 +63,30 @@ $(document).ready(function() {
         // Prevent default behaviour
         event.preventDefault();
         
+        // Pause cursor blinking
+        pauseCursorBlink();
+        
         // Switch/case on pressed key
         switch (event.which) {
-           
-            // Backspace
+            
+            /*
+             * Key: Backspace.
+             * Remove last character from current input.
+             */
             case KEY_BACKSPACE:
                 break;
                 
-            // Tab
+            /*
+             * Key: Tab.
+             * Autocomplete filenames in current command.
+             */
             case KEY_TAB:
                 break;
                 
-            // Enter
+            /*
+             * Key: Enter.
+             * Execute current command.
+             */
             case KEY_ENTER:
                 
                 // If the shift key is pressed
@@ -92,11 +104,11 @@ $(document).ready(function() {
                 
                 break;
                 
-            // Left
+            /*
+             * Key: Left arrow.
+             * Navigate to the left in current input.
+             */
             case KEY_LEFT:
-                
-                // Pause cursor blinking
-                pauseCursorBlink();
                 
                 // If there is text before the cursor
                 if (inputBefore.text().length > 0) {
@@ -119,14 +131,15 @@ $(document).ready(function() {
                 
                 break;
             
-            // Right
+            /*
+             * Key: Right arrow.
+             * Navigate to the right in current input.
+             */
             case KEY_RIGHT:
-            
-                // Pause cursor blinking
-                pauseCursorBlink();
                 
                 // If there is text after the cursor
-                if (inputCurrent.text() !== String.fromCharCode(KEY_NBSP)) {
+                if ((inputCurrent.text() !== String.fromCharCode(KEY_NBSP)) ||
+                    (inputAfter.text().length > 0)) {
                     
                     // Shift current text to the left
                     inputBefore.text(
@@ -152,15 +165,24 @@ $(document).ready(function() {
                 
                 break;
                 
-            // Up
+            /*
+             * Key: Up arrow.
+             * Navigate backwards in command history.
+             */
             case KEY_UP:
                 break;
                 
-            // Down
+            /*
+             * Key: Down arrow.
+             * Navigate forwards in command history.
+             */
             case KEY_DOWN:
                 break;
                 
-            // Default
+            /*
+             * Key: Default.
+             * Append pressed key-character to current input.
+             */
             default:
                 
                 // Get pressed character

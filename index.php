@@ -32,8 +32,11 @@
                 <p><a id="logo" href="." title="Reload jmportfolio">jmportfolio</a></p>
             	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
                 <p>This is Jakob Metzger's personal online portfolio.</p>
-            	<p><u>Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<br/></p>
+            	<p><u>[Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<u>]</u></p>
             </section>
+            
+            <!--Output-->
+            <section class="section" id="section-output"></section>
             
             <!--Output
             <section class="section" id="section-output">
