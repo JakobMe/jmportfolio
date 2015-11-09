@@ -78,7 +78,12 @@ body {
     }
     
     // Output
-    blockquote { padding: 0 0 0 (4 * @font-medium); }
+    blockquote {
+        padding: 0 0 0 (4 * @font-medium);
+        
+        // File output
+        &.files { word-break: break-all; }
+    }
     
     // Paragraph/output
     p, blockquote {
@@ -109,7 +114,7 @@ body {
         &, h1 { font-size: @font-small; }
         
         // Output
-        blockquote { padding-left: (4 * @font-small); }
+        blockquote { padding-left: (2 * @font-small); }
         
         // Paragraph/output
         p, blockquote {
