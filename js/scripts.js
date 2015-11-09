@@ -206,10 +206,11 @@ $(document).ready(function() {
                     // Lower-/uppercase transformation
                     if (event.shiftKey) { input = input.toUpperCase(); }
                     else {                input = input.toLowerCase(); }
-                }
-                
-                // If the space key is pressed, convert to forced space
-                if (event.which === KEY_SPACE) {
+                    
+                // If the space key is pressed
+                } else if (event.which === KEY_SPACE) {
+                    
+                    // Convert to forced space
                     input = String.fromCharCode(KEY_NBSP);
                 }
                 

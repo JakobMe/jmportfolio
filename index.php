@@ -28,22 +28,25 @@
     	<article id="terminal">
             
             <!--Introduction-->
-            <section class="section" id="section-intro">
-                <p><a id="logo" href="." title="Reload jmportfolio">jmportfolio</a></p>
+            <section class="section" id="intro">
+                <p><a id="logo" href="." title="Restart jmportfolio">jmportfolio</a></p>
             	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
                 <p>This is Jakob Metzger's personal online portfolio.</p>
-            	<p><u>[Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<u>]</u></p>
+            	<p>
+                	<u>Hint:</u> Type <a href="#" title="Execute 'help' command">help</a>
+                	and press <dfn>enter</dfn> to list all available commands.
+                </p>
             </section>
             
             <!--Output-->
-            <section class="section" id="section-output"></section>
+            <section class="section" id="output"></section>
             
             <!--Output
             <section class="section" id="section-output">
             	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> help</span></p>
             	<blockquote>
-                	<i>ls</i> — List all files<br/>
-                	<i>cat</i> — Display file content<br/>
+                	<i>list</i> — List all files<br/>
+                	<i>open</i> — Display file content<br/>
                 	<i>help</i> — Display this help<br/>
                 	<i>clear</i> — Clear terminal<br/>
                 	<i>random</i> — Display random image file<br/>
@@ -86,14 +89,12 @@
         	</section>-->
         	
         	<!--Input-->
-        	<section class="section" id="section-input">
+        	<section class="section" id="input">
             	<p>
-                	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u></span>
-                	<code id="input">
-                    	<span id="input-before"></span>
-                    	<span id="input-current" class="cursor blink">&nbsp;</span>
-                        <span id="input-after"></span>
-                	</code>
+                	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> </span>
+                	<span id="input-before"></span>
+                	<span id="input-current" class="cursor blink">&nbsp;</span>
+                    <span id="input-after"></span>
             	</p>
         	</section>
 
