@@ -78,20 +78,27 @@ $(document).ready(function() {
     var TEXT_DOWN           = "down";
     var TEXT_TAB            = "tab";
     var TEXT_PRESS          = "Press ";
+    var TEXT_FILENAME       = "filename";
     var TEXT_COMMAND        = "command";
     var TEXT_COMMANDS       = "commands";
+    var TEXT_FILES          = "files";
     var TEXT_LETTERS        = "Letters ";
     var TEXT_NUMBERS        = "numbers ";
     var TEXT_PUNCTUATION    = "punctuation ";
     var TEXT_AZ             = "[a-z]";
     var TEXT_09             = "[0-9]";
     var TEXT_SPCHARS        = "[._-]";
-    var TEXT_NOT_FOUND      = "Command not found";
+    var TEXT_NOT_FOUND      = "' not found";
+    var TEXT_COM_NOT_FOUND  = "Command not found";
+    var TEXT_SPECIFY_FILE   = "You must specify a file to display";
     var TEXT_ALLOWED        = "Allowed input:";
+    var TEXT_FILE           = "File '";
     var TEXT_HINT           = "Hint:";
+    var TEXT_USAGE          = "Usage:";
     var TEXT_TYPE           = "Type your ";
     var TEXT_HELP           = "help";
     var TEXT_USE            = ". Use ";
+    var TEXT_USE_ALT        = " Use ";
     var TEXT_AND            = " and ";
     var TEXT_MOVE_CURSOR    = " arrow keys to move the cursor";
     var TEXT_HISTORY        = " arrow keys to navigate your command history";
@@ -488,6 +495,62 @@ $(document).ready(function() {
                  * Display file content.
                  */
                 case COMMAND_OPEN:
+                    
+                    // If a filename is given
+                    if (command[1] !== undefined) {
+                        
+                        // Initialize found file as false
+                        var foundFile = false;
+                        
+                        // Iterate all files, search for file
+                        $.each(files, function(key, value) {
+                            if (value[1] === command[1]) {
+                                foundFile = command[1];
+                            }
+                        });
+                        
+                        // If file is found
+                        if (foundFile !== false) {
+                            
+                            //
+                            
+                        // If file is not found
+                        } else {
+                            
+                            // Append error output
+                            output.append(
+                                htmlTag(
+                                    TAG_BLOCKQUOTE,
+                                    COMMAND_OPEN + TEXT_COMMAND_AFTER +
+                                    htmlTag(
+                                        TAG_STRONG, TEXT_FILE + command[1] +
+                                        TEXT_NOT_FOUND
+                                    ) + CHAR_DOT + TEXT_BREAK +
+                                    htmlTag(TAG_U, TEXT_HINT) + TEXT_USE_ALT +
+                                    htmlTag(TAG_I, COMMAND_LIST) +
+                                    TEXT_LIST_AVAILABLE +
+                                    htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
+                                )
+                            );
+                        }
+                        
+                    // If no filename is given
+                    } else {
+                        
+                        // Append error output
+                        output.append(
+                            htmlTag(
+                                TAG_BLOCKQUOTE,
+                                COMMAND_OPEN + TEXT_COMMAND_AFTER +
+                                htmlTag(TAG_STRONG, TEXT_SPECIFY_FILE) +
+                                CHAR_DOT + TEXT_BREAK +
+                                htmlTag(TAG_U, TEXT_USAGE) + CHAR_SPACE +
+                                htmlTag(TAG_EM, COMMAND_OPEN) + CHAR_SPACE +
+                                htmlTag(TAG_DFN, TEXT_FILENAME)
+                            )
+                        );
+                    }
+                    
                     break;
                 
                 /*
@@ -529,7 +592,7 @@ $(document).ready(function() {
                         htmlTag(
                             TAG_BLOCKQUOTE,
                             command + TEXT_COMMAND_AFTER +
-                            htmlTag(TAG_STRONG, TEXT_NOT_FOUND) +
+                            htmlTag(TAG_STRONG, TEXT_COM_NOT_FOUND) +
                             TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
                             TEXT_LIST_AVAILABLE +
                             htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
