@@ -63,6 +63,16 @@ $(document).ready(function() {
     var TEXT_USE            = ". Use ";
     var TEXT_LIST_AVAILABLE = " to list available ";
     
+    // Constants: Commands
+    var COMMAND_LIST        = "list";
+    var COMMAND_OPEN        = "open";
+    var COMMAND_HELP        = "help";
+    var COMMAND_CLEAR       = "clear";
+    var COMMAND_RANDOM      = "random";
+    var COMMAND_ABOUT       = "about";
+    var COMMAND_CONTACT     = "contact";
+    var COMMAND_NOTICE      = "notice";
+    
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
     var KEY_TAB             = 9;
@@ -94,7 +104,7 @@ $(document).ready(function() {
     var inputCurrent        = $(ID_INPUT_CURRENT);
     var inputAfter          = $(ID_INPUT_AFTER);
     
-    // Available commands
+    // List of available commands
     var commands = {
         list: {},
         open: {},
@@ -221,9 +231,8 @@ $(document).ready(function() {
         // Prevent default behaviour
         event.preventDefault();
         
-        if (!$(this).hasClass(CLASS_READY)) {
-            return false;
-        }
+        // Exit function if terminal is not ready
+        if (!$(this).hasClass(CLASS_READY)) { return false; }
         
         // Pause cursor blinking
         pauseCursorBlink();
@@ -304,6 +313,21 @@ $(document).ready(function() {
                         
                         // If command does exist
                         if (commands.hasOwnProperty(command)) {
+                            
+                            // Choose behaviour by command
+                            switch (command) {
+                                
+                                /*
+                                 * Command "clear".
+                                 * Clears the output container.
+                                 */
+                                case COMMAND_CLEAR:
+                                    
+                                    // Empty output
+                                    output.html(CHAR_EMPTY);
+                                    
+                                    break;
+                            }
                             
                         // If command does not exist
                         } else {
