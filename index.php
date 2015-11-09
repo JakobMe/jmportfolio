@@ -34,19 +34,9 @@
         	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
             <p>This is Jakob Metzger's personal online portfolio.</p>
         	
-        	<!--Introduction-->
-        	<p>
-            	Use the <i>help</i> command to list all available commands.<br/>
-            	Use the <i>ls</i> command to list all available <dfn>files</dfn>.
-        	</p>
-        	
         	<!--Hint-->
         	<p>
-            	<u>Hint:</u><br/>
-            	Press <dfn>left</dfn> and <dfn>right</dfn> arrow keys to move the cursor.<br/>
-            	Press <dfn>up</dfn> and <dfn>down</dfn> arrow keys to navigate your command history.<br/>
-            	Press <dfn>tab</dfn> to autocomplete filenames.<br/>
-            	Press <dfn>enter</dfn> to execute your <i>command</i>.
+            	<u>Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<br/>
         	</p>
 
         	<!--Command: help-->
@@ -56,7 +46,7 @@
         	
         	<!--Output: help-->
         	<blockquote>
-            	<i>ls</i> — List files<br/>
+            	<i>ls</i> — List all files<br/>
             	<i>cat</i> — Display file content<br/>
             	<i>help</i> — Display this help<br/>
             	<i>clear</i> — Clear terminal<br/>
@@ -66,7 +56,13 @@
             	<i>contact</i> — Display contact information<br/>
             	<i>notice</i> — Display legal information<br/>
             	<br/>
-            	<u>hint:</u> Type your <i>command</i> below and press <dfn>enter</dfn> to execute it.
+            	Type your <i>command</i> below and press <dfn>enter</dfn> to execute it.<br/>
+            	<br/>
+            	<u>Hint:</u><br/>
+            	Press <dfn>left</dfn> and <dfn>right</dfn> arrow keys to move the cursor.<br/>
+            	Press <dfn>up</dfn> and <dfn>down</dfn> arrow keys to navigate your command history.<br/>
+            	Press <dfn>tab</dfn> to autocomplete filenames.<br/>
+            	Press <dfn>enter</dfn> to execute your <i>command</i>.
         	</blockquote>
         	
         	<!--Command: ssh-->
