@@ -113,7 +113,7 @@ $(document).ready(function() {
         open:    "Display file content",
         help:    "Display this help",
         clear:   "Clear terminal",
-        random:  "Display random image file",
+        random:  "Display random file",
         about:   "Display info about me",
         contact: "Display contact information",
         notice:  "Display legal information"
@@ -150,6 +150,11 @@ $(document).ready(function() {
     var inputBefore         = $(ID_INPUT_BEFORE);
     var inputCurrent        = $(ID_INPUT_CURRENT);
     var inputAfter          = $(ID_INPUT_AFTER);
+    
+    // Command history
+    var history = [];
+    var historyLast = CHAR_EMPTY;
+    var historyCurrent = history.length;
     
     /*
      * Function: Compose HTML tag.
@@ -223,6 +228,36 @@ $(document).ready(function() {
     }
     
     /*
+     * Function: Load command from history.
+     * Loads a command from history and displays it
+     * in current input field.
+     */
+    function loadCommand(backward) {
+        
+        // Initialize var for loading from last typed command
+        var loadLast = false;
+        
+        // Choose direction (forward/backward)
+        if (backward === true) { historyCurrent--; }
+        else if (backward === false) { historyCurrent++; }
+        
+        // Set boundaries for current history index
+        if (historyCurrent < 0) { historyCurrent = 0; }
+        if (historyCurrent >= history.length) {
+            historyCurrent = history.length;
+            loadLast = true;
+        }
+        
+        // Clear current input
+        inputAfter.text(CHAR_EMPTY);
+        inputCurrent.text(String.fromCharCode(KEY_NBSP));
+        
+        // Display loaded input
+        if (loadLast) { inputBefore.text(historyLast); }
+        else { inputBefore.text(history[historyCurrent]); }
+    }
+    
+    /*
      * Function: Execute command.
      * Takes a command input and tries to execute it;
      * checks if command is available/correct and creates
@@ -238,7 +273,7 @@ $(document).ready(function() {
             command = command.split(String.fromCharCode(KEY_NBSP));
             
             // If first command is "open", keep second command
-            if (command[0] === COMMAND_OPEN) {
+            if ((command[0] === COMMAND_OPEN) && (command[1] !== undefined)) {
                 commandOutput = command[0] +
                                 String.fromCharCode(KEY_NBSP) +
                                 command[1];
@@ -262,6 +297,11 @@ $(document).ready(function() {
                     )
                 )
             );
+            
+            // Add command to history
+            history.push(commandOutput);
+            historyCurrent = history.length;
+            historyLast = CHAR_EMPTY;
             
             // Clear current input
             inputBefore.add(inputAfter).text(CHAR_EMPTY);
@@ -356,6 +396,48 @@ $(document).ready(function() {
                         );
                         
                         break;
+                    
+                    /*
+                     * Command "ls".
+                     * List all files.
+                     */
+                    case COMMAND_LIST:
+                        break;
+                    
+                    /*
+                     * Command "open".
+                     * Display file content.
+                     */
+                    case COMMAND_OPEN:
+                        break;
+                    
+                    /*
+                     * Command "random".
+                     * Display random file.
+                     */
+                    case COMMAND_RANDOM:
+                        break;
+                        
+                    /*
+                     * Command "about".
+                     * Display info about me.
+                     */
+                    case COMMAND_ABOUT:
+                        break;
+                        
+                    /*
+                     * Command "contact".
+                     * Display contact information.
+                     */
+                    case COMMAND_CONTACT:
+                        break;
+                    
+                    /*
+                     * Command "notice".
+                     * Display legal information.
+                     */
+                    case COMMAND_NOTICE:
+                        break;
                 }
                 
             // If command does not exist
@@ -443,6 +525,11 @@ $(document).ready(function() {
                             0, inputBefore.text().length - 1
                         )
                     );
+                    
+                    // Save current input
+                    historyLast = inputBefore.text() +
+                                  inputCurrent.text().trim() +
+                                  inputAfter.text();
                 }
                 
                 break;
@@ -494,9 +581,15 @@ $(document).ready(function() {
                 if (inputBefore.text().length > 0) {
                     
                     // Shift current text to the right
-                    inputAfter.text(
-                        inputCurrent.text() + inputAfter.text()
-                    );
+                    if (inputAfter.text().length > 0) {
+                        inputAfter.text(
+                            inputCurrent.text() + inputAfter.text()
+                        );
+                    } else {
+                        inputAfter.text(
+                            inputCurrent.text().trim()
+                        );
+                    }
                     
                     // Replace current text
                     inputCurrent.text(inputBefore.text().slice(-1));
@@ -550,6 +643,9 @@ $(document).ready(function() {
              * Navigate backwards in command history.
              */
             case KEY_UP:
+            
+                loadCommand(true);
+                
                 break;
                 
             /*
@@ -557,6 +653,9 @@ $(document).ready(function() {
              * Navigate forwards in command history.
              */
             case KEY_DOWN:
+            
+                loadCommand(false);
+                
                 break;
                 
             /*
@@ -631,6 +730,11 @@ $(document).ready(function() {
                 
                 // Append entered character to input-field
                 inputBefore.text(inputBefore.text() + input);
+                
+                // Save current input
+                historyLast = inputBefore.text() +
+                              inputCurrent.text().trim() +
+                              inputAfter.text();
         }
         
     });
