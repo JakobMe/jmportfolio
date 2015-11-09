@@ -14,10 +14,12 @@
 $(document).ready(function() {
     
     // Constants: IDs
+    var ID_COMPUTER         = "#computer";
     var ID_LOGO             = "#logo";
     var ID_INTRO_TITLE      = "#intro-title";
     var ID_INTRO_SUBTITLE   = "#intro-subtitle";
     var ID_INTRO_HINT       = "#intro-hint";
+    var ID_OUTPUT           = "#output";
     var ID_INPUT            = "#input";
     var ID_INPUT_CURRENT    = "#input-current";
     var ID_INPUT_BEFORE     = "#input-before";
@@ -32,11 +34,34 @@ $(document).ready(function() {
     
     // Constants: Characters
     var CHAR_EMPTY          = "";
+    var CHAR_SPACE          = " ";
     var CHAR_DOT            = ".";
     var CHAR_DASH           = "-";
     var CHAR_UNDERSCORE     = "_";
+    var CHAR_SLASH          = "/";
     var CHAR_LT             = "<";
     var CHAR_GT             = ">";
+    
+    // Constants: HTML tags
+    var TAG_P               = "p";
+    var TAG_B               = "b";
+    var TAG_I               = "i";
+    var TAG_EM              = "em";
+    var TAG_SPAN            = "span";
+    var TAG_SMALL           = "small";
+    var TAG_BLOCKQUOTE      = "blockquote";
+    var TAG_STRONG          = "strong";
+    
+    // Constants: Output texts
+    var TEXT_TITLE          = "jmportfolio";
+    var TEXT_PROMPT         = ":~ ";
+    var TEXT_USER           = "guest$";
+    var TEXT_COMMANDS       = "commands";
+    var TEXT_COMMAND_AFTER  = ": ";
+    var TEXT_NOT_FOUND      = "Command not found";
+    var TEXT_HELP           = "help";
+    var TEXT_USE            = ". Use ";
+    var TEXT_LIST_AVAILABLE = " to list available ";
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -58,14 +83,40 @@ $(document).ready(function() {
     var KEY_DOT_LOWER       = 190;
     
     // Initialize important jQuery objects
+    var computer            = $(ID_COMPUTER);
     var logo                = $(ID_LOGO);
     var introTitle          = $(ID_INTRO_TITLE);
     var introSubtitle       = $(ID_INTRO_SUBTITLE);
     var introHint           = $(ID_INTRO_HINT);
+    var output              = $(ID_OUTPUT);
     var input               = $(ID_INPUT);
     var inputBefore         = $(ID_INPUT_BEFORE);
     var inputCurrent        = $(ID_INPUT_CURRENT);
     var inputAfter          = $(ID_INPUT_AFTER);
+    
+    // Available commands
+    var commands = {
+        list: {},
+        open: {},
+        help: {},
+        clear: {},
+        random: {},
+        about: {},
+        contact: {},
+        notice: {}
+    };
+    
+    /*
+     * Function: Compose HTML tag.
+     * Encases given content string in given
+     * HTML tag and returns it.
+     */
+    function htmlTag(tag, content) {
+        
+        // Return composed HTML tag
+        return CHAR_LT + tag + CHAR_GT + content +
+               CHAR_LT + CHAR_SLASH + tag + CHAR_GT;
+    }
     
     /*
      * Function: Pause blinking of cursor.
@@ -93,7 +144,7 @@ $(document).ready(function() {
         var text = container.attr(ATTR_DATA_TEXT);
         var textLength = text.length;
         var index = 0;
-        var time = 10;
+        var time = 5;
         var timeout;
         
         // Add blinking cursor to container
@@ -111,7 +162,7 @@ $(document).ready(function() {
                 
                 // Change time to skip HTML tags
                 if (type.slice(-1) === CHAR_LT) { time = 0; }
-                else if (type.slice(-1) === CHAR_GT) { time = 10; }
+                else if (type.slice(-1) === CHAR_GT) { time = 5; }
                 
                 // Insert text, run function
                 container.html(type);
@@ -149,6 +200,7 @@ $(document).ready(function() {
                             function() {
                                 logo.removeClass(CLASS_BLINK);
                                 input.addClass(CLASS_READY);
+                                computer.addClass(CLASS_READY);
                             }
                         );
                     }
@@ -164,10 +216,14 @@ $(document).ready(function() {
      * control behaviour of arrow keys, enter, backspace and tab,
      * insert entered characters to input-field.
      */
-    $(document).keydown(function(event) {
+    computer.keydown(function(event) {
         
         // Prevent default behaviour
         event.preventDefault();
+        
+        if (!$(this).hasClass(CLASS_READY)) {
+            return false;
+        }
         
         // Pause cursor blinking
         pauseCursorBlink();
@@ -218,6 +274,53 @@ $(document).ready(function() {
                 // If just enter
                 } else {
                     
+                    // Get current command and trim spaces
+                    var command = (
+                        inputBefore.text() +
+                        inputCurrent.text() +
+                        inputAfter.text()
+                    ).trim();
+                    
+                    // If a command was executed
+                    if (command.length > 0) {
+                        
+                        // Append command prompt to output
+                        output.append(
+                            htmlTag(
+                                TAG_P,
+                                htmlTag(
+                                    TAG_SPAN,
+                                    htmlTag(TAG_B, TEXT_TITLE) +
+                                    TEXT_PROMPT +
+                                    htmlTag(TAG_SMALL, TEXT_USER) +
+                                    CHAR_SPACE + command
+                                )
+                            )
+                        );
+                        
+                        // Clear current input
+                        inputBefore.add(inputAfter).text(CHAR_EMPTY);
+                        inputCurrent.text(String.fromCharCode(KEY_NBSP));
+                        
+                        // If command does exist
+                        if (commands.hasOwnProperty(command)) {
+                            
+                        // If command does not exist
+                        } else {
+                            
+                            // Append error message to output
+                            output.append(
+                                htmlTag(
+                                    TAG_BLOCKQUOTE,
+                                    command + TEXT_COMMAND_AFTER +
+                                    htmlTag(TAG_STRONG, TEXT_NOT_FOUND) +
+                                    TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
+                                    TEXT_LIST_AVAILABLE +
+                                    htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
+                                )
+                            );
+                        }
+                    }
                 }
                 
                 break;
