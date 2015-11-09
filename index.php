@@ -33,7 +33,9 @@
             	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
                 <p>This is Jakob Metzger's personal online portfolio.</p>
             	<p>
-                	<u>Hint:</u> Type <a href="#" title="Execute 'help' command">help</a>
+                	<u>Hint:</u> Type
+                	<a href="#" class="execute" data-command="help"
+                       title="Execute 'help' command">help</a>
                 	and press <dfn>enter</dfn> to list all available commands.
                 </p>
             </section>
@@ -50,12 +52,14 @@
                 	<i>help</i> — Display this help<br/>
                 	<i>clear</i> — Clear terminal<br/>
                 	<i>random</i> — Display random image file<br/>
-                	<i>message</i> — Send a message<br/>
                 	<i>about</i> — Display info about me<br/>
                 	<i>contact</i> — Display contact information<br/>
                 	<i>notice</i> — Display legal information<br/>
                 	<br/>
                 	Type your <i>command</i> below and press <dfn>enter</dfn> to execute it.<br/>
+                	<br/>
+                	<u>Allowed input:</u><br/>
+                	Letters <dfn>[a-z]</dfn>, numbers <dfn>[0-9]</dfn>, punctuation <dfn>[._-]</dfn>.<br/>
                 	<br/>
                 	<u>Hint:</u><br/>
                 	Press <dfn>left</dfn> and <dfn>right</dfn> arrow keys to move the cursor.<br/>
