@@ -85,8 +85,8 @@ body {
         &.files { word-break: break-all; }
     }
     
-    // Paragraph/output
-    p, blockquote {
+    // Paragraph/output and sections
+    p, blockquote, .section {
         clear: both;
         overflow: hidden;
         margin: 0 0 (2 * @font-medium) 0;
@@ -116,8 +116,8 @@ body {
         // Output
         blockquote { padding-left: (2 * @font-small); }
         
-        // Paragraph/output
-        p, blockquote {
+        // Paragraph/output and sections
+        p, blockquote, .section {
             margin-bottom: (2 * @font-small);
             &:last-child { margin: 0; }
         }

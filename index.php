@@ -8,7 +8,7 @@
 		<title>jmportfolio — bash — 80x24</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
         <meta name="description" content="Jakob Metzger's online portfolio">
-        <meta name="keywords" content="Jakob, Metzger, Portfolio">
+        <meta name="keywords" content="jakob, metzger, portfolio, frontend, developer, design, graphic">
 		<meta charset="utf-8">
 		
 		<!--Assets-->
@@ -27,90 +27,70 @@
     	<!--Terminal-->
     	<article id="terminal">
             
-            <!--Logo-->
-            <p><a id="logo" href="." title="Reload jmportfolio"></a></p>
+            <!--Introduction-->
+            <section class="section" id="intro">
+                <p><a id="logo" href="." title="Reload jmportfolio"></a></p>
+            	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
+                <p>This is Jakob Metzger's personal online portfolio.</p>
+            	<p><u>Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<br/></p>
+            </section>
             
-        	<!--Welcome-->
-        	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
-            <p>This is Jakob Metzger's personal online portfolio.</p>
+            <!--Output-->
+            <section class="section" id="output">
+            	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> help</span></p>
+            	<blockquote>
+                	<i>ls</i> — List all files<br/>
+                	<i>cat</i> — Display file content<br/>
+                	<i>help</i> — Display this help<br/>
+                	<i>clear</i> — Clear terminal<br/>
+                	<i>random</i> — Display random image file<br/>
+                	<i>message</i> — Send a message<br/>
+                	<i>about</i> — Display info about me<br/>
+                	<i>contact</i> — Display contact information<br/>
+                	<i>notice</i> — Display legal information<br/>
+                	<br/>
+                	Type your <i>command</i> below and press <dfn>enter</dfn> to execute it.<br/>
+                	<br/>
+                	<u>Hint:</u><br/>
+                	Press <dfn>left</dfn> and <dfn>right</dfn> arrow keys to move the cursor.<br/>
+                	Press <dfn>up</dfn> and <dfn>down</dfn> arrow keys to navigate your command history.<br/>
+                	Press <dfn>tab</dfn> to autocomplete filenames.<br/>
+                	Press <dfn>enter</dfn> to execute your <i>command</i>.
+            	</blockquote>
+            	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> ssh</span></p>
+            	<blockquote>
+                	ssh: <strong>Command not found</strong>. Use <i>help</i>
+                	to list available <i>commands</i>.<br/>
+            	</blockquote>
+            	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> ls</span></p>
+            	<blockquote class="files">
+                	<dfn>about.txt</dfn><br/>
+                	<dfn>contact.txt</dfn><br/>
+                	<dfn>notice.txt</dfn><br/>
+                	<dfn>skills.dat</dfn><br/>
+                	<dfn>deviantart.html</dfn><br/>
+                	<dfn>01_lichtblick.jpg</dfn><br/>
+                	<dfn>02_minimalicons.jpg</dfn><br/>
+                	<dfn>03_aurora.jpg</dfn><br/>
+                	<dfn>04_tinycons.jpg</dfn><br/>
+                	<dfn>05_jakobmetzger.jpg</dfn><br/>
+            	</blockquote>
+            	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> cat</span></p>
+            	<blockquote>
+                	cat: <strong>You must specify a file to display</strong>.<br/>
+                	<u>usage:</u> <i>cat</i> <dfn>filename</dfn>
+            	</blockquote>
+        	</section>
         	
-        	<!--Hint-->
-        	<p>
-            	<u>Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<br/>
-        	</p>
-
-        	<!--Command: help-->
-        	<p>
-            	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> help</span>
-        	</p>
-        	
-        	<!--Output: help-->
-        	<blockquote>
-            	<i>ls</i> — List all files<br/>
-            	<i>cat</i> — Display file content<br/>
-            	<i>help</i> — Display this help<br/>
-            	<i>clear</i> — Clear terminal<br/>
-            	<i>random</i> — Display random image file<br/>
-            	<i>message</i> — Send a message<br/>
-            	<i>about</i> — Display info about me<br/>
-            	<i>contact</i> — Display contact information<br/>
-            	<i>notice</i> — Display legal information<br/>
-            	<br/>
-            	Type your <i>command</i> below and press <dfn>enter</dfn> to execute it.<br/>
-            	<br/>
-            	<u>Hint:</u><br/>
-            	Press <dfn>left</dfn> and <dfn>right</dfn> arrow keys to move the cursor.<br/>
-            	Press <dfn>up</dfn> and <dfn>down</dfn> arrow keys to navigate your command history.<br/>
-            	Press <dfn>tab</dfn> to autocomplete filenames.<br/>
-            	Press <dfn>enter</dfn> to execute your <i>command</i>.
-        	</blockquote>
-        	
-        	<!--Command: ssh-->
-        	<p>
-            	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> ssh</span>
-        	</p>
-        	
-        	<!--Output: ssh-->
-        	<blockquote>
-            	ssh: <strong>Command not found</strong>. Use <i>help</i>
-            	to list available <i>commands</i>.<br/>
-        	</blockquote>
-        	
-        	<!--Command: ls-->
-        	<p>
-            	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> ls</span>
-        	</p>
-        	
-        	<!--Output: ls-->
-        	<blockquote class="files">
-            	<dfn>about.txt</dfn><br/>
-            	<dfn>contact.txt</dfn><br/>
-            	<dfn>notice.txt</dfn><br/>
-            	<dfn>skills.dat</dfn><br/>
-            	<dfn>deviantart.html</dfn><br/>
-            	<dfn>01_lichtblick.jpg</dfn><br/>
-            	<dfn>02_minimalicons.jpg</dfn><br/>
-            	<dfn>03_aurora.jpg</dfn><br/>
-            	<dfn>04_tinycons.jpg</dfn><br/>
-            	<dfn>05_jakobmetzger.jpg</dfn><br/>
-        	</blockquote>
-        	
-        	<!--Command-->
-        	<p>
-            	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> cat</span>
-        	</p>
-        	
-        	<!--Output-->
-        	<blockquote>
-            	cat: <strong>You must specify a file to display</strong>.<br/>
-            	<u>usage:</u> <i>cat</i> <dfn>filename</dfn>
-        	</blockquote>
-        	
-        	<!--Command-->
-        	<p>
-            	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u></span>
-            	<span class="cursor blink">&nbsp;</span>
-        	</p>
+        	<!--Input-->
+        	<section class="section" id="input">
+            	<p>
+                	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u></span>
+                	<span id="input-before"></span>
+                	<span id="input-current" class="cursor blink">&nbsp;</span>
+                    <span id="input-after"></span>
+            	</p>
+        	</section>
 
     	</article>
     	
