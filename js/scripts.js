@@ -74,6 +74,18 @@ $(document).ready(function() {
              * Remove last character from current input.
              */
             case KEY_BACKSPACE:
+            
+                // If there is text before the cursor
+                if (inputBefore.text().length > 0) {
+                    
+                    // Remove last char from before-text
+                    inputBefore.text(
+                        inputBefore.text().slice(
+                            0, inputBefore.text().length - 1
+                        )
+                    );
+                }
+                
                 break;
                 
             /*
