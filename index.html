@@ -29,15 +29,11 @@
             
             <!--Introduction-->
             <section class="section" id="intro">
-                <p><a id="logo" href="." title="Restart jmportfolio">jmportfolio</a></p>
-            	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
-                <p>This is Jakob Metzger's personal online portfolio.</p>
-            	<p>
-                	<u>Hint:</u> Type
-                	<a href="#" class="execute" data-command="help"
-                       title="Execute 'help' command">help</a>
-                	and press <dfn>enter</dfn> to list all available commands.
-                </p>
+                <p><a id="logo" class="blink" href="." title="Restart jmportfolio">jmportfolio</a></p>
+            	<h1 id="intro-title" data-text="Welcome to <b>jmportfolio</b>.de!"></h1>
+                <p id="intro-subtitle" data-text="This is Jakob Metzger's personal online portfolio."></p>
+            	<p id="intro-hint" data-text="<u>Hint:</u> Type <i>help</i>
+                   and press <dfn>enter</dfn> to list all available commands."></p>
             </section>
             
             <!--Output-->
@@ -56,7 +52,7 @@
                 	<i>contact</i> — Display contact information<br/>
                 	<i>notice</i> — Display legal information<br/>
                 	<br/>
-                	Type your <i>command</i> below and press <dfn>enter</dfn> to execute it.<br/>
+                	Type your <em>command</em> below and press <dfn>enter</dfn> to execute it.<br/>
                 	<br/>
                 	<u>Allowed input:</u><br/>
                 	Letters <dfn>[a-z]</dfn>, numbers <dfn>[0-9]</dfn>, punctuation <dfn>[._-]</dfn>.<br/>
@@ -65,30 +61,30 @@
                 	Press <dfn>left</dfn> and <dfn>right</dfn> arrow keys to move the cursor.<br/>
                 	Press <dfn>up</dfn> and <dfn>down</dfn> arrow keys to navigate your command history.<br/>
                 	Press <dfn>tab</dfn> to autocomplete filenames.<br/>
-                	Press <dfn>enter</dfn> to execute your <i>command</i>.
+                	Press <dfn>enter</dfn> to execute your <em>command</em>.
             	</blockquote>
             	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> ssh</span></p>
             	<blockquote>
                 	ssh: <strong>Command not found</strong>. Use <i>help</i>
-                	to list available <i>commands</i>.<br/>
+                	to list available <em>commands</em>.<br/>
             	</blockquote>
-            	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> ls</span></p>
+            	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> list</span></p>
             	<blockquote class="files">
-                	<dfn>about.txt</dfn><br/>
-                	<dfn>contact.txt</dfn><br/>
-                	<dfn>notice.txt</dfn><br/>
-                	<dfn>skills.dat</dfn><br/>
-                	<dfn>deviantart.html</dfn><br/>
-                	<dfn>01_lichtblick.jpg</dfn><br/>
-                	<dfn>02_minimalicons.jpg</dfn><br/>
-                	<dfn>03_aurora.jpg</dfn><br/>
-                	<dfn>04_tinycons.jpg</dfn><br/>
-                	<dfn>05_jakobmetzger.jpg</dfn><br/>
+                	<ins>about.txt</ins><br/>
+                	<ins>contact.txt</ins><br/>
+                	<ins>notice.txt</ins><br/>
+                	<ins>skills.dat</ins><br/>
+                	<ins>deviantart.html</ins><br/>
+                	<ins>01_lichtblick.jpg</ins><br/>
+                	<ins>02_minimalicons.jpg</ins><br/>
+                	<ins>03_aurora.jpg</ins><br/>
+                	<ins>04_tinycons.jpg</ins><br/>
+                	<ins>05_jakobmetzger.jpg</ins><br/>
             	</blockquote>
             	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> cat</span></p>
             	<blockquote>
                 	cat: <strong>You must specify a file to display</strong>.<br/>
-                	<u>usage:</u> <i>cat</i> <dfn>filename</dfn>
+                	<u>usage:</u> <em>cat</em> <dfn>filename</dfn>
             	</blockquote>
         	</section>-->
         	

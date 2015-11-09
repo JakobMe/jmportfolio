@@ -21,6 +21,9 @@ body {
 ::-moz-selection { background: fade(@color-highlight, @fade-selection); }
 ::selection { background: fade(@color-highlight, @fade-selection); }
 
+// Terminal font
+.font-terminal() { font-family: @font-terminal, monospace; }
+
 // Terminal
 #terminal {
     -webkit-font-smoothing: subpixel-antialiased;
@@ -40,6 +43,9 @@ body {
         background-size: @size-logo @size-logo;
         width: @size-logo;
         height: @size-logo;
+        
+        // Blinking logo
+        &.blink { .animation-logo(); }
     }
     
     // Title
@@ -51,13 +57,16 @@ body {
     }
     
     // Commands
-    i {
+    em {
         font-style: normal;
+        font-weight: normal;
         color: @color-command;
     }
     
     // Command links
-    a {
+    i {
+        cursor: pointer;
+        font-style: normal;
         text-decoration: none;
         color: @color-command;
         
@@ -75,6 +84,17 @@ body {
     dfn {
         font-style: normal;
         color: @color-hint;
+    }
+    
+    // Hint links
+    ins {
+        cursor: pointer;
+        font-style: normal;
+        text-decoration: none;
+        color: @color-hint;
+        
+        // Hover
+        &:hover { background: fade(@color-hint, @fade-cursor); }
     }
     
     // Error text
@@ -108,7 +128,7 @@ body {
         &:last-child { margin: 0; }
         
         // Empty element
-        &:empty { display: none; margin: 0; }
+        &:empty { margin: 0; }
     }
     
     // Cursor
@@ -119,15 +139,33 @@ body {
         &.blink { .animation-cursor(); }
     }
     
+    // Text with blinking cursor
+    p.blink, h1.blink {
+        &:after {
+            display: inline;
+            content: "\00a0";
+            background: fade(@color-text, @fade-cursor);
+            .animation-cursor();
+        }
+    }
+    
     // Input
-    #input p {
-        word-break: break-all;
-        word-wrap: break-word;
-        font-size: 0;
-        .font-terminal();
+    #input {
+        display: none;
         
-        // Font-size
-        span { font-size: @font-medium; }
+        // Ready visible
+        &.ready { display: block; }
+        
+        // Paragraph
+        p {
+            word-break: break-all;
+            word-wrap: break-word;
+            font-size: 0;
+            .font-terminal();
+            
+            // Font-size
+            span { font-size: @font-medium; }
+        }
     }
 }
 

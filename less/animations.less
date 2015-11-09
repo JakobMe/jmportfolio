@@ -11,7 +11,17 @@
     50% { background: transparent; }
 }
 
+// Blinking logo keyframes
+@keyframes logo {
+    50% { opacity: 0; }
+}
+
 // Blinking cursor animation
-.animation-cursor {
+.animation-cursor() {
     animation: cursor 1s infinite normal forwards steps(1);
+}
+
+// Blinking logo animation
+.animation-logo() {
+    animation: logo 1s infinite normal forwards steps(1);
 }

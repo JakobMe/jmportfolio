@@ -14,18 +14,29 @@
 $(document).ready(function() {
     
     // Constants: IDs
+    var ID_LOGO             = "#logo";
+    var ID_INTRO_TITLE      = "#intro-title";
+    var ID_INTRO_SUBTITLE   = "#intro-subtitle";
+    var ID_INTRO_HINT       = "#intro-hint";
+    var ID_INPUT            = "#input";
     var ID_INPUT_CURRENT    = "#input-current";
     var ID_INPUT_BEFORE     = "#input-before";
     var ID_INPUT_AFTER      = "#input-after";
     
     // Constants: CSS-classes
     var CLASS_BLINK         = "blink";
+    var CLASS_READY         = "ready";
+    
+    // Constants: HTML-attributes
+    var ATTR_DATA_TEXT      = "data-text";
     
     // Constants: Characters
     var CHAR_EMPTY          = "";
     var CHAR_DOT            = ".";
     var CHAR_DASH           = "-";
     var CHAR_UNDERSCORE     = "_";
+    var CHAR_LT             = "<";
+    var CHAR_GT             = ">";
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -47,9 +58,14 @@ $(document).ready(function() {
     var KEY_DOT_LOWER       = 190;
     
     // Initialize important jQuery objects
-    var inputBefore  = $(ID_INPUT_BEFORE);
-    var inputCurrent = $(ID_INPUT_CURRENT);
-    var inputAfter   = $(ID_INPUT_AFTER);
+    var logo                = $(ID_LOGO);
+    var introTitle          = $(ID_INTRO_TITLE);
+    var introSubtitle       = $(ID_INTRO_SUBTITLE);
+    var introHint           = $(ID_INTRO_HINT);
+    var input               = $(ID_INPUT);
+    var inputBefore         = $(ID_INPUT_BEFORE);
+    var inputCurrent        = $(ID_INPUT_CURRENT);
+    var inputAfter          = $(ID_INPUT_AFTER);
     
     /*
      * Function: Pause blinking of cursor.
@@ -59,12 +75,88 @@ $(document).ready(function() {
      */
     function pauseCursorBlink() {
         
-        // Remove and add "blinkg"-class
+        // Remove and add "blinking"-class
         inputCurrent.removeClass(CLASS_BLINK);
         setTimeout(function() {
             inputCurrent.addClass(CLASS_BLINK);
         }, 2000);
     }
+    
+    /*
+     * Function: Animate typing a text.
+     * Inserts a text character by character to a container to
+     * animate someone typing it.
+     */
+    function typeText(container, callback) {
+        
+        // Initialize text, textlength, index and timeout function
+        var text = container.attr(ATTR_DATA_TEXT);
+        var textLength = text.length;
+        var index = 0;
+        var time = 10;
+        var timeout;
+        
+        // Add blinking cursor to container
+        container.addClass(CLASS_BLINK);
+        
+        // Type function
+        (function typeIt() {
+            
+            // Set timeout function
+            timeout = setTimeout(function() {
+                
+                // Increase index, get text to insert
+                index++;
+                var type = text.substring(0, index);
+                
+                // Change time to skip HTML tags
+                if (type.slice(-1) === CHAR_LT) { time = 0; }
+                else if (type.slice(-1) === CHAR_GT) { time = 10; }
+                
+                // Insert text, run function
+                container.html(type);
+                typeIt();
+                
+                // Stop function if finished
+                if (index === textLength) {
+                    container.removeAttr(ATTR_DATA_TEXT);
+                    container.removeClass(CLASS_BLINK);
+                    clearTimeout(timeout);
+                    callback();
+                }
+        
+            }, time);
+            
+        }());
+    }
+    
+    /*
+     * Wait for window to load.
+     * Run functions when everything is ready; these functions
+     * will run just once (for example intro animations).
+     */
+    $(window).load(function() {
+        
+        // Run animation functions for intro
+        typeText(
+            introTitle,
+            function() {
+                typeText(
+                    introSubtitle,
+                    function() {
+                        typeText(
+                            introHint,
+                            function() {
+                                logo.removeClass(CLASS_BLINK);
+                                input.addClass(CLASS_READY);
+                            }
+                        );
+                    }
+                );
+            }
+        );
+
+    });
     
     /*
      * On keydown.
