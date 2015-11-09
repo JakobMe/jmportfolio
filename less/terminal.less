@@ -87,7 +87,7 @@ body {
     }
     
     // Hint links
-    ins {
+    ins, a {
         cursor: pointer;
         font-style: normal;
         text-decoration: none;
@@ -118,10 +118,8 @@ body {
     
     // Output
     blockquote {
+        word-break: break-all;
         padding: 0 0 0 (4 * @font-medium);
-        
-        // File output
-        &.files { word-break: break-all; }
     }
     
     // Paragraph/output and sections
@@ -130,11 +128,8 @@ body {
         overflow: hidden;
         margin: 0 0 (2 * @font-medium) 0;
         
-        // Last paragraph/output/section
-        &:last-child { margin: 0; }
-        
-        // Empty element
-        &:empty { margin: 0; }
+        // Last or empty paragraph/output/section
+        &:last-child, &:empty { margin: 0; }
     }
     
     // Cursor

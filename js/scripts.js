@@ -47,11 +47,13 @@ $(document).ready(function() {
     var CHAR_GT             = ">";
     
     // Constants: HTML tags
+    var TAG_A               = "a";
     var TAG_P               = "p";
     var TAG_B               = "b";
     var TAG_I               = "i";
     var TAG_U               = "u";
     var TAG_EM              = "em";
+    var TAG_INS             = "ins";
     var TAG_DFN             = "dfn";
     var TAG_SPAN            = "span";
     var TAG_BODY            = "body";
@@ -60,6 +62,8 @@ $(document).ready(function() {
     var TAG_STRONG          = "strong";
     
     // Constants: Output texts
+    var TEXT_HREF           = " href='http://";
+    var TEXT_TARGET         = "' target='_blank'";
     var TEXT_COMMA          = ", ";
     var TEXT_DIVIDE         = " — ";
     var TEXT_PROMPT         = ":~ ";
@@ -107,6 +111,11 @@ $(document).ready(function() {
     var COMMAND_CONTACT     = "contact";
     var COMMAND_NOTICE      = "notice";
     
+    // Constants: Filetypes
+    var FILE_TEXT           = "text";
+    var FILE_HTML           = "html";
+    var FILE_HIDDEN         = "hidden";
+    
     // List of available commands
     var commands = {
         ls:      "List all files",
@@ -114,10 +123,26 @@ $(document).ready(function() {
         help:    "Display this help",
         clear:   "Clear terminal",
         random:  "Display random file",
-        about:   "Display info about me",
-        contact: "Display contact information",
-        notice:  "Display legal information"
+        about:   "Display info about me (about.txt)",
+        contact: "Display contact information (contact.txt)",
+        notice:  "Display legal information (notice.txt)"
     };
+    
+    // List of available files
+    var files = [
+        [FILE_TEXT,   "about.txt", ""],
+        [FILE_TEXT,   "contact.txt", ""],
+        [FILE_TEXT,   "notice.txt", ""],
+        [FILE_TEXT,   "skills.dat", ""],
+        [FILE_TEXT,   "01_lichtblick.pdf", ""],
+        [FILE_TEXT,   "02_minimalicons.pdf", ""],
+        [FILE_TEXT,   "03_aurora.pdf", ""],
+        [FILE_TEXT,   "04_tinycons.pdf", ""],
+        [FILE_TEXT,   "05_jakobmetzger.pdf", ""],
+        [FILE_HTML,   "mannmitdertarnjacke.deviantart.com"],
+        [FILE_HTML,   "lichtblick-im-auetal.de"],
+        [FILE_HIDDEN, ".fun", ""]
+    ];
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -166,6 +191,18 @@ $(document).ready(function() {
         // Return composed HTML tag
         return CHAR_LT + tag + CHAR_GT + content +
                CHAR_LT + CHAR_SLASH + tag + CHAR_GT;
+    }
+    
+    /*
+     * Function: Create HTML link element.
+     * Composes an 'a' element from url and returns
+     * the HTML output.
+     */
+    function htmlLink(url) {
+        
+        // Return composed HTML tag
+        return CHAR_LT + TAG_A + TEXT_HREF + url + TEXT_TARGET + CHAR_GT +
+               url + CHAR_LT + CHAR_SLASH + TAG_A + CHAR_GT;
     }
     
     /*
@@ -402,6 +439,38 @@ $(document).ready(function() {
                      * List all files.
                      */
                     case COMMAND_LIST:
+                        
+                        // Initialize empty output
+                        var listOutput = CHAR_EMPTY;
+                        
+                        // Iterate all files, add name to output
+                        $.each(files, function(key, value) {
+                            
+                            // Hidden files
+                            if (value[0] === FILE_HIDDEN) {
+                                listOutput +=
+                                    htmlTag(TAG_SMALL, value[1]) +
+                                    TEXT_BREAK;
+                            
+                            // Link files
+                            } else if (value[0] === FILE_HTML) {
+                                listOutput +=
+                                    htmlLink(value[1]) +
+                                    TEXT_BREAK;
+                            
+                            // Standard files
+                            } else {
+                                listOutput +=
+                                    htmlTag(TAG_INS, value[1]) +
+                                    TEXT_BREAK;
+                            }
+                        });
+                        
+                        // Append output
+                        output.append(
+                            htmlTag(TAG_BLOCKQUOTE, listOutput)
+                        );
+                        
                         break;
                     
                     /*
@@ -643,7 +712,8 @@ $(document).ready(function() {
              * Navigate backwards in command history.
              */
             case KEY_UP:
-            
+                
+                // Load previous command
                 loadCommand(true);
                 
                 break;
@@ -653,7 +723,8 @@ $(document).ready(function() {
              * Navigate forwards in command history.
              */
             case KEY_DOWN:
-            
+                
+                // Load next command
                 loadCommand(false);
                 
                 break;
