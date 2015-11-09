@@ -110,6 +110,7 @@ $(document).ready(function() {
     var COMMAND_ABOUT       = "about";
     var COMMAND_CONTACT     = "contact";
     var COMMAND_NOTICE      = "notice";
+    var COMMAND_ALL         = "-a";
     
     // Constants: Filetypes
     var FILE_TEXT           = "text";
@@ -310,17 +311,28 @@ $(document).ready(function() {
             var commandOutput;
             command = command.split(String.fromCharCode(KEY_NBSP));
             
-            // If first command is "open", keep second command
-            if ((command[0] === COMMAND_OPEN) && (command[1] !== undefined)) {
+            // If first command is "open"
+            if ((command[0] === COMMAND_OPEN) &&
+                (command[1] !== undefined)) {
+                    
+                // Keep second command
                 commandOutput = command[0] +
                                 String.fromCharCode(KEY_NBSP) +
                                 command[1];
+            
+            // If first command is 'ls'
+            } else if (command[0] === COMMAND_LIST &&
+                      (command[1] === COMMAND_ALL)) {
+                
+                // Keep second command
+                commandOutput = command[0] +
+                                String.fromCharCode(KEY_NBSP) +
+                                command[1];
+            
+            // Else just keep first command
             } else {
                 commandOutput = command[0];
             }
-            
-            // Set command to first command
-            command = command[0];
             
             // Append command prompt to output
             output.append(
@@ -346,7 +358,7 @@ $(document).ready(function() {
             inputCurrent.text(String.fromCharCode(KEY_NBSP));
                 
             // Choose behaviour by command
-            switch (command) {
+            switch (command[0]) {
                 
                 /*
                  * Command "clear".
@@ -444,9 +456,11 @@ $(document).ready(function() {
                         
                         // Hidden files
                         if (value[0] === FILE_HIDE) {
-                            listOutput +=
-                                htmlTag(TAG_SMALL, value[1]) +
-                                TEXT_BREAK;
+                            if (command[1] === COMMAND_ALL) {
+                                listOutput +=
+                                    htmlTag(TAG_SMALL, value[1]) +
+                                    TEXT_BREAK;
+                            }
                         
                         // Link files
                         } else if (value[0] === FILE_HTML) {
@@ -606,6 +620,46 @@ $(document).ready(function() {
              * Autocomplete filenames in current command.
              */
             case KEY_TAB:
+                
+                // Get current command
+                var currentCommand = inputBefore.text() +
+                                     inputCurrent.text() +
+                                     inputAfter.text();
+                
+                // Trim spaces, split command
+                currentCommand = currentCommand.trim()
+                    .split(String.fromCharCode(KEY_NBSP));
+                
+                // If current command is 'open'
+                if ((currentCommand[0] === COMMAND_OPEN) &&
+                    (currentCommand[1] !== undefined)) {
+                    
+                    // Initialize autocomplete file
+                    var file = CHAR_EMPTY;
+                    
+                    // Iterate all available files, try autocomplete
+                    $.each(files, function(key, value) {
+                        if (value[1].substring(0, currentCommand[1].length) ===
+                            currentCommand[1]) {
+                            
+                            // Replace autocomplete file
+                            file = value[1];
+                        }
+                    });
+                    
+                    // If file was found
+                    if (file !== CHAR_EMPTY) {
+                        
+                        // Replace current command with autocompleted
+                        inputBefore.text(
+                            COMMAND_OPEN + String.fromCharCode(KEY_NBSP) +
+                            file
+                        );
+                        inputCurrent.text(String.fromCharCode(KEY_NBSP));
+                        inputAfter.text(CHAR_EMPTY);
+                    }
+                }
+                
                 break;
                 
             /*
