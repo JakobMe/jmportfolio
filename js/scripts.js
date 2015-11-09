@@ -1,9 +1,7 @@
 /*
- * JS-module: Main.
- * Main Javascript file.
- * @author    Jakob Metzger <jakob.me@gmail.com>
+ * JMPortfolio Terminal Script.
+ * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2015 Jakob Metzger
- * @license   http://www.php.net/license/3_0.txt PHP License 3.0
  */
 
 /*
