@@ -205,10 +205,6 @@ $(document).ready(function() {
                 index++;
                 var type = text.substring(0, index);
                 
-                // Change time to skip HTML tags
-                if (type.slice(-1) === CHAR_LT) { time = 0; }
-                else if (type.slice(-1) === CHAR_GT) { time = 5; }
-                
                 // Insert text, run function
                 container.html(type);
                 typeIt();
