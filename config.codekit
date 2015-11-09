@@ -11,6 +11,28 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/img\/logo-retina.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1790,
+		"inputAbbreviatedPath": "\/img\/logo-retina.png",
+		"outputAbbreviatedPath": "\/img\/logo-retina.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/logo.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3604,
+		"inputAbbreviatedPath": "\/img\/logo.png",
+		"outputAbbreviatedPath": "\/img\/logo.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/index.php": {
 		"fileType": 8192,
 		"ignore": 0,

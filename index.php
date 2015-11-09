@@ -6,6 +6,7 @@
     	
     	<!--Meta-->
 		<title>jmportfolio — bash — 80x24</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
         <meta name="description" content="Jakob Metzger's online portfolio">
         <meta name="keywords" content="Jakob, Metzger, Portfolio">
 		<meta charset="utf-8">
@@ -25,7 +26,10 @@
     	
     	<!--Terminal-->
     	<article id="terminal">
-
+            
+            <!--Logo-->
+            <p><a id="logo" href="."></a></p>
+            
         	<!--Welcome-->
         	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
             <p>This is Jakob Metzger's personal online portfolio.</p>
