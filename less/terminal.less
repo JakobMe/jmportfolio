@@ -110,6 +110,12 @@ body {
         color: @color-comment;
     }
     
+    // Comment text small
+    small {
+        color: @color-comment;
+        font-size: @font-medium;
+    }
+    
     // Output
     blockquote {
         padding: 0 0 0 (4 * @font-medium);
@@ -176,7 +182,7 @@ body {
     #terminal {
         
         // Title/terminal
-        &, h1, #input p span { font-size: @font-small; }
+        &, h1, #input p span, small { font-size: @font-small; }
         
         // Output
         blockquote { padding-left: (2 * @font-small); }
