@@ -28,15 +28,15 @@
     	<article id="terminal">
             
             <!--Introduction-->
-            <section class="section" id="intro">
-                <p><a id="logo" href="." title="Reload jmportfolio"></a></p>
+            <section class="section" id="section-intro">
+                <p><a id="logo" href="." title="Reload jmportfolio">jmportfolio</a></p>
             	<h1>Welcome to <b>jmportfolio</b>.de!</h1>
                 <p>This is Jakob Metzger's personal online portfolio.</p>
             	<p><u>Hint:</u> Type <i>help</i> and press <dfn>enter</dfn> to list all available commands.<br/></p>
             </section>
             
-            <!--Output-->
-            <section class="section" id="output">
+            <!--Output
+            <section class="section" id="section-output">
             	<p><span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u> help</span></p>
             	<blockquote>
                 	<i>ls</i> — List all files<br/>
@@ -80,15 +80,17 @@
                 	cat: <strong>You must specify a file to display</strong>.<br/>
                 	<u>usage:</u> <i>cat</i> <dfn>filename</dfn>
             	</blockquote>
-        	</section>
+        	</section>-->
         	
         	<!--Input-->
-        	<section class="section" id="input">
+        	<section class="section" id="section-input">
             	<p>
                 	<span class="prompt"><b>jmportfolio</b>:~ guest<u>$</u></span>
-                	<span id="input-before"></span>
-                	<span id="input-current" class="cursor blink">&nbsp;</span>
-                    <span id="input-after"></span>
+                	<code id="input">
+                    	<span id="input-before"></span>
+                    	<span id="input-current" class="cursor blink">&nbsp;</span>
+                        <span id="input-after"></span>
+                	</code>
             	</p>
         	</section>
 

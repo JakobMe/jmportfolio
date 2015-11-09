@@ -2,6 +2,9 @@
  * LESS-module: Terminal.
  * Styles for all terminal components;
  * type, background, colors, margins etc.
+ * @author    Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ * @license   http://www.php.net/license/3_0.txt PHP License 3.0
  */
 
 // Body
@@ -32,6 +35,7 @@ body {
         float: left;
         display: block;
         background: transparent center center no-repeat;
+        font-size: 0;
         background-image: url("../img/logo.png");
         background-size: @size-logo @size-logo;
         width: @size-logo;
@@ -102,6 +106,16 @@ body {
         // Blinking cursor
         &.blink { .animation-cursor(); }
     }
+    
+    // Input
+    #input {
+        display: inline-block;
+        font-size: 0;
+        .font-terminal();
+        
+        // Font-size
+        & > span { font-size: @font-medium; }
+    }
 }
 
 // Responsive
@@ -111,7 +125,7 @@ body {
     #terminal {
         
         // Title/terminal
-        &, h1 { font-size: @font-small; }
+        &, h1, #input > span { font-size: @font-small; }
         
         // Output
         blockquote { padding-left: (2 * @font-small); }
