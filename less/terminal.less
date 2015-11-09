@@ -20,6 +20,7 @@ body {
     color: @color-text;
     font-size: @font-medium;
     padding: @padding-terminal;
+    max-width: @size-terminal;
     .font-terminal();
     
     // Commands
@@ -32,6 +33,36 @@ body {
     b {
         font-weight: normal;
         color: @color-highlight;
+    }
+    
+    // Hint text
+    dfn {
+        font-style: normal;
+        color: @color-hint;
+    }
+    
+    // Error text
+    strong {
+        font-weight: normal;
+        color: @color-error;
+    }
+    
+    // Comment text
+    u {
+        text-decoration: none;
+        text-transform: uppercase;
+        color: @color-comment;
+    }
+    
+    // Paragraphs
+    p {
+        margin: 0 0 @margin-paragraph 0;
+        
+        // Output paragraph
+        &.output { padding-left: (2 * @margin-paragraph); }
+        
+        // Last paragraph
+        &:last-child { margin: 0; }
     }
     
     // Cursor
