@@ -21,6 +21,12 @@ $(document).ready(function() {
     // Constants: CSS-classes
     var CLASS_BLINK         = "blink";
     
+    // Constants: Characters
+    var CHAR_EMPTY          = "";
+    var CHAR_DOT            = ".";
+    var CHAR_DASH           = "-";
+    var CHAR_UNDERSCORE     = "_";
+    
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
     var KEY_TAB             = 9;
@@ -30,7 +36,15 @@ $(document).ready(function() {
     var KEY_UP              = 38;
     var KEY_RIGHT           = 39;
     var KEY_DOWN            = 40;
+    var KEY_A               = 65;
+    var KEY_Z               = 90;
+    var KEY_0               = 48;
+    var KEY_9               = 57;
     var KEY_NBSP            = 160;
+    var KEY_DASH            = 189;
+    var KEY_DASH_FIREFOX    = 173;
+    var KEY_DOT_UPPER       = 186;
+    var KEY_DOT_LOWER       = 190;
     
     // Initialize important jQuery objects
     var inputBefore  = $(ID_INPUT_BEFORE);
@@ -200,18 +214,65 @@ $(document).ready(function() {
                 // Get pressed character
                 var input = String.fromCharCode(event.which);
                 
-                // If a character key is pressed
-                if ((event.which >= 65) && (event.which <= 90)) {
+                /*
+                 * If a letter key is pressed.
+                 * Convert key to letter, differ between
+                 * lower- and uppercase.
+                 */
+                if ((event.which >= KEY_A) && (event.which <= KEY_Z)) {
                     
                     // Lower-/uppercase transformation
                     if (event.shiftKey) { input = input.toUpperCase(); }
                     else {                input = input.toLowerCase(); }
+                
+                /*
+                 * If a number key is pressed.
+                 * Convert key to number, ignore lower-/uppercase.
+                 */
+                } else if ((event.which >= KEY_0) && (event.which <= KEY_9)) {
                     
-                // If the space key is pressed
+                    // Convert to character
+                    input = String.fromCharCode(event.which);
+                
+                /*
+                 * If the space key is pressed.
+                 * Convert space to non-breaking space (nbsp) character.
+                 */
                 } else if (event.which === KEY_SPACE) {
                     
                     // Convert to forced space
                     input = String.fromCharCode(KEY_NBSP);
+                    
+                /*
+                 * If dot key is pressed.
+                 * Convert key to dot character.
+                 */
+                } else if ((event.which === KEY_DOT_LOWER) ||
+                           (event.which === KEY_DOT_UPPER)) {
+                    
+                    // Convert to dot character
+                    input = CHAR_DOT;
+                    
+                /*
+                 * If dash key is pressed.
+                 * Convert key to dash character, differ between
+                 * dash and underscore.
+                 */
+                } else if ((event.which === KEY_DASH) ||
+                           (event.which === KEY_DASH_FIREFOX)) {
+                    
+                    // Lower-/uppercase transformation
+                    if (event.shiftKey) { input = CHAR_UNDERSCORE; }
+                    else {                input = CHAR_DASH; }
+                    
+                /*
+                 * If another key is pressed.
+                 * Ignore all other keys, set input character to 'empty'.
+                 */
+                } else {
+                    
+                    // Set input to empty character
+                    input = CHAR_EMPTY;
                 }
                 
                 // Append entered character to input-field
