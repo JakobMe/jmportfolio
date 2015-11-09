@@ -114,34 +114,35 @@ $(document).ready(function() {
     // Constants: Filetypes
     var FILE_TEXT           = "text";
     var FILE_HTML           = "html";
-    var FILE_HIDDEN         = "hidden";
+    var FILE_HIDE           = "hide";
     
     // List of available commands
-    var commands = {
-        ls:      "List all files",
-        open:    "Display file content",
-        help:    "Display this help",
-        clear:   "Clear terminal",
-        random:  "Display random file",
-        about:   "Display info about me (about.txt)",
-        contact: "Display contact information (contact.txt)",
-        notice:  "Display legal information (notice.txt)"
-    };
+    var commands = [
+        [COMMAND_LIST,    "List all files"],
+        [COMMAND_OPEN,    "Display file content"],
+        [COMMAND_HELP,    "Display this help"],
+        [COMMAND_CLEAR,   "Clear terminal"],
+        [COMMAND_RANDOM,  "Display random file"],
+        [COMMAND_ABOUT,   "Display info about me (about.txt)"],
+        [COMMAND_CONTACT, "Display contact information (contact.txt)"],
+        [COMMAND_NOTICE,  "Display legal information (notice.txt)"]
+    ];
     
     // List of available files
     var files = [
-        [FILE_TEXT,   "about.txt", ""],
-        [FILE_TEXT,   "contact.txt", ""],
-        [FILE_TEXT,   "notice.txt", ""],
-        [FILE_TEXT,   "skills.dat", ""],
-        [FILE_TEXT,   "01_lichtblick.pdf", ""],
-        [FILE_TEXT,   "02_minimalicons.pdf", ""],
-        [FILE_TEXT,   "03_aurora.pdf", ""],
-        [FILE_TEXT,   "04_tinycons.pdf", ""],
-        [FILE_TEXT,   "05_jakobmetzger.pdf", ""],
-        [FILE_HTML,   "mannmitdertarnjacke.deviantart.com"],
-        [FILE_HTML,   "lichtblick-im-auetal.de"],
-        [FILE_HIDDEN, ".fun", ""]
+        [FILE_TEXT, "about.txt"],
+        [FILE_TEXT, "contact.txt"],
+        [FILE_TEXT, "notice.txt"],
+        [FILE_TEXT, "skills.dat"],
+        [FILE_TEXT, "01_lichtblick.pdf"],
+        [FILE_TEXT, "02_minimalicons.pdf"],
+        [FILE_TEXT, "03_aurora.pdf"],
+        [FILE_TEXT, "04_tinycons.pdf"],
+        [FILE_TEXT, "05_jakobmetzger.pdf"],
+        [FILE_HTML, "mannmitdertarnjacke.deviantart.com"],
+        [FILE_HTML, "lichtblick-im-auetal.de"],
+        [FILE_HTML, "spieler-internet.de"],
+        [FILE_HIDE, ".fun"]
     ];
     
     // Constants: Key-codes
@@ -343,186 +344,183 @@ $(document).ready(function() {
             // Clear current input
             inputBefore.add(inputAfter).text(CHAR_EMPTY);
             inputCurrent.text(String.fromCharCode(KEY_NBSP));
-            
-            // If command does exist
-            if (commands.hasOwnProperty(command)) {
                 
-                // Choose behaviour by command
-                switch (command) {
+            // Choose behaviour by command
+            switch (command) {
+                
+                /*
+                 * Command "clear".
+                 * Clears the output container.
+                 */
+                case COMMAND_CLEAR:
                     
-                    /*
-                     * Command "clear".
-                     * Clears the output container.
-                     */
-                    case COMMAND_CLEAR:
+                    // Scroll to top, empty output
+                    body.animate({
+                        scrollTop: 0 }, 250,
+                        function() { output.html(CHAR_EMPTY); }
+                    );
+                    
+                    break;
+                    
+                /*
+                 * Command "help".
+                 * Display all available commands.
+                 */
+                case COMMAND_HELP:
+                    
+                    // Initialize output
+                    var helpOutput = CHAR_EMPTY;
+                    
+                    // Iterate commands
+                    $.each(commands, function(key, value) {
+                        helpOutput += htmlTag(
+                            TAG_I, value[0]
+                        ) + TEXT_DIVIDE +
+                        value[1] +
+                        TEXT_BREAK;
+                    });
+                    
+                    // Add instruction line to output
+                    helpOutput +=
+                        TEXT_BREAK + TEXT_TYPE +
+                        htmlTag(TAG_EM, TEXT_COMMAND) +
+                        TEXT_BELOW_PRESS +
+                        htmlTag(TAG_DFN, TEXT_ENTER) +
+                        TEXT_TO_EXECUTE + TEXT_BREAK +
+                        TEXT_BREAK;
                         
-                        // Scroll to top, empty output
-                        body.animate({
-                            scrollTop: 0 }, 250,
-                            function() { output.html(CHAR_EMPTY); }
-                        );
+                    // Add allowed input line to output
+                    helpOutput +=
+                        htmlTag(TAG_U, TEXT_ALLOWED) +
+                        TEXT_BREAK + TEXT_LETTERS +
+                        htmlTag(TAG_DFN, TEXT_AZ) +
+                        TEXT_COMMA + TEXT_NUMBERS +
+                        htmlTag(TAG_DFN, TEXT_09) +
+                        TEXT_COMMA + TEXT_PUNCTUATION +
+                        htmlTag(TAG_DFN, TEXT_SPCHARS) +
+                        CHAR_DOT + TEXT_BREAK;
+                    
+                    // Add hint text to output
+                    helpOutput +=
+                        TEXT_BREAK +
+                        htmlTag(TAG_U, TEXT_HINT) +
+                        TEXT_BREAK + TEXT_PRESS +
+                        htmlTag(TAG_DFN, TEXT_LEFT) +
+                        TEXT_AND +
+                        htmlTag(TAG_DFN, TEXT_RIGHT) +
+                        TEXT_MOVE_CURSOR + CHAR_DOT +
+                        TEXT_BREAK + TEXT_PRESS +
+                        htmlTag(TAG_DFN, TEXT_UP) +
+                        TEXT_AND +
+                        htmlTag(TAG_DFN, TEXT_DOWN) +
+                        TEXT_HISTORY + CHAR_DOT +
+                        TEXT_BREAK + TEXT_PRESS +
+                        htmlTag(TAG_DFN, TEXT_TAB) +
+                        TEXT_AUTOCOMPLETE + CHAR_DOT +
+                        TEXT_BREAK + TEXT_PRESS +
+                        htmlTag(TAG_DFN, TEXT_ENTER) +
+                        TEXT_EXECUTE_YOUR +
+                        htmlTag(TAG_EM, TEXT_COMMAND) +
+                        CHAR_DOT;
+                    
+                    // Append output
+                    output.append(
+                        htmlTag(TAG_BLOCKQUOTE, helpOutput)
+                    );
+                    
+                    break;
+                
+                /*
+                 * Command "ls".
+                 * List all files.
+                 */
+                case COMMAND_LIST:
+                    
+                    // Initialize empty output
+                    var listOutput = CHAR_EMPTY;
+                    
+                    // Iterate all files, add name to output
+                    $.each(files, function(key, value) {
                         
-                        break;
-                        
-                    /*
-                     * Command "help".
-                     * Display all available commands.
-                     */
-                    case COMMAND_HELP:
-                        
-                        // Initialize output
-                        var helpOutput = CHAR_EMPTY;
-                        
-                        // Iterate commands
-                        for (var property in commands) {
-                            if (commands.hasOwnProperty(property)) {
-                                helpOutput += htmlTag(
-                                    TAG_I, property
-                                ) + TEXT_DIVIDE +
-                                commands[property] +
+                        // Hidden files
+                        if (value[0] === FILE_HIDE) {
+                            listOutput +=
+                                htmlTag(TAG_SMALL, value[1]) +
                                 TEXT_BREAK;
-                            }
+                        
+                        // Link files
+                        } else if (value[0] === FILE_HTML) {
+                            listOutput +=
+                                htmlLink(value[1]) +
+                                TEXT_BREAK;
+                        
+                        // Standard files
+                        } else {
+                            listOutput +=
+                                htmlTag(TAG_INS, value[1]) +
+                                TEXT_BREAK;
                         }
-                        
-                        // Add instruction line to output
-                        helpOutput +=
-                            TEXT_BREAK + TEXT_TYPE +
-                            htmlTag(TAG_EM, TEXT_COMMAND) +
-                            TEXT_BELOW_PRESS +
-                            htmlTag(TAG_DFN, TEXT_ENTER) +
-                            TEXT_TO_EXECUTE + TEXT_BREAK +
-                            TEXT_BREAK;
-                            
-                        // Add allowed input line to output
-                        helpOutput +=
-                            htmlTag(TAG_U, TEXT_ALLOWED) +
-                            TEXT_BREAK + TEXT_LETTERS +
-                            htmlTag(TAG_DFN, TEXT_AZ) +
-                            TEXT_COMMA + TEXT_NUMBERS +
-                            htmlTag(TAG_DFN, TEXT_09) +
-                            TEXT_COMMA + TEXT_PUNCTUATION +
-                            htmlTag(TAG_DFN, TEXT_SPCHARS) +
-                            CHAR_DOT + TEXT_BREAK;
-                        
-                        // Add hint text to output
-                        helpOutput +=
-                            TEXT_BREAK +
-                            htmlTag(TAG_U, TEXT_HINT) +
-                            TEXT_BREAK + TEXT_PRESS +
-                            htmlTag(TAG_DFN, TEXT_LEFT) +
-                            TEXT_AND +
-                            htmlTag(TAG_DFN, TEXT_RIGHT) +
-                            TEXT_MOVE_CURSOR + CHAR_DOT +
-                            TEXT_BREAK + TEXT_PRESS +
-                            htmlTag(TAG_DFN, TEXT_UP) +
-                            TEXT_AND +
-                            htmlTag(TAG_DFN, TEXT_DOWN) +
-                            TEXT_HISTORY + CHAR_DOT +
-                            TEXT_BREAK + TEXT_PRESS +
-                            htmlTag(TAG_DFN, TEXT_TAB) +
-                            TEXT_AUTOCOMPLETE + CHAR_DOT +
-                            TEXT_BREAK + TEXT_PRESS +
-                            htmlTag(TAG_DFN, TEXT_ENTER) +
-                            TEXT_EXECUTE_YOUR +
-                            htmlTag(TAG_EM, TEXT_COMMAND) +
-                            CHAR_DOT;
-                        
-                        // Append output
-                        output.append(
-                            htmlTag(TAG_BLOCKQUOTE, helpOutput)
-                        );
-                        
-                        break;
+                    });
                     
-                    /*
-                     * Command "ls".
-                     * List all files.
-                     */
-                    case COMMAND_LIST:
-                        
-                        // Initialize empty output
-                        var listOutput = CHAR_EMPTY;
-                        
-                        // Iterate all files, add name to output
-                        $.each(files, function(key, value) {
-                            
-                            // Hidden files
-                            if (value[0] === FILE_HIDDEN) {
-                                listOutput +=
-                                    htmlTag(TAG_SMALL, value[1]) +
-                                    TEXT_BREAK;
-                            
-                            // Link files
-                            } else if (value[0] === FILE_HTML) {
-                                listOutput +=
-                                    htmlLink(value[1]) +
-                                    TEXT_BREAK;
-                            
-                            // Standard files
-                            } else {
-                                listOutput +=
-                                    htmlTag(TAG_INS, value[1]) +
-                                    TEXT_BREAK;
-                            }
-                        });
-                        
-                        // Append output
-                        output.append(
-                            htmlTag(TAG_BLOCKQUOTE, listOutput)
-                        );
-                        
-                        break;
+                    // Append output
+                    output.append(
+                        htmlTag(TAG_BLOCKQUOTE, listOutput)
+                    );
                     
-                    /*
-                     * Command "open".
-                     * Display file content.
-                     */
-                    case COMMAND_OPEN:
-                        break;
-                    
-                    /*
-                     * Command "random".
-                     * Display random file.
-                     */
-                    case COMMAND_RANDOM:
-                        break;
-                        
-                    /*
-                     * Command "about".
-                     * Display info about me.
-                     */
-                    case COMMAND_ABOUT:
-                        break;
-                        
-                    /*
-                     * Command "contact".
-                     * Display contact information.
-                     */
-                    case COMMAND_CONTACT:
-                        break;
-                    
-                    /*
-                     * Command "notice".
-                     * Display legal information.
-                     */
-                    case COMMAND_NOTICE:
-                        break;
-                }
+                    break;
                 
-            // If command does not exist
-            } else {
+                /*
+                 * Command "open".
+                 * Display file content.
+                 */
+                case COMMAND_OPEN:
+                    break;
                 
-                // Append error message to output
-                output.append(
-                    htmlTag(
-                        TAG_BLOCKQUOTE,
-                        command + TEXT_COMMAND_AFTER +
-                        htmlTag(TAG_STRONG, TEXT_NOT_FOUND) +
-                        TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
-                        TEXT_LIST_AVAILABLE +
-                        htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
-                    )
-                );
+                /*
+                 * Command "random".
+                 * Display random file.
+                 */
+                case COMMAND_RANDOM:
+                    break;
+                    
+                /*
+                 * Command "about".
+                 * Display info about me.
+                 */
+                case COMMAND_ABOUT:
+                    break;
+                    
+                /*
+                 * Command "contact".
+                 * Display contact information.
+                 */
+                case COMMAND_CONTACT:
+                    break;
+                
+                /*
+                 * Command "notice".
+                 * Display legal information.
+                 */
+                case COMMAND_NOTICE:
+                    break;
+                    
+                /*
+                 * Default case.
+                 * Display error.
+                 */
+                default:
+                
+                    // Append error message to output
+                    output.append(
+                        htmlTag(
+                            TAG_BLOCKQUOTE,
+                            command + TEXT_COMMAND_AFTER +
+                            htmlTag(TAG_STRONG, TEXT_NOT_FOUND) +
+                            TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
+                            TEXT_LIST_AVAILABLE +
+                            htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
+                        )
+                    );
             }
         }
         
