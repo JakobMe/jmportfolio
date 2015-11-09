@@ -32,6 +32,10 @@ $(document).ready(function() {
     // Constants: HTML-attributes
     var ATTR_DATA_TEXT      = "data-text";
     
+    // Constants: Events
+    var EVENT_CLICK         = "click";
+    var EVENT_KEYDOWN       = "keydown";
+    
     // Constants: Characters
     var CHAR_EMPTY          = "";
     var CHAR_SPACE          = " ";
@@ -46,25 +50,55 @@ $(document).ready(function() {
     var TAG_P               = "p";
     var TAG_B               = "b";
     var TAG_I               = "i";
+    var TAG_U               = "u";
     var TAG_EM              = "em";
+    var TAG_DFN             = "dfn";
     var TAG_SPAN            = "span";
+    var TAG_BODY            = "body";
     var TAG_SMALL           = "small";
     var TAG_BLOCKQUOTE      = "blockquote";
     var TAG_STRONG          = "strong";
     
     // Constants: Output texts
-    var TEXT_TITLE          = "jmportfolio";
+    var TEXT_COMMA          = ", ";
+    var TEXT_DIVIDE         = " — ";
     var TEXT_PROMPT         = ":~ ";
-    var TEXT_USER           = "guest$";
-    var TEXT_COMMANDS       = "commands";
     var TEXT_COMMAND_AFTER  = ": ";
+    var TEXT_BREAK          = "<br/>";
+    var TEXT_USER           = "guest$";
+    var TEXT_TITLE          = "jmportfolio";
+    var TEXT_ENTER          = "enter";
+    var TEXT_LEFT           = "left";
+    var TEXT_RIGHT          = "right";
+    var TEXT_UP             = "up";
+    var TEXT_DOWN           = "down";
+    var TEXT_TAB            = "tab";
+    var TEXT_PRESS          = "Press ";
+    var TEXT_COMMAND        = "command";
+    var TEXT_COMMANDS       = "commands";
+    var TEXT_LETTERS        = "Letters ";
+    var TEXT_NUMBERS        = "numbers ";
+    var TEXT_PUNCTUATION    = "punctuation ";
+    var TEXT_AZ             = "[a-z]";
+    var TEXT_09             = "[0-9]";
+    var TEXT_SPCHARS        = "[._-]";
     var TEXT_NOT_FOUND      = "Command not found";
+    var TEXT_ALLOWED        = "Allowed input:";
+    var TEXT_HINT           = "Hint:";
+    var TEXT_TYPE           = "Type your ";
     var TEXT_HELP           = "help";
     var TEXT_USE            = ". Use ";
+    var TEXT_AND            = " and ";
+    var TEXT_MOVE_CURSOR    = " arrow keys to move the cursor";
+    var TEXT_HISTORY        = " arrow keys to navigate your command history";
+    var TEXT_AUTOCOMPLETE   = " to autocomplete filenames";
+    var TEXT_EXECUTE_YOUR   = " to execute your ";
     var TEXT_LIST_AVAILABLE = " to list available ";
+    var TEXT_BELOW_PRESS    = " below and press ";
+    var TEXT_TO_EXECUTE     = " to execute it.";
     
     // Constants: Commands
-    var COMMAND_LIST        = "list";
+    var COMMAND_LIST        = "ls";
     var COMMAND_OPEN        = "open";
     var COMMAND_HELP        = "help";
     var COMMAND_CLEAR       = "clear";
@@ -72,6 +106,18 @@ $(document).ready(function() {
     var COMMAND_ABOUT       = "about";
     var COMMAND_CONTACT     = "contact";
     var COMMAND_NOTICE      = "notice";
+    
+    // List of available commands
+    var commands = {
+        ls:      "List all files",
+        open:    "Display file content",
+        help:    "Display this help",
+        clear:   "Clear terminal",
+        random:  "Display random image file",
+        about:   "Display info about me",
+        contact: "Display contact information",
+        notice:  "Display legal information"
+    };
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -93,6 +139,7 @@ $(document).ready(function() {
     var KEY_DOT_LOWER       = 190;
     
     // Initialize important jQuery objects
+    var body                = $(TAG_BODY);
     var computer            = $(ID_COMPUTER);
     var logo                = $(ID_LOGO);
     var introTitle          = $(ID_INTRO_TITLE);
@@ -103,18 +150,6 @@ $(document).ready(function() {
     var inputBefore         = $(ID_INPUT_BEFORE);
     var inputCurrent        = $(ID_INPUT_CURRENT);
     var inputAfter          = $(ID_INPUT_AFTER);
-    
-    // List of available commands
-    var commands = {
-        list: {},
-        open: {},
-        help: {},
-        clear: {},
-        random: {},
-        about: {},
-        contact: {},
-        notice: {}
-    };
     
     /*
      * Function: Compose HTML tag.
@@ -192,6 +227,163 @@ $(document).ready(function() {
     }
     
     /*
+     * Function: Execute command.
+     * Takes a command input and tries to execute it;
+     * checks if command is available/correct and creates
+     * the appropriate output.
+     */
+    function executeCommand(command) {
+        
+        // If a command was executed
+        if (command.length > 0) {
+            
+            // Split command by spaces
+            var commandOutput;
+            command = command.split(String.fromCharCode(KEY_NBSP));
+            
+            // If first command is "open", keep second command
+            if (command[0] === COMMAND_OPEN) {
+                commandOutput = command[0] +
+                                String.fromCharCode(KEY_NBSP) +
+                                command[1];
+            } else {
+                commandOutput = command[0];
+            }
+            
+            // Set command to first command
+            command = command[0];
+            
+            // Append command prompt to output
+            output.append(
+                htmlTag(
+                    TAG_P,
+                    htmlTag(
+                        TAG_SPAN,
+                        htmlTag(TAG_B, TEXT_TITLE) +
+                        TEXT_PROMPT +
+                        htmlTag(TAG_SMALL, TEXT_USER) +
+                        CHAR_SPACE + commandOutput
+                    )
+                )
+            );
+            
+            // Clear current input
+            inputBefore.add(inputAfter).text(CHAR_EMPTY);
+            inputCurrent.text(String.fromCharCode(KEY_NBSP));
+            
+            // If command does exist
+            if (commands.hasOwnProperty(command)) {
+                
+                // Choose behaviour by command
+                switch (command) {
+                    
+                    /*
+                     * Command "clear".
+                     * Clears the output container.
+                     */
+                    case COMMAND_CLEAR:
+                        
+                        // Scroll to top, empty output
+                        body.animate({
+                            scrollTop: 0 }, 250,
+                            function() { output.html(CHAR_EMPTY); }
+                        );
+                        
+                        break;
+                        
+                    /*
+                     * Command "help".
+                     * Display all available commands.
+                     */
+                    case COMMAND_HELP:
+                        
+                        // Initialize output
+                        var helpOutput = CHAR_EMPTY;
+                        
+                        // Iterate commands
+                        for (var property in commands) {
+                            if (commands.hasOwnProperty(property)) {
+                                helpOutput += htmlTag(
+                                    TAG_I, property
+                                ) + TEXT_DIVIDE +
+                                commands[property] +
+                                TEXT_BREAK;
+                            }
+                        }
+                        
+                        // Add instruction line to output
+                        helpOutput +=
+                            TEXT_BREAK + TEXT_TYPE +
+                            htmlTag(TAG_EM, TEXT_COMMAND) +
+                            TEXT_BELOW_PRESS +
+                            htmlTag(TAG_DFN, TEXT_ENTER) +
+                            TEXT_TO_EXECUTE + TEXT_BREAK +
+                            TEXT_BREAK;
+                            
+                        // Add allowed input line to output
+                        helpOutput +=
+                            htmlTag(TAG_U, TEXT_ALLOWED) +
+                            TEXT_BREAK + TEXT_LETTERS +
+                            htmlTag(TAG_DFN, TEXT_AZ) +
+                            TEXT_COMMA + TEXT_NUMBERS +
+                            htmlTag(TAG_DFN, TEXT_09) +
+                            TEXT_COMMA + TEXT_PUNCTUATION +
+                            htmlTag(TAG_DFN, TEXT_SPCHARS) +
+                            CHAR_DOT + TEXT_BREAK;
+                        
+                        // Add hint text to output
+                        helpOutput +=
+                            TEXT_BREAK +
+                            htmlTag(TAG_U, TEXT_HINT) +
+                            TEXT_BREAK + TEXT_PRESS +
+                            htmlTag(TAG_DFN, TEXT_LEFT) +
+                            TEXT_AND +
+                            htmlTag(TAG_DFN, TEXT_RIGHT) +
+                            TEXT_MOVE_CURSOR + CHAR_DOT +
+                            TEXT_BREAK + TEXT_PRESS +
+                            htmlTag(TAG_DFN, TEXT_UP) +
+                            TEXT_AND +
+                            htmlTag(TAG_DFN, TEXT_DOWN) +
+                            TEXT_HISTORY + CHAR_DOT +
+                            TEXT_BREAK + TEXT_PRESS +
+                            htmlTag(TAG_DFN, TEXT_TAB) +
+                            TEXT_AUTOCOMPLETE + CHAR_DOT +
+                            TEXT_BREAK + TEXT_PRESS +
+                            htmlTag(TAG_DFN, TEXT_ENTER) +
+                            TEXT_EXECUTE_YOUR +
+                            htmlTag(TAG_EM, TEXT_COMMAND) +
+                            CHAR_DOT;
+                        
+                        // Append output
+                        output.append(
+                            htmlTag(TAG_BLOCKQUOTE, helpOutput)
+                        );
+                        
+                        break;
+                }
+                
+            // If command does not exist
+            } else {
+                
+                // Append error message to output
+                output.append(
+                    htmlTag(
+                        TAG_BLOCKQUOTE,
+                        command + TEXT_COMMAND_AFTER +
+                        htmlTag(TAG_STRONG, TEXT_NOT_FOUND) +
+                        TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
+                        TEXT_LIST_AVAILABLE +
+                        htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
+                    )
+                );
+            }
+        }
+        
+        // Scroll to bottom
+        body.animate({ scrollTop: computer.height() }, 500);
+    }
+    
+    /*
      * Wait for window to load.
      * Run functions when everything is ready; these functions
      * will run just once (for example intro animations).
@@ -226,7 +418,7 @@ $(document).ready(function() {
      * control behaviour of arrow keys, enter, backspace and tab,
      * insert entered characters to input-field.
      */
-    computer.keydown(function(event) {
+    computer.on(EVENT_KEYDOWN, function(event) {
         
         // Prevent default behaviour
         event.preventDefault();
@@ -290,61 +482,8 @@ $(document).ready(function() {
                         inputAfter.text()
                     ).trim();
                     
-                    // If a command was executed
-                    if (command.length > 0) {
-                        
-                        // Append command prompt to output
-                        output.append(
-                            htmlTag(
-                                TAG_P,
-                                htmlTag(
-                                    TAG_SPAN,
-                                    htmlTag(TAG_B, TEXT_TITLE) +
-                                    TEXT_PROMPT +
-                                    htmlTag(TAG_SMALL, TEXT_USER) +
-                                    CHAR_SPACE + command
-                                )
-                            )
-                        );
-                        
-                        // Clear current input
-                        inputBefore.add(inputAfter).text(CHAR_EMPTY);
-                        inputCurrent.text(String.fromCharCode(KEY_NBSP));
-                        
-                        // If command does exist
-                        if (commands.hasOwnProperty(command)) {
-                            
-                            // Choose behaviour by command
-                            switch (command) {
-                                
-                                /*
-                                 * Command "clear".
-                                 * Clears the output container.
-                                 */
-                                case COMMAND_CLEAR:
-                                    
-                                    // Empty output
-                                    output.html(CHAR_EMPTY);
-                                    
-                                    break;
-                            }
-                            
-                        // If command does not exist
-                        } else {
-                            
-                            // Append error message to output
-                            output.append(
-                                htmlTag(
-                                    TAG_BLOCKQUOTE,
-                                    command + TEXT_COMMAND_AFTER +
-                                    htmlTag(TAG_STRONG, TEXT_NOT_FOUND) +
-                                    TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
-                                    TEXT_LIST_AVAILABLE +
-                                    htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
-                                )
-                            );
-                        }
-                    }
+                    // Execute command
+                    executeCommand(command);
                 }
                 
                 break;
@@ -498,6 +637,16 @@ $(document).ready(function() {
                 inputBefore.text(inputBefore.text() + input);
         }
         
+    });
+    
+    /*
+     * On click on command links.
+     * Executes a command on click.
+     */
+    body.on(EVENT_CLICK, TAG_I, function() {
+        
+        // Execute command
+        executeCommand($(this).text());
     });
     
 });
