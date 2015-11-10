@@ -589,6 +589,15 @@ $(document).ready(function() {
                  */
                 case COMMAND_RANDOM:
                     
+                    // Fetch random entry from file list
+                    var filesAll = getFileList();
+                    var fileRandom = filesAll[
+                        Math.floor(Math.random() * filesAll.length)
+                    ];
+                    
+                    // Open file
+                    openFile(fileRandom);
+                    
                     // Break
                     break;
                     
