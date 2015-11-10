@@ -121,7 +121,7 @@ $(document).ready(function() {
         [COMMAND_CLEAR,      "Clear terminal"],
         [COMMAND_RANDOM,     "Open random file"],
         [COMMAND_ABOUT,      "Open about.txt file"],
-        [COMMAND_CONTACT,    "Open contact.html file"],
+        [COMMAND_CONTACT,    "Open contact.txt file"],
         [COMMAND_DISCLOSURE, "Open disclosure.txt file"]
     ];
     

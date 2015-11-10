@@ -10,19 +10,22 @@
     33647 Bielefeld
 </p>
 <p>
-    =======<br/>
+    -------<br/>
     CONTACT<br/>
-    =======
+    -------
 </p>
 <p>
     Telephone: +49 151 68162501<br/>
-    E-Mail: jakob.me@gmail.com<br/>
-    Internetaddress: http://jmportfolio.de
+    E-Mail:
+    <a href="mailto:jakob.me@gmail.com" target="_blank">jakob.me@gmail.com</a>
+    <br/>
+    Internetaddress:
+    <a href="http://jmportfolio.de" target="_blank">http://jmportfolio.de</a>
 </p>
 <p>
-    ==========<br/>
+    ----------<br/>
     DISCLAIMER<br/>
-    ==========
+    ----------
 </p>
 <p>
     ACCOUNTABILITY FOR CONTENT:<br/>
