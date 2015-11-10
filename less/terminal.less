@@ -116,18 +116,10 @@ body {
     }
     
     // Output
-    blockquote {
-        word-break: break-all;
-        padding: 0 0 0 (4 * @font-medium);
-        
-        // Paragraphs and code containers
-        p, pre {
-            margin: (2 * @font-medium) 0 0 0;
-        }
-    }
+    blockquote { padding: 0 0 0 (4 * @font-medium); }
     
     // Paragraph/output and sections
-    p, blockquote, .section {
+    p, blockquote, .section, pre {
         clear: both;
         overflow: hidden;
         margin: 0 0 (2 * @font-medium) 0;
@@ -187,9 +179,9 @@ body {
         blockquote { padding-left: (2 * @font-small); }
         
         // Paragraph/output and sections
-        p, blockquote, .section {
+        p, blockquote, .section, pre {
             margin-bottom: (2 * @font-small);
-            &:last-child { margin: 0; }
+            &:last-child, &:empty { margin: 0; }
         }
     }
 }

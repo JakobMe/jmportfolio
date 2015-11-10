@@ -96,14 +96,14 @@ $(document).ready(function() {
     var TEXT_TO_EXECUTE     = " to execute it.";
     
     // Constants: Commands
-    var COMMAND_LIST        = "ls";
+    var COMMAND_LS          = "ls";
     var COMMAND_OPEN        = "open";
     var COMMAND_HELP        = "help";
     var COMMAND_CLEAR       = "clear";
     var COMMAND_RANDOM      = "random";
     var COMMAND_ABOUT       = "about";
     var COMMAND_CONTACT     = "contact";
-    var COMMAND_NOTICE      = "notice";
+    var COMMAND_DISCLOSURE  = "disclosure";
     var COMMAND_ALL         = "-a";
     
     // Constants: Strings for AJAX calls
@@ -115,14 +115,14 @@ $(document).ready(function() {
     
     // List of available commands
     var commands = [
-        [COMMAND_LIST,    "List all files"],
-        [COMMAND_OPEN,    "Display file content"],
-        [COMMAND_HELP,    "Display this help"],
-        [COMMAND_CLEAR,   "Clear terminal"],
-        [COMMAND_RANDOM,  "Open random file"],
-        [COMMAND_ABOUT,   "Open about.txt file"],
-        [COMMAND_CONTACT, "Open contact.txt file"],
-        [COMMAND_NOTICE,  "Open notice.txt file"]
+        [COMMAND_LS,         "List all files"],
+        [COMMAND_OPEN,       "Display file content"],
+        [COMMAND_HELP,       "Display this help"],
+        [COMMAND_CLEAR,      "Clear terminal"],
+        [COMMAND_RANDOM,     "Open random file"],
+        [COMMAND_ABOUT,      "Open about.txt file"],
+        [COMMAND_CONTACT,    "Open contact.html file"],
+        [COMMAND_DISCLOSURE, "Open disclosure.txt file"]
     ];
     
     // Constants: Key-codes
@@ -248,15 +248,14 @@ $(document).ready(function() {
                     var outputTitle = htmlTag(
                         TAG_SMALL,
                         TEXT_CONTENT_OF + foundFile +
-                        TEXT_COMMAND_AFTER
+                        TEXT_COMMAND_AFTER + TEXT_BREAK
                     );
                     
                     // Append file content to output
                     output.append(
                         htmlTag(
                             TAG_BLOCKQUOTE,
-                            outputTitle + TEXT_BREAK +
-                            htmlTag(foundFileTag, content)
+                            outputTitle + TEXT_BREAK + content
                         )
                     );
                 }
@@ -270,12 +269,10 @@ $(document).ready(function() {
                 htmlTag(
                     TAG_BLOCKQUOTE,
                     COMMAND_OPEN + TEXT_COMMAND_AFTER +
-                    htmlTag(
-                        TAG_STRONG, TEXT_FILE + filename +
-                        TEXT_NOT_FOUND
-                    ) + CHAR_DOT + TEXT_BREAK +
+                    htmlTag(TAG_STRONG, TEXT_FILE + filename + TEXT_NOT_FOUND) +
+                    CHAR_DOT + TEXT_BREAK +
                     htmlTag(TAG_U, TEXT_HINT) + TEXT_USE_ALT +
-                    htmlTag(TAG_I, COMMAND_LIST) +
+                    htmlTag(TAG_I, COMMAND_LS) +
                     TEXT_LIST_AVAILABLE +
                     htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
                 )
@@ -407,7 +404,7 @@ $(document).ready(function() {
                                 command[1];
             
             // If first command is 'ls'
-            } else if (command[0] === COMMAND_LIST &&
+            } else if (command[0] === COMMAND_LS &&
                       (command[1] === COMMAND_ALL)) {
                 
                 // Keep second command
@@ -533,7 +530,7 @@ $(document).ready(function() {
                  * Command "ls".
                  * List all files.
                  */
-                case COMMAND_LIST:
+                case COMMAND_LS:
                     
                     // Initialize empty output
                     var listOutput = CHAR_EMPTY;
@@ -629,10 +626,10 @@ $(document).ready(function() {
                  * Command "notice".
                  * Display legal information.
                  */
-                case COMMAND_NOTICE:
+                case COMMAND_DISCLOSURE:
                     
                     // Open 'notice.txt' file
-                    openFile(COMMAND_NOTICE + CHAR_DOT + AJAX_TXT);
+                    openFile(COMMAND_DISCLOSURE + CHAR_DOT + AJAX_TXT);
                     
                     // Break
                     break;
