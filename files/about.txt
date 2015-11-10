@@ -1,6 +1,11 @@
 <p>
-    Hi, I'm <b>Jakob</b>!<br/>
-    I am a front-end web developer and webdesigner from Germany who
+    ========<br/>
+    About me<br/>
+    ========
+</p>
+<p>
+    Hi, I'm Jakob Metzger!<br/>
+    I am a 25 year old front-end web developer and webdesigner from Germany who
     studies media informatics at
     <a href="https://www.uni-bielefeld.de/(en)/index.html"
        target="_blank">University Bielefeld</a>.
@@ -44,9 +49,8 @@
                     `.--..`
 </pre>
 <p>
-    I like to code and develop in <b>HTML</b>, <b>CSS/LESS</b>,
-    <b>PHP</b> and <b>JavaScript/jQuery</b> and design user interfaces,
-    webdesigns and icons. I work as a web developer at
+    I like to code and develop in HTML, CSS/LESS, PHP and JavaScript/jQuery
+    and design user interfaces, webdesigns and icons. I work as a web developer at
     <a href="http://spieler-internet.de" target="_blank">Spieler Internet</a>
     in my free time (we make websites).<br/>
     Use the <i>contact</i> command to get in touch with me.
@@ -67,62 +71,62 @@
         <tr>
             <td>HTML</td>
             <td>90%</td>
-            <td>[<small><b>–––––––––</b>–</small>]</td>
+            <td class="level"><small><b>•••••••••</b>•</small></td>
         </tr>
         <tr>
             <td>CSS/LESS</td>
             <td>90%</td>
-            <td>[<small><b>–––––––––</b>–</small>]</td>
+            <td class="level"><small><b>•••••••••</b>•</small></td>
         </tr>
         <tr>
             <td>Photoshop</td>
             <td>80%</td>
-            <td>[<small><b>––––––––</b>––</small>]</td>
+            <td class="level"><small><b>••••••••</b>••</small></td>
         </tr>
         <tr>
             <td>PHP</td>
             <td>70%</td>
-            <td>[<small><b>–––––––</b>–––</small>]</td>
+            <td class="level"><small><b>•••••••</b>•••</small></td>
         </tr>
         <tr>
             <td>jQuery</td>
             <td>70%</td>
-            <td>[<small><b>–––––––</b>–––</small>]</td>
+            <td class="level"><small><b>•••••••</b>•••</small></td>
         </tr>
         <tr>
             <td>JavaScript</td>
             <td>60%</td>
-            <td>[<small><b>––––––</b>––––</small>]</td>
+            <td class="level"><small><b>••••••</b>••••</small></td>
         </tr>
         <tr>
             <td>WordPress</td>
             <td>60%</td>
-            <td>[<small><b>––––––</b>––––</small>]</td>
+            <td class="level"><small><b>••••••</b>••••</small></td>
         </tr>
         <tr>
             <td>MySQL</td>
             <td>50%</td>
-            <td>[<small><b>–––––</b>–––––</small>]</td>
+            <td class="level"><small><b>•••••</b>•••••</small></td>
         </tr>
         <tr>
             <td>Git</td>
             <td>50%</td>
-            <td>[<small><b>–––––</b>–––––</small>]</td>
+            <td class="level"><small><b>•••••</b>•••••</small></td>
         </tr>
         <tr>
             <td>Java</td>
             <td>50%</td>
-            <td>[<small><b>–––––</b>–––––</small>]</td>
+            <td class="level"><small><b>•••••</b>•••••</small></td>
         </tr>
         <tr>
             <td>Java EE</td>
             <td>30%</td>
-            <td>[<small><b>–––</b>–––––––</small>]</td>
+            <td class="level"><small><b>•••</b>•••••••</small></td>
         </tr>
         <tr>
             <td>C</td>
             <td>10%</td>
-            <td>[<small><b>–</b>–––––––––</small>]</td>
+            <td class="level"><small><b>•</b>•••••••••</small></td>
         </tr>
     </tbody>
     <thead>
@@ -134,17 +138,17 @@
         <tr>
             <td>German</td>
             <td>100%</td>
-            <td>[<small><b>––––––––––</b></small>]</td>
+            <td class="level"><small><b>••••••••••</b></small></td>
         </tr>
         <tr>
             <td>English</td>
             <td>70%</td>
-            <td>[<small><b>–––––––</b>–––</small>]</td>
+            <td class="level"><small><b>•••••••</b>•••</small></td>
         </tr>
         <tr>
             <td>Russian</td>
             <td>20%</td>
-            <td>[<small><b>––</b>––––––––</small>]</td>
+            <td class="level"><small><b>••</b>••••••••</small></td>
         </tr>
     </tbody>
 </table>

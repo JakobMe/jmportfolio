@@ -22,6 +22,7 @@ $(document).ready(function() {
     var ID_INPUT_CURRENT    = "#input-current";
     var ID_INPUT_BEFORE     = "#input-before";
     var ID_INPUT_AFTER      = "#input-after";
+    var ID_LAST_ADDED       = "#output > p:last-of-type";
     
     // Constants: CSS-classes
     var CLASS_BLINK         = "blink";
@@ -124,6 +125,10 @@ $(document).ready(function() {
         [COMMAND_CONTACT,    "Show contact info"],
         [COMMAND_DISCLOSURE, "Show legal disclosure"]
     ];
+    
+    // Constants: Times
+    var TIME_SCROLL         = 0;
+    var TIME_TYPE           = 0;
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -295,6 +300,18 @@ $(document).ready(function() {
     }
     
     /*
+     * Function: Scroll to bottom.
+     * Scrolls the page to the bottom.
+     */
+    function scrollToBottom() {
+        
+        // Scroll to bottom
+        body.animate({
+            scrollTop: computer.height()
+        }, TIME_SCROLL);
+    }
+    
+    /*
      * Function: Pause blinking of cursor.
      * Removes the "blink"-class form the cursor
      * and adds it again two seconds later, causing a short
@@ -347,7 +364,7 @@ $(document).ready(function() {
                     callback();
                 }
         
-            }, 5);
+            }, TIME_TYPE);
             
         }());
     }
@@ -452,7 +469,7 @@ $(document).ready(function() {
                     
                     // Scroll to top, empty output
                     body.animate({
-                        scrollTop: 0 }, 250,
+                        scrollTop: 0 }, TIME_SCROLL,
                         function() { output.html(CHAR_EMPTY); }
                     );
                     
@@ -656,8 +673,11 @@ $(document).ready(function() {
             }
         }
         
-        // Scroll to bottom
-        body.animate({ scrollTop: computer.height() }, 500);
+        // Scroll to beginning of last prompt
+        body.animate({
+            scrollTop: $(ID_LAST_ADDED).offset().top - 20 },
+            TIME_SCROLL
+        );
     }
     
     /*
@@ -731,6 +751,9 @@ $(document).ready(function() {
                                   inputAfter.text();
                 }
                 
+                // Scroll to bottom
+                scrollToBottom();
+                
                 // Break
                 break;
                 
@@ -780,6 +803,9 @@ $(document).ready(function() {
                     }
                 }
                 
+                // Scroll to bottom
+                scrollToBottom();
+                
                 // Break
                 break;
                 
@@ -796,6 +822,9 @@ $(document).ready(function() {
                     inputBefore.text(
                         inputBefore.text() + CHAR_NBSP
                     );
+                    
+                    // Scroll to bottom
+                    scrollToBottom();
                     
                 // If just enter
                 } else {
@@ -845,6 +874,9 @@ $(document).ready(function() {
                     );
                 }
                 
+                // Scroll to bottom
+                scrollToBottom();
+                
                 // Break
                 break;
             
@@ -878,7 +910,10 @@ $(document).ready(function() {
                             1, inputAfter.text().length
                         )
                     );
-                } 
+                }
+                
+                // Scroll to bottom
+                scrollToBottom();
                 
                 // Break
                 break;
@@ -891,6 +926,7 @@ $(document).ready(function() {
                 
                 // Load previous command
                 loadCommand(true);
+                scrollToBottom();
                 
                 // Break
                 break;
@@ -903,6 +939,7 @@ $(document).ready(function() {
                 
                 // Load next command
                 loadCommand(false);
+                scrollToBottom();
                 
                 // Break
                 break;
@@ -976,6 +1013,9 @@ $(document).ready(function() {
                     // Set input to empty character
                     input = CHAR_EMPTY;
                 }
+                
+                // Scroll to bottom, if input is legit
+                if (input !== CHAR_EMPTY) { scrollToBottom(); }
                 
                 // Append entered character to input-field
                 inputBefore.text(inputBefore.text() + input);
