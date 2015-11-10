@@ -96,6 +96,12 @@ body {
         &:hover { background: fade(@color-hint, @fade-cursor); }
     }
     
+    // Links
+    a {
+        &:before { content: "["; }
+        &:after  { content: "]"; }
+    }
+    
     // Error text
     strong {
         font-weight: normal;
@@ -115,11 +121,53 @@ body {
         font-size: @font-medium;
     }
     
+    // Preformatted small
+    pre.small { color: @color-comment; }
+    
     // Output
     blockquote { padding: 0 0 0 (4 * @font-medium); }
     
+    // Tables
+    table {
+        
+        // Reset
+        &, tr, td, th, thead, tbody {
+            border-collapse: collapse;
+            border: none;
+            border-spacing: 0;
+            padding: 0;
+            margin: 0;
+            -webkit-border-horizontal-spacing: 0;
+            -webkit-border-vertical-spacing: 0;
+        }
+        
+        // Head column
+        th {
+            text-align: left;
+            font-weight: normal;
+            text-transform: uppercase;
+            font-size: @font-medium;
+            color: @color-comment;
+            margin-bottom: @font-medium;
+        }
+        
+        // Columns
+        td {
+            padding: 0 @font-medium;
+            
+            // First and last column
+            &:first-child { padding-left: 0; }
+            &:last-child { padding-right: 0; }
+        }
+        
+        // Table head
+        thead:not(:first-child) th {
+            padding-top: @font-medium;
+        }
+    }
+    
     // Paragraph/output and sections
-    p, blockquote, .section, pre {
+    p, blockquote, .section, pre, table {
         clear: both;
         overflow: hidden;
         margin: 0 0 (2 * @font-medium) 0;
@@ -173,13 +221,26 @@ body {
     #terminal {
         
         // Title/terminal
-        &, h1, #input p span, small { font-size: @font-small; }
+        &, h1, #input p span, small, table th { font-size: @font-small; }
+        
+        // Table columns
+        table {
+            th { margin-bottom: @font-small; }
+            td {
+                padding: 0 @font-small;
+                &:first-child { padding-left: 0; }
+                &:last-child { padding-right: 0; }
+            }
+            thead:not(:first-child) th {
+                padding-top: @font-small;
+            }
+        }
         
         // Output
         blockquote { padding-left: (2 * @font-small); }
         
         // Paragraph/output and sections
-        p, blockquote, .section, pre {
+        p, blockquote, .section, pre, table {
             margin-bottom: (2 * @font-small);
             &:last-child, &:empty { margin: 0; }
         }
