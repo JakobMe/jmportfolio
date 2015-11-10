@@ -34,16 +34,6 @@ $(document).ready(function() {
     var EVENT_CLICK         = "click";
     var EVENT_KEYDOWN       = "keydown";
     
-    // Constants: Characters
-    var CHAR_EMPTY          = "";
-    var CHAR_SPACE          = " ";
-    var CHAR_DOT            = ".";
-    var CHAR_DASH           = "-";
-    var CHAR_UNDERSCORE     = "_";
-    var CHAR_SLASH          = "/";
-    var CHAR_LT             = "<";
-    var CHAR_GT             = ">";
-    
     // Constants: HTML tags
     var TAG_P               = "p";
     var TAG_B               = "b";
@@ -153,6 +143,17 @@ $(document).ready(function() {
     var KEY_DASH_FIREFOX    = 173;
     var KEY_DOT_UPPER       = 186;
     var KEY_DOT_LOWER       = 190;
+    
+    // Constants: Characters
+    var CHAR_NBSP           = String.fromCharCode(KEY_NBSP);
+    var CHAR_EMPTY          = "";
+    var CHAR_SPACE          = " ";
+    var CHAR_DOT            = ".";
+    var CHAR_DASH           = "-";
+    var CHAR_UNDERSCORE     = "_";
+    var CHAR_SLASH          = "/";
+    var CHAR_LT             = "<";
+    var CHAR_GT             = ">";
     
     // Initialize important jQuery objects
     var body                = $(TAG_BODY);
@@ -375,7 +376,7 @@ $(document).ready(function() {
         
         // Clear current input
         inputAfter.text(CHAR_EMPTY);
-        inputCurrent.text(String.fromCharCode(KEY_NBSP));
+        inputCurrent.text(CHAR_NBSP);
         
         // Display loaded input
         if (loadLast) { inputBefore.text(historyLast); }
@@ -395,14 +396,14 @@ $(document).ready(function() {
             
             // Split command by spaces
             var commandOutput;
-            command = command.split(String.fromCharCode(KEY_NBSP));
+            command = command.split(CHAR_NBSP);
             
             // If first command is "open"
             if ((command[0] === COMMAND_OPEN) &&
                 (command[1] !== undefined)) {
                     
                 // Keep second command
-                commandOutput = command[0] + String.fromCharCode(KEY_NBSP) +
+                commandOutput = command[0] + CHAR_NBSP +
                                 command[1];
             
             // If first command is 'ls'
@@ -410,7 +411,7 @@ $(document).ready(function() {
                       (command[1] === COMMAND_ALL)) {
                 
                 // Keep second command
-                commandOutput = command[0] + String.fromCharCode(KEY_NBSP) +
+                commandOutput = command[0] + CHAR_NBSP +
                                 command[1];
             
             // Else just keep first command
@@ -439,7 +440,7 @@ $(document).ready(function() {
             
             // Clear current input
             inputBefore.add(inputAfter).text(CHAR_EMPTY);
-            inputCurrent.text(String.fromCharCode(KEY_NBSP));
+            inputCurrent.text(CHAR_NBSP);
                 
             // Choose behaviour by command
             switch (command[0]) {
@@ -737,7 +738,7 @@ $(document).ready(function() {
                 
                 // Trim spaces, split command
                 currentCommand = currentCommand.trim()
-                    .split(String.fromCharCode(KEY_NBSP));
+                    .split(CHAR_NBSP);
                 
                 // If current command is 'open'
                 if ((currentCommand[0] === COMMAND_OPEN) &&
@@ -761,12 +762,12 @@ $(document).ready(function() {
                         
                         // Replace current command with autocompleted
                         inputBefore.text(
-                            COMMAND_OPEN + String.fromCharCode(KEY_NBSP) +
+                            COMMAND_OPEN + CHAR_NBSP +
                             file
                         );
                         
                         // Clear end of command
-                        inputCurrent.text(String.fromCharCode(KEY_NBSP));
+                        inputCurrent.text(CHAR_NBSP);
                         inputAfter.text(CHAR_EMPTY);
                     }
                 }
@@ -785,7 +786,7 @@ $(document).ready(function() {
                     
                     // Insert a space
                     inputBefore.text(
-                        inputBefore.text() + String.fromCharCode(KEY_NBSP)
+                        inputBefore.text() + CHAR_NBSP
                     );
                     
                 // If just enter
@@ -846,7 +847,7 @@ $(document).ready(function() {
             case KEY_RIGHT:
                 
                 // If there is text after the cursor
-                if ((inputCurrent.text() !== String.fromCharCode(KEY_NBSP)) ||
+                if ((inputCurrent.text() !== CHAR_NBSP) ||
                     (inputAfter.text().length > 0)) {
                     
                     // Shift current text to the left
@@ -857,7 +858,7 @@ $(document).ready(function() {
                     // Change empty after-text to forced space character
                     var afterText = inputAfter.text().slice(0, 1);
                     if (afterText.length === 0) {
-                        afterText = String.fromCharCode(KEY_NBSP);
+                        afterText = CHAR_NBSP;
                     }
                     
                     // Replace current text
@@ -934,7 +935,7 @@ $(document).ready(function() {
                 } else if (event.which === KEY_SPACE) {
                     
                     // Convert to forced space
-                    input = String.fromCharCode(KEY_NBSP);
+                    input = CHAR_NBSP;
                     
                 /*
                  * If dot key is pressed.
@@ -996,7 +997,7 @@ $(document).ready(function() {
         
         // Execute 'open' command
         executeCommand(
-            COMMAND_OPEN + String.fromCharCode(KEY_NBSP) + $(this).text()
+            COMMAND_OPEN + CHAR_NBSP + $(this).text()
         );
     });
     
