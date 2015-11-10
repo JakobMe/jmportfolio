@@ -45,7 +45,6 @@ $(document).ready(function() {
     var CHAR_GT             = ">";
     
     // Constants: HTML tags
-    var TAG_A               = "a";
     var TAG_P               = "p";
     var TAG_B               = "b";
     var TAG_I               = "i";
@@ -53,6 +52,7 @@ $(document).ready(function() {
     var TAG_EM              = "em";
     var TAG_INS             = "ins";
     var TAG_DFN             = "dfn";
+    var TAG_PRE             = "pre";
     var TAG_SPAN            = "span";
     var TAG_BODY            = "body";
     var TAG_SMALL           = "small";
@@ -60,8 +60,6 @@ $(document).ready(function() {
     var TAG_STRONG          = "strong";
     
     // Constants: Output texts
-    var TEXT_HREF           = " href='http://";
-    var TEXT_TARGET         = "' target='_blank'";
     var TEXT_COMMA          = ", ";
     var TEXT_DIVIDE         = " — ";
     var TEXT_PROMPT         = ":~ ";
@@ -88,6 +86,7 @@ $(document).ready(function() {
     var TEXT_SPCHARS        = "[._-]";
     var TEXT_NOT_FOUND      = "' not found";
     var TEXT_COM_NOT_FOUND  = "Command not found";
+    var TEXT_CONTENT_OF     = "Content of ";
     var TEXT_SPECIFY_FILE   = "You must specify a file to display";
     var TEXT_ALLOWED        = "Allowed input:";
     var TEXT_FILE           = "File '";
@@ -117,10 +116,12 @@ $(document).ready(function() {
     var COMMAND_NOTICE      = "notice";
     var COMMAND_ALL         = "-a";
     
-    // Constants: Filetypes
-    var FILE_TEXT           = "text";
-    var FILE_HTML           = "html";
-    var FILE_HIDE           = "hide";
+    // Constants: Strings for AJAX calls
+    var AJAX_OPEN           = "php/open.php";
+    var AJAX_LS             = "php/ls.php";
+    var AJAX_POST           = "POST";
+    var AJAX_JSON           = "json";
+    var AJAX_TXT            = "txt";
     
     // List of available commands
     var commands = [
@@ -134,7 +135,7 @@ $(document).ready(function() {
         [COMMAND_NOTICE,  "Display legal information (notice.txt)"]
     ];
     
-    // List of available files
+    /* List of available files
     var files = [
         [FILE_TEXT, "about.txt"],
         [FILE_TEXT, "contact.txt"],
@@ -149,7 +150,7 @@ $(document).ready(function() {
         [FILE_HTML, "lichtblick-im-auetal.de"],
         [FILE_HTML, "spieler-internet.de"],
         [FILE_HIDE, ".fun"]
-    ];
+    ];*/
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -188,6 +189,38 @@ $(document).ready(function() {
     var historyLast = CHAR_EMPTY;
     var historyCurrent = history.length;
     
+    // Initialize list of available files
+    var files = [];
+    
+    /*
+     * Function: Get file list.
+     * If global file-array is empty, make an AJAX call to
+     * retrieve a list of available files; return array of files.
+     */
+    function getFileList() {
+
+        // If current file list is empty
+        if (files.length === 0) {
+            
+            // Make AJAX call to PHP script
+            $.ajax({
+                async: false,
+                url: AJAX_LS,
+                type: AJAX_POST,
+                dataType: AJAX_JSON,
+                success: function(data) {
+                    
+                    // Save file list, return it
+                    files = data;
+                    return data;
+                }
+            });
+        }
+        
+        // Return global file list
+        return files;
+    }
+    
     /*
      * Function: Compose HTML tag.
      * Encases given content string in given
@@ -198,18 +231,6 @@ $(document).ready(function() {
         // Return composed HTML tag
         return CHAR_LT + tag + CHAR_GT + content +
                CHAR_LT + CHAR_SLASH + tag + CHAR_GT;
-    }
-    
-    /*
-     * Function: Create HTML link element.
-     * Composes an 'a' element from url and returns
-     * the HTML output.
-     */
-    function htmlLink(url) {
-        
-        // Return composed HTML tag
-        return CHAR_LT + TAG_A + TEXT_HREF + url + TEXT_TARGET + CHAR_GT +
-               url + CHAR_LT + CHAR_SLASH + TAG_A + CHAR_GT;
     }
     
     /*
@@ -238,7 +259,6 @@ $(document).ready(function() {
         var text = container.attr(ATTR_DATA_TEXT);
         var textLength = text.length;
         var index = 0;
-        var time = 5;
         var timeout;
         
         // Add blinking cursor to container
@@ -266,7 +286,7 @@ $(document).ready(function() {
                     callback();
                 }
         
-            }, time);
+            }, 5);
             
         }());
     }
@@ -457,28 +477,8 @@ $(document).ready(function() {
                     var listOutput = CHAR_EMPTY;
                     
                     // Iterate all files, add name to output
-                    $.each(files, function(key, value) {
-                        
-                        // Hidden files
-                        if (value[0] === FILE_HIDE) {
-                            if (command[1] === COMMAND_ALL) {
-                                listOutput +=
-                                    htmlTag(TAG_SMALL, value[1]) +
-                                    TEXT_BREAK;
-                            }
-                        
-                        // Link files
-                        } else if (value[0] === FILE_HTML) {
-                            listOutput +=
-                                htmlLink(value[1]) +
-                                TEXT_BREAK;
-                        
-                        // Standard files
-                        } else {
-                            listOutput +=
-                                htmlTag(TAG_INS, value[1]) +
-                                TEXT_BREAK;
-                        }
+                    $.each(getFileList(), function(key, value) {
+                        listOutput += htmlTag(TAG_INS, value) + TEXT_BREAK;
                     });
                     
                     // Append output
@@ -501,8 +501,8 @@ $(document).ready(function() {
                         var foundFile = false;
                         
                         // Iterate all files, search for file
-                        $.each(files, function(key, value) {
-                            if (value[1] === command[1]) {
+                        $.each(getFileList(), function(key, value) {
+                            if (value === command[1]) {
                                 foundFile = command[1];
                             }
                         });
@@ -510,7 +510,41 @@ $(document).ready(function() {
                         // If file is found
                         if (foundFile !== false) {
                             
-                            //
+                            // Get file type (extension)
+                            var foundFileType = foundFile.split(CHAR_DOT);
+                            foundFileType = foundFileType[1];
+                            
+                            // Choose encasing output tag
+                            var foundFileTag = TAG_P;
+                            if (foundFileType === AJAX_TXT) {
+                                foundFileTag = TAG_PRE;
+                            }
+                            
+                            // Make AJAX call to PHP script
+                            $.ajax({
+                                async: false,
+                                url: AJAX_OPEN,
+                                type: AJAX_POST,
+                                data: { file: foundFile },
+                                success: function (content) {
+                                    
+                                    // Output title
+                                    var outputTitle = htmlTag(
+                                        TAG_SMALL,
+                                        TEXT_CONTENT_OF + foundFile +
+                                        TEXT_COMMAND_AFTER
+                                    );
+                                    
+                                    // Append file content to output
+                                    output.append(
+                                        htmlTag(
+                                            TAG_BLOCKQUOTE,
+                                            outputTitle + TEXT_BREAK +
+                                            htmlTag(foundFileTag, content)
+                                        )
+                                    );
+                                }
+                            });
                             
                         // If file is not found
                         } else {
@@ -699,12 +733,12 @@ $(document).ready(function() {
                     var file = CHAR_EMPTY;
                     
                     // Iterate all available files, try autocomplete
-                    $.each(files, function(key, value) {
-                        if (value[1].substring(0, currentCommand[1].length) ===
+                    $.each(getFileList(), function(key, value) {
+                        if (value.substring(0, currentCommand[1].length) ===
                             currentCommand[1]) {
                             
                             // Replace autocomplete file
-                            file = value[1];
+                            file = value;
                         }
                     });
                     
@@ -716,6 +750,8 @@ $(document).ready(function() {
                             COMMAND_OPEN + String.fromCharCode(KEY_NBSP) +
                             file
                         );
+                        
+                        // Clear end of command
                         inputCurrent.text(String.fromCharCode(KEY_NBSP));
                         inputAfter.text(CHAR_EMPTY);
                     }
