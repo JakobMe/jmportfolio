@@ -119,10 +119,10 @@ $(document).ready(function() {
         [COMMAND_OPEN,       "Display file content"],
         [COMMAND_HELP,       "Display this help"],
         [COMMAND_CLEAR,      "Clear terminal"],
-        [COMMAND_RANDOM,     "Open random file"],
-        [COMMAND_ABOUT,      "Open about.txt file"],
-        [COMMAND_CONTACT,    "Open contact.txt file"],
-        [COMMAND_DISCLOSURE, "Open disclosure.txt file"]
+        [COMMAND_RANDOM,     "Display random file"],
+        [COMMAND_ABOUT,      "Show info about me"],
+        [COMMAND_CONTACT,    "Show contact info"],
+        [COMMAND_DISCLOSURE, "Show legal disclosure"]
     ];
     
     // Constants: Key-codes
