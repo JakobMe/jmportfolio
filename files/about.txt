@@ -44,8 +44,8 @@
                     `.--..`
 </pre>
 <p>
-    I like to code and develop in <b>HTML</b>, <b>CSS</b>/<b>LESS</b>,
-    <b>PHP</b> and <b>JavaScript</b>/<b>jQuery</b> and design user interfaces,
+    I like to code and develop in <b>HTML</b>, <b>CSS/LESS</b>,
+    <b>PHP</b> and <b>JavaScript/jQuery</b> and design user interfaces,
     webdesigns and icons. I work as a web developer at
     <a href="http://spieler-internet.de" target="_blank">Spieler Internet</a>
     in my free time (we make websites).<br/>

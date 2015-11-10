@@ -246,16 +246,18 @@ $(document).ready(function() {
                     
                     // Output title
                     var outputTitle = htmlTag(
-                        TAG_SMALL,
-                        TEXT_CONTENT_OF + foundFile +
-                        TEXT_COMMAND_AFTER + TEXT_BREAK
+                        TAG_P,
+                        htmlTag(
+                            TAG_SMALL,
+                            TEXT_CONTENT_OF + foundFile + TEXT_COMMAND_AFTER
+                        )
                     );
                     
                     // Append file content to output
                     output.append(
                         htmlTag(
                             TAG_BLOCKQUOTE,
-                            outputTitle + TEXT_BREAK + content
+                            outputTitle + content
                         )
                     );
                 }
