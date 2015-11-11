@@ -129,8 +129,7 @@ $(document).ready(function() {
     // Constants: Times
     var TIME_SCROLL         = 0;
     var TIME_TYPE           = 0;
-    var TIME_SECRET         = 5000;
-    var TIME_COUNTDOWN      = 1000;
+    var TIME_SECOND         = 1000;
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -273,7 +272,8 @@ $(document).ready(function() {
                     
                     // If hidden file was opened
                     if (showHidden) {
-                        animateCountdown();
+                        
+                        // Set a countdown
                         setTimeout(function() {
                             
                             // Clear terminal
@@ -284,7 +284,7 @@ $(document).ready(function() {
                             historyLast = CHAR_EMPTY;
                             historyCurrent = history.length;
                             
-                        }, TIME_SECRET);
+                        }, animateCountdown());
                     }
                 }
             });
@@ -365,8 +365,11 @@ $(document).ready(function() {
             setTimeout(function() {
                 countdown.text(timeCurrent - 1);
                 animateCountdown();
-            }, TIME_COUNTDOWN);
+            }, TIME_SECOND);
         }
+        
+        // Return time in milliseconds
+        return (timeCurrent * TIME_SECOND);
     }
     
     /*
