@@ -1,0 +1,35 @@
+/*
+ * LESS-module: Mixins.
+ * Defines LESS-mixins.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+ 
+// Terminal font
+.font-terminal() { font-family: @font-terminal, monospace; }
+
+// Border-box
+.border-box() {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+         -o-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+// Shadow
+.shadow(@y: @padding-terminal-half, @size: @padding-terminal-half, @color: @color-background) {
+    -webkit-box-shadow: 0 @y @size 0 @color;
+       -moz-box-shadow: 0 @y @size 0 @color;
+        -ms-box-shadow: 0 @y @size 0 @color;
+         -o-box-shadow: 0 @y @size 0 @color;
+            box-shadow: 0 @y @size 0 @color;
+}
+
+// Gradient
+.gradient(@fade-left, @fade-right, @color: @color-background) {
+    background-image: -webkit-linear-gradient(left, fade(@color, @fade-left), fade(@color, @fade-right));
+    background-image:    -moz-linear-gradient(left, fade(@color, @fade-left), fade(@color, @fade-right));
+    background-image:      -o-linear-gradient(left, fade(@color, @fade-left), fade(@color, @fade-right));
+    background-image:         linear-gradient(left, fade(@color, @fade-left), fade(@color, @fade-right));
+}

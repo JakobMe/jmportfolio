@@ -14,6 +14,7 @@
 @color-comment:         #7a7a7a;
 @color-command:         #ead159;
 @color-text:            #ffffff;
+@color-black:           #000000;
 
 // Fades
 @fade-cursor:           50%;
@@ -24,12 +25,16 @@
 
 // Margins
 @margin-terminal:       8%;
+@padding-terminal:      20px;
+@padding-terminal-half: (@padding-terminal / 2);
+
+// Font sizes
+@font-big:              18px;
+@font-medium:           14px;
+@font-small:            12px;
 
 // Sizes
 @size-responsive:       720px;
 @size-terminal:         672px;
 @size-logo:             64px;
-
-// Font sizes
-@font-medium:           14px;
-@font-small:            12px;
+@size-navigation:       ((@padding-terminal * 2) + @font-medium);

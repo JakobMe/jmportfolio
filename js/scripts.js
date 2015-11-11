@@ -13,6 +13,7 @@ $(document).ready(function() {
     
     // Constants: IDs
     var ID_COMPUTER         = "#computer";
+    var ID_TERMINAL         = "#terminal";
     var ID_LOGO             = "#logo";
     var ID_INTRO_TITLE      = "#intro-title";
     var ID_INTRO_SUBTITLE   = "#intro-subtitle";
@@ -24,10 +25,12 @@ $(document).ready(function() {
     var ID_INPUT_AFTER      = "#input-after";
     var ID_LAST_ADDED       = "#output > p:last-of-type";
     var ID_COUNTDOWN        = "#countdown";
+    var ID_NAVIGATION       = "#navigation";
     
     // Constants: CSS-classes
     var CLASS_BLINK         = "blink";
     var CLASS_READY         = "ready";
+    var CLASS_MOBILE        = "mobile";
     
     // Constants: HTML-attributes
     var ATTR_DATA_TEXT      = "data-text";
@@ -42,6 +45,8 @@ $(document).ready(function() {
     var TAG_I               = "i";
     var TAG_U               = "u";
     var TAG_EM              = "em";
+    var TAG_UL              = "ul";
+    var TAG_LI              = "li";
     var TAG_INS             = "ins";
     var TAG_DFN             = "dfn";
     var TAG_SPAN            = "span";
@@ -163,7 +168,9 @@ $(document).ready(function() {
     
     // Initialize important jQuery objects
     var body                = $(TAG_BODY);
+    var terminal            = $(ID_TERMINAL);
     var computer            = $(ID_COMPUTER);
+    var navigation          = $(ID_NAVIGATION);
     var logo                = $(ID_LOGO);
     var introTitle          = $(ID_INTRO_TITLE);
     var introSubtitle       = $(ID_INTRO_SUBTITLE);
@@ -413,6 +420,50 @@ $(document).ready(function() {
             }, TIME_TYPE);
             
         }());
+    }
+    
+    /*
+     *
+     *
+     */
+    function createMobileNavigation() {
+        
+        //
+        var isMobileDevice =
+            (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)
+                .test(navigator.userAgent);
+        
+        //
+        if (isMobileDevice) {
+            
+            //
+            $.each(commands, function(key, value) {
+                
+                //
+                navigation.children(TAG_UL).append(
+                    htmlTag(
+                        TAG_LI,
+                        htmlTag(
+                            TAG_I,
+                            htmlTag(
+                                TAG_SPAN,
+                                value[0]
+                            )
+                        )
+                    )
+                );
+                
+            });
+            
+            //
+            terminal.add(navigation).addClass(CLASS_MOBILE);
+        
+        //
+        } else {
+            
+            //
+            navigation.remove();
+        }
     }
     
     /*
@@ -730,7 +781,9 @@ $(document).ready(function() {
         // Scroll to beginning of last prompt
         if (output.text().length > 0) {
             body.animate({
-                scrollTop: $(ID_LAST_ADDED).offset().top - 20 },
+                scrollTop: $(ID_LAST_ADDED).offset().top -
+                           20 - navigation.height()
+                },
                 TIME_SCROLL
             );
         }
@@ -742,6 +795,9 @@ $(document).ready(function() {
      * will run just once (for example intro animations).
      */
     $(window).load(function() {
+        
+        // Fill navigation with available commands
+        createMobileNavigation();
         
         // Run animation functions for intro
         typeText(

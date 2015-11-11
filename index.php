@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html id="computer" lang="en">
-    
-    <!--Head-->
 	<head>
-    	
-    	<!--Meta-->
 		<title>jmportfolio — -bash — 80x24</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="Jakob Metzger's online portfolio">
         <meta name="keywords" content="jakob, metzger, portfolio, frontend, developer, design, graphic">
 		<meta charset="utf-8">
-		
-		<!--Favicon-->
 		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-touch-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-touch-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
@@ -35,24 +30,13 @@
         <meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png">
         <meta name="msapplication-config" content="img/favicon/browserconfig.xml">
         <meta name="theme-color" content="#57b76e">
-		
-		<!--Assets-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400" type="text/css" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        
-        <!--JS/CSS-->
         <link rel="stylesheet" href="css/style.min.css" type="text/css" />
         <script type="text/javascript" src="js/scripts.min.js"></script>
-
 	</head>
-	
-	<!--Body-->
 	<body>
-    	
-    	<!--Terminal-->
     	<div id="terminal">
-            
-            <!--Introduction-->
             <div class="section" id="intro">
                 <p><a id="logo" class="blink" href="." title="Restart jmportfolio">jmportfolio</a></p>
             	<h1 id="intro-title" data-text="Welcome to <b>jmportfolio</b>.de!"></h1>
@@ -64,11 +48,7 @@
                    You can also click on a <em>command</em> or <dfn>file</dfn> to execute/open it.">
                 </p>
             </div>
-            
-            <!--Output-->
             <div class="section" id="output"></div>
-        	
-        	<!--Input-->
         	<div class="section" id="input">
             	<p>
                 	<span class="prompt"><b>jmportfolio</b>:~ <small>guest$</small> </span>
@@ -77,9 +57,11 @@
                     <span id="input-after"></span>
             	</p>
         	</div>
-
     	</div>
-    	
+    	<div id="navigation">
+        	<ul>
+            	<li><b><span>type</span></b></li>
+        	</ul>
+    	</div>
 	</body>
-	
 </html>
