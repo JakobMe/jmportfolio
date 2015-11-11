@@ -15,6 +15,11 @@
     50% { opacity: 0; }
 }
 
+// Blinking secret keyframes
+@keyframes secret {
+    50% { color: @color-error; }
+}
+
 // Blinking cursor animation
 .animation-cursor() {
     animation: cursor 1s infinite normal forwards steps(1);
@@ -23,4 +28,9 @@
 // Blinking logo animation
 .animation-logo() {
     animation: logo 1s infinite normal forwards steps(1);
+}
+
+// Blinking secret animation
+.animation-secret() {
+    animation: secret 1s infinite normal forwards steps(1);
 }

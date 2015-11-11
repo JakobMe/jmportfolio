@@ -186,28 +186,39 @@ $(document).ready(function() {
      * If global file-array is empty, make an AJAX call to
      * retrieve a list of available files; return array of files.
      */
-    function getFileList() {
-
-        // If current file list is empty
-        if (files.length === 0) {
+    function getFileList(showHidden) {
+        
+        // Initialize empty file array
+        var foundFiles = [];
+        
+        // If current file list is empty (or a new one is requested)
+        if ((files.length === 0) || (showHidden === true)) {
             
             // Make AJAX call to PHP script
             $.ajax({
                 async: false,
                 url: AJAX_LS,
+                data: { reveal: showHidden },  
                 type: AJAX_POST,
                 dataType: AJAX_JSON,
-                success: function(data) {
+                success: function(response) {
                     
-                    // Save file list, return it
-                    files = data;
-                    return data;
+                    // Save or delete global file list
+                    if (showHidden === true) { files = []; }
+                    else { files = response; }
+                    
+                    // Save file list for return
+                    foundFiles = response;
                 }
             });
+        
+        // If a legit file list exists, use it instead
+        } else {
+            foundFiles = files;
         }
         
         // Return global file list
-        return files;
+        return foundFiles;
     }
     
     /*
@@ -218,14 +229,16 @@ $(document).ready(function() {
      */
     function openFile(filename) {
         
-        // Initialize found file as false
+        // Initialize found file and 'show hidden' as false
         var foundFile = false;
+        var showHidden = false;
+        
+        // If filename starts with '.', include hidden files
+        if (filename.substring(0, 1) === CHAR_DOT) { showHidden = true; }
         
         // Iterate all files, search for file
-        $.each(getFileList(), function(key, value) {
-            if (value === filename) {
-                foundFile = filename;
-            }
+        $.each(getFileList(showHidden), function(key, value) {
+            if (value === filename) { foundFile = filename; }
         });
         
         // If file is found
@@ -265,6 +278,21 @@ $(document).ready(function() {
                             outputTitle + content
                         )
                     );
+                    
+                    // If hidden file was opened
+                    if (showHidden) {
+                        setTimeout(function() {
+                            
+                            // Clear terminal
+                            executeCommand(COMMAND_CLEAR);
+                            
+                            // Reset history
+                            history = [];
+                            historyLast = CHAR_EMPTY;
+                            historyCurrent = history.length;
+                            
+                        }, 3000);
+                    }
                 }
             });
             
@@ -552,11 +580,19 @@ $(document).ready(function() {
                 case COMMAND_LS:
                     
                     // Initialize empty output
+                    var showHiddenFiles = false;
                     var listOutput = CHAR_EMPTY;
                     
+                    // Show hidden files if '-a' command is executed
+                    if (command[1] === COMMAND_ALL) { showHiddenFiles = true; }
+                    
                     // Iterate all files, add name to output
-                    $.each(getFileList(), function(key, value) {
-                        listOutput += htmlTag(TAG_INS, value) + TEXT_BREAK;
+                    $.each(getFileList(showHiddenFiles), function(key, value) {
+                        var tag = TAG_INS;
+                        if (value.substring(0, 1) === CHAR_DOT) {
+                            tag = TAG_SMALL;
+                        }
+                        listOutput += htmlTag(tag, value) + TEXT_BREAK;
                     });
                     
                     // Append output
@@ -606,7 +642,7 @@ $(document).ready(function() {
                 case COMMAND_RANDOM:
                     
                     // Fetch random entry from file list
-                    var filesAll = getFileList();
+                    var filesAll = getFileList(false);
                     var fileRandom = filesAll[
                         Math.floor(Math.random() * filesAll.length)
                     ];
@@ -674,10 +710,12 @@ $(document).ready(function() {
         }
         
         // Scroll to beginning of last prompt
-        body.animate({
-            scrollTop: $(ID_LAST_ADDED).offset().top - 20 },
-            TIME_SCROLL
-        );
+        if (output.text().length > 0) {
+            body.animate({
+                scrollTop: $(ID_LAST_ADDED).offset().top - 20 },
+                TIME_SCROLL
+            );
+        }
     }
     
     /*
@@ -779,7 +817,7 @@ $(document).ready(function() {
                     var file = CHAR_EMPTY;
                     
                     // Iterate all available files, try autocomplete
-                    $.each(getFileList(), function(key, value) {
+                    $.each(getFileList(false), function(key, value) {
                         if (value.substring(0, currentCommand[1].length) ===
                             currentCommand[1]) {
                             

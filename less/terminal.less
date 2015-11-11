@@ -70,7 +70,7 @@ body {
         color: @color-command;
         
         // Hover
-        &:hover { background: fade(@color-command, @fade-cursor); }
+        &:hover, &:active { background: fade(@color-command, @fade-cursor); }
     }
     
     // Highlighted text
@@ -93,7 +93,7 @@ body {
         color: @color-hint;
         
         // Hover
-        &:hover { background: fade(@color-hint, @fade-cursor); }
+        &:hover, &:active { background: fade(@color-hint, @fade-cursor); }
     }
     
     // Links
@@ -196,6 +196,9 @@ body {
             .animation-cursor();
         }
     }
+    
+    // Secret text
+    .secret { .animation-secret(); }
     
     // Input
     #input {
