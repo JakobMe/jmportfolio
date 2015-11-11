@@ -8,6 +8,15 @@
 // Terminal font
 .font-terminal() { font-family: @font-terminal, monospace; }
 
+// Transition
+.transition(@type: all, @time: 0.2s, @delay: 0s) {
+    -webkit-transition: @type @time ease @delay;
+       -moz-transition: @type @time ease @delay;
+        -ms-transition: @type @time ease @delay;
+         -o-transition: @type @time ease @delay;
+            transition: @type @time ease @delay;
+}
+
 // Border-box
 .border-box() {
     -webkit-box-sizing: border-box;

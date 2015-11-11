@@ -23,14 +23,17 @@ $(document).ready(function() {
     var ID_INPUT_CURRENT    = "#input-current";
     var ID_INPUT_BEFORE     = "#input-before";
     var ID_INPUT_AFTER      = "#input-after";
+    var ID_INPUT_MOBILE     = "#input-mobile";
     var ID_LAST_ADDED       = "#output > p:last-of-type";
     var ID_COUNTDOWN        = "#countdown";
     var ID_NAVIGATION       = "#navigation";
+    var ID_TYPE_MOBILE      = "#type-mobile";
     
     // Constants: CSS-classes
     var CLASS_BLINK         = "blink";
     var CLASS_READY         = "ready";
     var CLASS_MOBILE        = "mobile";
+    var CLASS_ABSOLUTE      = "absolute";
     
     // Constants: HTML-attributes
     var ATTR_DATA_TEXT      = "data-text";
@@ -121,9 +124,9 @@ $(document).ready(function() {
     
     // List of available commands
     var commands = [
+        [COMMAND_HELP,       "Display this help"],
         [COMMAND_LS,         "List all files"],
         [COMMAND_OPEN,       "Display file content"],
-        [COMMAND_HELP,       "Display this help"],
         [COMMAND_CLEAR,      "Clear terminal"],
         [COMMAND_RANDOM,     "Display random file"],
         [COMMAND_ABOUT,      "Show info about me"],
@@ -180,6 +183,7 @@ $(document).ready(function() {
     var inputBefore         = $(ID_INPUT_BEFORE);
     var inputCurrent        = $(ID_INPUT_CURRENT);
     var inputAfter          = $(ID_INPUT_AFTER);
+    var inputMobile         = $(ID_INPUT_MOBILE);
     
     // Command history
     var history = [];
@@ -423,23 +427,24 @@ $(document).ready(function() {
     }
     
     /*
-     *
-     *
+     * Function: Create mobile navigation.
+     * Checks for mobile device and fills the mobile navigation
+     * with available commands; removes navigation otherwise.
      */
     function createMobileNavigation() {
         
-        //
+        // Check for mobile devices
         var isMobileDevice =
             (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)
                 .test(navigator.userAgent);
         
-        //
+        // If a mobile device is detected
         if (isMobileDevice) {
             
-            //
+            // Iterate all available commands
             $.each(commands, function(key, value) {
                 
-                //
+                // Add command to mobile navigation
                 navigation.children(TAG_UL).append(
                     htmlTag(
                         TAG_LI,
@@ -452,16 +457,15 @@ $(document).ready(function() {
                         )
                     )
                 );
-                
             });
             
-            //
+            // Add mobile classes to terminal and navigation
             terminal.add(navigation).addClass(CLASS_MOBILE);
         
-        //
+        // If no mobile device is detected
         } else {
             
-            //
+            // Remove mobile navigation
             navigation.remove();
         }
     }
@@ -778,11 +782,20 @@ $(document).ready(function() {
             }
         }
         
-        // Scroll to beginning of last prompt
+        // If there already is output
         if (output.text().length > 0) {
+            
+            // Fix issues with mobile navigation and absolute positioning
+            var fixNavigation = 0;
+            if (navigation.hasClass(CLASS_ABSOLUTE)) {
+                fixNavigation = navigation.height();
+            }
+            
+            // Scroll to last output
             body.animate({
-                scrollTop: $(ID_LAST_ADDED).offset().top -
-                           20 - navigation.height()
+                scrollTop:
+                    $(ID_LAST_ADDED).offset().top - 20 -
+                    navigation.height() + fixNavigation
                 },
                 TIME_SCROLL
             );
@@ -1159,6 +1172,35 @@ $(document).ready(function() {
         executeCommand(
             COMMAND_OPEN + CHAR_NBSP + $(this).text()
         );
+    });
+    
+    /*
+     * On click on mobile type command or input container.
+     * Focus on hidden mobile input to show mobile keyboard,
+     * scroll to bottom (to show prompt).
+     */
+    $(ID_TYPE_MOBILE).add(input).click(function() {
+        
+        // Focus on mobile input, scroll to bottom
+        inputMobile.focus();
+        scrollToBottom();
+        
+    });
+    
+    /*
+     * On focus-in on mobile input.
+     * Add helper-class to mobile input on focus-in.
+     */
+    inputMobile.focusin(function() {
+        navigation.addClass(CLASS_ABSOLUTE);
+    });
+    
+    /*
+     * On focus-out on mobile input.
+     * Remove helper-class from mobile input on focus-out.
+     */
+    inputMobile.focusout(function() {
+        navigation.removeClass(CLASS_ABSOLUTE);
     });
     
 });
