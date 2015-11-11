@@ -97,9 +97,14 @@ body {
     }
     
     // Links
-    a {
+    a:not(.image) {
         &:before { content: "["; }
         &:after  { content: "]"; }
+    }
+    
+    // Image link
+    a.image {
+        background: transparent;
     }
     
     // Error text
@@ -193,9 +198,6 @@ body {
             .animation-cursor();
         }
     }
-    
-    // Secret text
-    .secret { .animation-secret(); }
     
     // Input
     #input {

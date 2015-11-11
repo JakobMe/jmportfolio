@@ -128,6 +128,7 @@ $(document).ready(function() {
     // Constants: Times
     var TIME_SCROLL         = 0;
     var TIME_TYPE           = 0;
+    var TIME_SECRET         = 5000;
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -280,7 +281,7 @@ $(document).ready(function() {
                             historyLast = CHAR_EMPTY;
                             historyCurrent = history.length;
                             
-                        }, 3000);
+                        }, TIME_SECRET);
                     }
                 }
             });
