@@ -10,7 +10,7 @@
     <a href="https://www.uni-bielefeld.de/(en)/index.html"
        target="_blank">University Bielefeld</a>.
 </p>
-<pre class="small">
+<pre>
            `--:////:-.
         .:+o/:+++//:-:.`  `
      `-/++soo+--//.-/-.` ``.
