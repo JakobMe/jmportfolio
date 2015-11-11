@@ -688,7 +688,7 @@ $(document).ready(function() {
                     output.append(
                         htmlTag(
                             TAG_BLOCKQUOTE,
-                            command + TEXT_COMMAND_AFTER +
+                            command[0] + TEXT_COMMAND_AFTER +
                             htmlTag(TAG_STRONG, TEXT_COM_NOT_FOUND) +
                             TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
                             TEXT_LIST_AVAILABLE +
