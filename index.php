@@ -50,10 +50,10 @@
 	<body>
     	
     	<!--Terminal-->
-    	<article id="terminal">
+    	<div id="terminal">
             
             <!--Introduction-->
-            <section class="section" id="intro">
+            <div class="section" id="intro">
                 <p><a id="logo" class="blink" href="." title="Restart jmportfolio">jmportfolio</a></p>
             	<h1 id="intro-title" data-text="Welcome to <b>jmportfolio</b>.de!"></h1>
                 <p id="intro-subtitle" data-text="This is Jakob Metzger's personal online portfolio.<br/>
@@ -63,22 +63,22 @@
                    and press <dfn>enter</dfn> to list all available commands.<br/>
                    You can also click on a <em>command</em> or <dfn>file</dfn> to execute/open it.">
                 </p>
-            </section>
+            </div>
             
             <!--Output-->
-            <section class="section" id="output"></section>
+            <div class="section" id="output"></div>
         	
         	<!--Input-->
-        	<section class="section" id="input">
+        	<div class="section" id="input">
             	<p>
                 	<span class="prompt"><b>jmportfolio</b>:~ <small>guest$</small> </span>
                 	<span id="input-before"></span>
                 	<span id="input-current" class="cursor blink">&nbsp;</span>
                     <span id="input-after"></span>
             	</p>
-        	</section>
+        	</div>
 
-    	</article>
+    	</div>
     	
 	</body>
 	
