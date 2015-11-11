@@ -6,7 +6,7 @@
 <table>
     <thead>
         <tr>
-            <th colspan="2">Address</th>
+            <th colspan="2">Address:</th>
         </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
     </tbody>
     <thead>
         <tr>
-            <th colspan="2">Links</th>
+            <th colspan="2">Links:</th>
         </tr>
     </thead>
     <tbody>
