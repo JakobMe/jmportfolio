@@ -23,6 +23,7 @@ $(document).ready(function() {
     var ID_INPUT_BEFORE     = "#input-before";
     var ID_INPUT_AFTER      = "#input-after";
     var ID_LAST_ADDED       = "#output > p:last-of-type";
+    var ID_COUNTDOWN        = "#countdown";
     
     // Constants: CSS-classes
     var CLASS_BLINK         = "blink";
@@ -129,6 +130,7 @@ $(document).ready(function() {
     var TIME_SCROLL         = 0;
     var TIME_TYPE           = 0;
     var TIME_SECRET         = 5000;
+    var TIME_COUNTDOWN      = 1000;
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -271,6 +273,7 @@ $(document).ready(function() {
                     
                     // If hidden file was opened
                     if (showHidden) {
+                        animateCountdown();
                         setTimeout(function() {
                             
                             // Clear terminal
@@ -342,6 +345,28 @@ $(document).ready(function() {
         setTimeout(function() {
             inputCurrent.addClass(CLASS_BLINK);
         }, 2000);
+    }
+    
+    /*
+     * Function: Animate countdown.
+     * Decrements the displayed time of a countdown element
+     * every second until it reaches zero.
+     */
+    function animateCountdown() {
+        
+        // Get countdown element and current time
+        var countdown = $(ID_COUNTDOWN);
+        var timeCurrent = parseInt(countdown.text());
+
+        // If countdown is not yet finished
+        if (timeCurrent > 0) {
+            
+            // Wait a second, reduce current time and restart function
+            setTimeout(function() {
+                countdown.text(timeCurrent - 1);
+                animateCountdown();
+            }, TIME_COUNTDOWN);
+        }
     }
     
     /*
