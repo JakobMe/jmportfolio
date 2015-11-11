@@ -43,7 +43,6 @@ $(document).ready(function() {
     var TAG_EM              = "em";
     var TAG_INS             = "ins";
     var TAG_DFN             = "dfn";
-    var TAG_PRE             = "pre";
     var TAG_SPAN            = "span";
     var TAG_BODY            = "body";
     var TAG_SMALL           = "small";
@@ -243,16 +242,6 @@ $(document).ready(function() {
         
         // If file is found
         if (foundFile !== false) {
-            
-            // Get file type (extension)
-            var foundFileType = foundFile.split(CHAR_DOT);
-            foundFileType = foundFileType[1];
-            
-            // Choose encasing output tag
-            var foundFileTag = TAG_P;
-            if (foundFileType === AJAX_TXT) {
-                foundFileTag = TAG_PRE;
-            }
             
             // Make AJAX call to PHP script
             $.ajax({
