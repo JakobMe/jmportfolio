@@ -104,7 +104,10 @@ body {
     
     // Image link
     a.image {
+        display: inline-block;
         background: transparent;
+        font-size: 0;
+        margin-right: @font-medium;
     }
     
     // Error text
@@ -242,7 +245,10 @@ body {
         }
         
         // Output
-        blockquote { padding-left: (1 * @font-small); }
+        blockquote { padding-left: @font-small; }
+        
+        // Image link
+        a.image { margin-right: @font-small; }
         
         // Paragraph/output and sections
         p, blockquote, .section, pre, table {
