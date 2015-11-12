@@ -914,7 +914,6 @@ $(document).ready(function() {
                 );
             }
         );
-
     });
     
     /*
@@ -1232,7 +1231,6 @@ $(document).ready(function() {
                 historyLast = inputBefore.text() + inputCurrent.text().trim() +
                               inputAfter.text();
         }
-        
     });
     
     /*
@@ -1240,7 +1238,7 @@ $(document).ready(function() {
      * Executes a command on click.
      */
     body.on(EVENT_CLICK, TAG_I, function() {
-        
+
         // Execute command
         executeCommand($(this).text());
     });
@@ -1267,7 +1265,6 @@ $(document).ready(function() {
         // Focus on mobile input, scroll to bottom
         inputMobile.focus();
         scrollToBottom();
-        
     });
     
     /*
