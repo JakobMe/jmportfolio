@@ -70,6 +70,7 @@ $(document).ready(function() {
     var TEXT_TAB            = "tab";
     var TEXT_PRESS          = "Press ";
     var TEXT_FILENAME       = "filename";
+    var TEXT_UNDEFINED      = "undefined";
     var TEXT_COMMAND        = "command";
     var TEXT_COMMANDS       = "commands";
     var TEXT_FILES          = "files";
@@ -135,6 +136,7 @@ $(document).ready(function() {
     var TIME_SCROLL         = 0;
     var TIME_TYPE           = 0;
     var TIME_SECOND         = 1000;
+    var TIME_PAUSE          = 2000;
     
     // Constants: Key-codes
     var KEY_BACKSPACE       = 8;
@@ -186,8 +188,9 @@ $(document).ready(function() {
     var historyLast = CHAR_EMPTY;
     var historyCurrent = history.length;
     
-    // Initialize list of available files
+    // Initialize list of available files and file cache
     var files = [];
+    var cache = [];
     
     /*
      * Function: Get file list.
@@ -235,10 +238,52 @@ $(document).ready(function() {
     }
     
     /*
+     * Function: Print file content.
+     * Creates file output for given filename and content;
+     * starts terminal reset countdown if hidden file was displayed.
+     */
+    function printFileContent(fileName, fileContent, showHidden) {
+        
+        // Output title
+        var outputTitle = htmlTag(
+            TAG_P,
+            htmlTag(
+                TAG_SMALL,
+                TEXT_CONTENT_OF + fileName + TEXT_COMMAND_AFTER
+            )
+        );
+        
+        // Append file content to output
+        output.append(
+            htmlTag(
+                TAG_BLOCKQUOTE,
+                outputTitle + fileContent
+            )
+        );
+        
+        // If hidden file was opened
+        if (showHidden) {
+            
+            // Set a countdown
+            setTimeout(function() {
+                
+                // Clear terminal
+                executeCommand(COMMAND_CLEAR);
+                
+                // Reset history
+                history = [];
+                historyLast = CHAR_EMPTY;
+                historyCurrent = history.length;
+                
+            }, animateCountdown());
+        }
+    }
+    
+    /*
      * Function: Open file.
-     * Searches for given filename in list of available files,
-     * tries to open that file with an AJAX call to display
-     * it's content, throws error message, if file is not found.
+     * Searches for given filename in list of available files
+     * and file cache, tries to open that file with an AJAX call to
+     * display its content, throws error message if file is not found.
      */
     function openFile(filename) {
         
@@ -249,91 +294,75 @@ $(document).ready(function() {
         // If filename starts with '.', include hidden files
         if (filename.substring(0, 1) === CHAR_DOT) { showHidden = true; }
         
-        // Get available files
-        var fileList = getFileList(showHidden);
-        
-        // If an error occured during file list
-        if (fileList === false) {
+        // If file is already cached
+        if (typeof cache[filename] !== TEXT_UNDEFINED) {
             
-            // Exit function
-            return false;
+            // Print cached file content
+            printFileContent(filename, cache[filename], showHidden);
             
-        // If no error occured
+        // If file is not yet cached
         } else {
             
-            // Iterate all files, search for file
-            $.each(fileList, function(key, value) {
-                if (value === filename) { foundFile = filename; }
-            });
+            // Get available files
+            var fileList = getFileList(showHidden);
             
-            // If file is not found
-            if (foundFile === false) {
+            // If an error occured during file list
+            if (fileList === false) {
                 
-                // Append error output
-                output.append(
-                    htmlTag(
-                        TAG_BLOCKQUOTE,
-                        COMMAND_OPEN + TEXT_COMMAND_AFTER +
-                        htmlTag(TAG_STRONG, TEXT_FILE + filename +
-                        TEXT_NOT_FOUND) + CHAR_DOT + TEXT_BREAK +
-                        htmlTag(TAG_U, TEXT_HINT) + TEXT_USE +
-                        htmlTag(TAG_I, COMMAND_LS) +
-                        TEXT_LIST_AVAILABLE +
-                        htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
-                    )
-                );
+                // Exit function
+                return false;
                 
-            // If file is found
+            // If no error occured
             } else {
                 
-                // Make AJAX call to PHP script
-                $.ajax({
-                    async: false,
-                    url: AJAX_OPEN,
-                    type: AJAX_POST,
-                    data: { file: foundFile },
-                    success: function (content) {
-                        
-                        // Output title
-                        var outputTitle = htmlTag(
-                            TAG_P,
-                            htmlTag(
-                                TAG_SMALL,
-                                TEXT_CONTENT_OF + foundFile + TEXT_COMMAND_AFTER
-                            )
-                        );
-                        
-                        // Append file content to output
-                        output.append(
-                            htmlTag(
-                                TAG_BLOCKQUOTE,
-                                outputTitle + content
-                            )
-                        );
-                        
-                        // If hidden file was opened
-                        if (showHidden) {
-                            
-                            // Set a countdown
-                            setTimeout(function() {
-                                
-                                // Clear terminal
-                                executeCommand(COMMAND_CLEAR);
-                                
-                                // Reset history
-                                history = [];
-                                historyLast = CHAR_EMPTY;
-                                historyCurrent = history.length;
-                                
-                            }, animateCountdown());
-                        }
-                    },
-                    error: function() {
-                        
-                        // Exit function if an error occured
-                        return false;
-                    }
+                // Iterate all files, search for file
+                $.each(fileList, function(key, value) {
+                    if (value === filename) { foundFile = filename; }
                 });
+                
+                // If file is not found
+                if (foundFile === false) {
+                    
+                    // Append error output
+                    output.append(
+                        htmlTag(
+                            TAG_BLOCKQUOTE,
+                            COMMAND_OPEN + TEXT_COMMAND_AFTER +
+                            htmlTag(TAG_STRONG, TEXT_FILE + filename +
+                            TEXT_NOT_FOUND) + CHAR_DOT + TEXT_BREAK +
+                            htmlTag(TAG_U, TEXT_HINT) + TEXT_USE +
+                            htmlTag(TAG_I, COMMAND_LS) +
+                            TEXT_LIST_AVAILABLE +
+                            htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
+                        )
+                    );
+                    
+                // If file is found
+                } else {
+                    
+                    // Make AJAX call to PHP script
+                    $.ajax({
+                        async: false,
+                        url: AJAX_OPEN,
+                        type: AJAX_POST,
+                        data: { file: foundFile },
+                        success: function (content) {
+                            
+                            // Push file to cache-array
+                            if (typeof cache[foundFile] === TEXT_UNDEFINED) {
+                                cache[foundFile] = content;
+                            }
+                            
+                            // Print file content
+                            printFileContent(foundFile, content, showHidden);
+                        },
+                        error: function() {
+                            
+                            // Exit function if an error occured
+                            return false;
+                        }
+                    });
+                }
             }
         }
     }
@@ -374,7 +403,7 @@ $(document).ready(function() {
         inputCurrent.removeClass(CLASS_BLINK);
         setTimeout(function() {
             inputCurrent.addClass(CLASS_BLINK);
-        }, 2000);
+        }, TIME_PAUSE);
     }
     
     /*
