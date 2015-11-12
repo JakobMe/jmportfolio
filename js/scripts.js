@@ -13,7 +13,6 @@ $(document).ready(function() {
     
     // Constants: IDs
     var ID_COMPUTER         = "#computer";
-    var ID_TERMINAL         = "#terminal";
     var ID_LOGO             = "#logo";
     var ID_INTRO_TITLE      = "#intro-title";
     var ID_INTRO_SUBTITLE   = "#intro-subtitle";
@@ -30,13 +29,10 @@ $(document).ready(function() {
     var ID_TYPE_MOBILE      = "#type-mobile";
     
     // Constants: CSS-classes
+    var CLASS_TYPE          = "type";
     var CLASS_BLINK         = "blink";
     var CLASS_READY         = "ready";
-    var CLASS_MOBILE        = "mobile";
     var CLASS_ABSOLUTE      = "absolute";
-    
-    // Constants: HTML-attributes
-    var ATTR_DATA_TEXT      = "data-text";
     
     // Constants: Events
     var EVENT_CLICK         = "click";
@@ -171,7 +167,6 @@ $(document).ready(function() {
     
     // Initialize important jQuery objects
     var body                = $(TAG_BODY);
-    var terminal            = $(ID_TERMINAL);
     var computer            = $(ID_COMPUTER);
     var navigation          = $(ID_NAVIGATION);
     var logo                = $(ID_LOGO);
@@ -389,9 +384,15 @@ $(document).ready(function() {
      * animate someone typing it.
      */
     function typeText(container, callback) {
+
+        // Get initial text, strip multiple spaces
+        var text = container.html().replace(/ +/g, CHAR_SPACE);
         
-        // Initialize text, textlength, index and timeout function
-        var text = container.attr(ATTR_DATA_TEXT);
+        // Empty container and show it
+        container.html(CHAR_EMPTY);
+        container.removeClass(CLASS_TYPE);
+        
+        // Initialize textlength, index and timeout function
         var textLength = text.length;
         var index = 0;
         var timeout;
@@ -414,8 +415,7 @@ $(document).ready(function() {
                 typeIt();
                 
                 // Stop function if finished
-                if (index === textLength) {
-                    container.removeAttr(ATTR_DATA_TEXT);
+                if (index >= textLength) {
                     container.removeClass(CLASS_BLINK);
                     clearTimeout(timeout);
                     callback();
@@ -427,47 +427,39 @@ $(document).ready(function() {
     }
     
     /*
-     * Function: Create mobile navigation.
-     * Checks for mobile device and fills the mobile navigation
-     * with available commands; removes navigation otherwise.
+     * Function: Create navigation.
+     * Checks for mobile device and fills the navigation
+     * with available commands; removes 'type' command on non-mobile.
      */
-    function createMobileNavigation() {
+    function createNavigation() {
         
         // Check for mobile devices
         var isMobileDevice =
             (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)
                 .test(navigator.userAgent);
         
-        // If a mobile device is detected
-        if (isMobileDevice) {
+        // If a mobile device is detected, remove initial navigation list
+        if (!isMobileDevice) {
+            navigation.children(TAG_UL).html(CHAR_EMPTY);
+        }
             
-            // Iterate all available commands
-            $.each(commands, function(key, value) {
-                
-                // Add command to mobile navigation
-                navigation.children(TAG_UL).append(
+        // Iterate all available commands
+        $.each(commands, function(key, value) {
+            
+            // Add command to mobile navigation
+            navigation.children(TAG_UL).append(
+                htmlTag(
+                    TAG_LI,
                     htmlTag(
-                        TAG_LI,
+                        TAG_I,
                         htmlTag(
-                            TAG_I,
-                            htmlTag(
-                                TAG_SPAN,
-                                value[0]
-                            )
+                            TAG_SPAN,
+                            value[0]
                         )
                     )
-                );
-            });
-            
-            // Add mobile classes to terminal and navigation
-            terminal.add(navigation).addClass(CLASS_MOBILE);
-        
-        // If no mobile device is detected
-        } else {
-            
-            // Remove mobile navigation
-            navigation.remove();
-        }
+                )
+            );
+        });
     }
     
     /*
@@ -810,7 +802,7 @@ $(document).ready(function() {
     $(window).load(function() {
         
         // Fill navigation with available commands
-        createMobileNavigation();
+        createNavigation();
         
         // Run animation functions for intro
         typeText(

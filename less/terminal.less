@@ -8,6 +8,7 @@
 
 // Body
 body {
+    -webkit-font-smoothing: subpixel-antialiased;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -15,6 +16,7 @@ body {
     color: @color-text;
     font-size: @font-medium;
     background: @color-background;
+    .font-terminal();
 }
 
 // Selection
@@ -23,15 +25,16 @@ body {
 
 // Terminal
 #terminal {
-    -webkit-font-smoothing: subpixel-antialiased;
+    margin: 0 auto;
     color: @color-text;
     font-size: @font-medium;
-    padding: @margin-terminal;
+    padding: @padding-terminal;
     max-width: @size-terminal;
-    .font-terminal();
+    margin-top: @size-navigation;
+    .border-box();
     
-    // Mobile terminal
-    &.mobile { margin-top: @size-navigation; }
+    // Type text
+    .type { display: none; }
     
     // Logo
     #logo {
@@ -113,6 +116,7 @@ body {
     
     // Images
     img {
+        height: auto;
         border: none;
         outline: none;
         max-width: 100%;
@@ -222,7 +226,6 @@ body {
             word-break: break-all;
             word-wrap: break-word;
             font-size: 0;
-            .font-terminal();
             
             // Font-size
             span { font-size: @font-medium; }
@@ -234,25 +237,17 @@ body {
 #navigation {
     -webkit-font-smoothing: subpixel-antialiased;
     overflow: hidden;
-    display: none;
     position: fixed;
+    display: block;
     top: 0;
     left: 0;
     margin: 0;
-    height: 0;
+    padding: 0;
     width: 100%;
-    padding: 0 @margin-terminal;
+    height: @size-navigation;
     background: @color-background;
-    .font-terminal();
-    .transition();
     .border-box();
     .shadow();
-    
-    // Visible navigation
-    &.mobile {
-        display: block;
-        height: @size-navigation;
-    }
     
     // Gradients right and left
     &:after, &:before {
@@ -266,8 +261,8 @@ body {
     }
     
     // Set positions and gradients
-    &:before { left: 0; .gradient(100%, 0%); }
-    &:after { right: 0; .gradient(0%, 100%); }
+    &:before { left: 0; .gradient-horizontal(100%, 0%); }
+    &:after { right: 0; .gradient-horizontal(0%, 100%); }
     
     // List
     ul {
@@ -276,12 +271,11 @@ body {
         overflow-y: hidden;
         white-space: nowrap;
         list-style-type: none;
-        padding: 0;
-        width: 100%;
-        z-index: 500;
+        margin: 0 auto;
         font-size: 0;
-        margin: 0 -(@padding-terminal-half);
-        height: @size-navigation;
+        height: (@size-navigation * 1.5);
+        padding: 0 @padding-terminal-half;
+        max-width: @size-terminal;
         .border-box();
         
         // List element
@@ -320,18 +314,41 @@ body {
         }
     }
     
-    // Mobile input
-    #input-mobile {
-        -webkit-appearance: none;
-        background: transparent;
-        position: absolute;
-        display: block;
-        outline: none;
-        border: none;
-        padding: 0;
-        left: -100%;
-        top: -100%;
+    // Form hidden
+    form {
+        overflow: hidden;
+        height: 0;
+        width: 0;
+        
+        // Input hidden
+        input {
+            -webkit-appearance: none;
+            background: transparent;
+            position: absolute;
+            display: block;
+            outline: none;
+            border: none;
+            padding: 0;
+            left: -100%;
+            top: -100%;
+        }
     }
+}
+
+// Footer
+#footer {
+    overflow: hidden;
+    position: fixed;
+    display: block;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    bottom: -(@size-navigation);
+    height: @size-navigation;
+    background: @color-background;
+    .shadow(-(@padding-terminal-half));
+    .border-box();
 }
 
 // Responsive
@@ -339,7 +356,6 @@ body {
     
     // Terminal
     #terminal {
-        padding: @padding-terminal;
         
         // Title/terminal
         &, p, h1, #input p span, small, table th { font-size: @font-small; }
@@ -367,17 +383,6 @@ body {
         p, blockquote, .section, pre, table {
             margin-bottom: (2 * @font-small);
             &:last-child, &:empty { margin: 0; }
-        }
-    }
-    
-    // Mobile navigation
-    #navigation {
-        padding: 0;
-        
-        // List
-        ul {
-            margin: 0;
-            padding: 0 @padding-terminal-half;
         }
     }
 }

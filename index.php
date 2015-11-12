@@ -39,13 +39,18 @@
     	<div id="terminal">
             <div class="section" id="intro">
                 <p><a id="logo" class="blink" href="." title="Restart jmportfolio">jmportfolio</a></p>
-            	<h1 id="intro-title" data-text="Welcome to <b>jmportfolio</b>.de!"></h1>
-                <p id="intro-subtitle" data-text="This is Jakob Metzger's personal online portfolio.<br/>
-                   <small>Copyright © 2015 Jakob Metzger.</small>">
+            	<h1 id="intro-title" class="type">
+                	Welcome to <b>jmportfolio</b>.de!
+                </h1>
+                <p id="intro-subtitle" class="type">
+                    This is Jakob Metzger's personal online portfolio.<br/>
+                   <small>Copyright © <?php echo date("Y"); ?> Jakob Metzger.</small>
                 </p>
-            	<p id="intro-hint" data-text="<u>Hint:</u><br/>Type <i>help</i>
-                   and press <dfn>enter</dfn> to list all available commands.<br/>
-                   You can also click on a <em>command</em> or <dfn>file</dfn> to execute/open it.">
+            	<p id="intro-hint" class="type">
+                    <u>Hint:</u><br/>Type <i>help</i> and press <dfn>enter</dfn>
+                    to list all available commands.<br/>
+                    You can also click on a <em>command</em> or <dfn>file</dfn>
+                    to execute/open it.
                 </p>
             </div>
             <div class="section" id="output"></div>
@@ -62,10 +67,10 @@
         	<ul>
             	<li><b id="type-mobile"><span>type</span></b></li>
         	</ul>
-        	<form method="post" action="">
-            	<input type="text" name="command" id="input-mobile">
-            	<input type="submit" name="execute" value="execute">
+        	<form method="post" action="#">
+            	<input type="text" id="input-mobile">
             </form>
     	</div>
+    	<div id="footer"></div>
 	</body>
 </html>
