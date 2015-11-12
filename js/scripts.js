@@ -82,6 +82,8 @@ $(document).ready(function() {
     var TEXT_NOT_FOUND      = "' not found";
     var TEXT_COM_NOT_FOUND  = "Command not found";
     var TEXT_CONTENT_OF     = "Content of ";
+    var TEXT_ERROR_SERVER   = "Error: Lost connection to server";
+    var TEXT_INTERNET       = " Make sure you are connected to the internet.";
     var TEXT_SPECIFY_FILE   = "You must specify a file to display";
     var TEXT_ALLOWED        = "Allowed input:";
     var TEXT_FILE           = "File '";
@@ -89,8 +91,7 @@ $(document).ready(function() {
     var TEXT_USAGE          = "Usage:";
     var TEXT_TYPE           = "Type your ";
     var TEXT_HELP           = "help";
-    var TEXT_USE            = ". Use ";
-    var TEXT_USE_ALT        = " Use ";
+    var TEXT_USE            = " Use ";
     var TEXT_AND            = " and ";
     var TEXT_MOVE_CURSOR    = " arrow keys to move the cursor";
     var TEXT_HISTORY        = " arrow keys to navigate your command history";
@@ -216,6 +217,11 @@ $(document).ready(function() {
                     
                     // Save file list for return
                     foundFiles = response;
+                },
+                error: function() {
+                    
+                    // Return false if an error occured
+                    foundFiles = false;
                 }
             });
         
@@ -243,74 +249,92 @@ $(document).ready(function() {
         // If filename starts with '.', include hidden files
         if (filename.substring(0, 1) === CHAR_DOT) { showHidden = true; }
         
-        // Iterate all files, search for file
-        $.each(getFileList(showHidden), function(key, value) {
-            if (value === filename) { foundFile = filename; }
-        });
+        // Get available files
+        var fileList = getFileList(showHidden);
         
-        // If file is found
-        if (foundFile !== false) {
+        // If an error occured during file list
+        if (fileList === false) {
             
-            // Make AJAX call to PHP script
-            $.ajax({
-                async: false,
-                url: AJAX_OPEN,
-                type: AJAX_POST,
-                data: { file: foundFile },
-                success: function (content) {
-                    
-                    // Output title
-                    var outputTitle = htmlTag(
-                        TAG_P,
-                        htmlTag(
-                            TAG_SMALL,
-                            TEXT_CONTENT_OF + foundFile + TEXT_COMMAND_AFTER
-                        )
-                    );
-                    
-                    // Append file content to output
-                    output.append(
-                        htmlTag(
-                            TAG_BLOCKQUOTE,
-                            outputTitle + content
-                        )
-                    );
-                    
-                    // If hidden file was opened
-                    if (showHidden) {
-                        
-                        // Set a countdown
-                        setTimeout(function() {
-                            
-                            // Clear terminal
-                            executeCommand(COMMAND_CLEAR);
-                            
-                            // Reset history
-                            history = [];
-                            historyLast = CHAR_EMPTY;
-                            historyCurrent = history.length;
-                            
-                        }, animateCountdown());
-                    }
-                }
-            });
+            // Exit function
+            return false;
             
-        // If file is not found
+        // If no error occured
         } else {
             
-            // Append error output
-            output.append(
-                htmlTag(
-                    TAG_BLOCKQUOTE,
-                    COMMAND_OPEN + TEXT_COMMAND_AFTER +
-                    htmlTag(TAG_STRONG, TEXT_FILE + filename + TEXT_NOT_FOUND) +
-                    CHAR_DOT + TEXT_BREAK +
-                    htmlTag(TAG_U, TEXT_HINT) + TEXT_USE_ALT +
-                    htmlTag(TAG_I, COMMAND_LS) +
-                    TEXT_LIST_AVAILABLE +
-                    htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
-                )
-            );
+            // Iterate all files, search for file
+            $.each(fileList, function(key, value) {
+                if (value === filename) { foundFile = filename; }
+            });
+            
+            // If file is not found
+            if (foundFile === false) {
+                
+                // Append error output
+                output.append(
+                    htmlTag(
+                        TAG_BLOCKQUOTE,
+                        COMMAND_OPEN + TEXT_COMMAND_AFTER +
+                        htmlTag(TAG_STRONG, TEXT_FILE + filename +
+                        TEXT_NOT_FOUND) + CHAR_DOT + TEXT_BREAK +
+                        htmlTag(TAG_U, TEXT_HINT) + TEXT_USE +
+                        htmlTag(TAG_I, COMMAND_LS) +
+                        TEXT_LIST_AVAILABLE +
+                        htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
+                    )
+                );
+                
+            // If file is found
+            } else {
+                
+                // Make AJAX call to PHP script
+                $.ajax({
+                    async: false,
+                    url: AJAX_OPEN,
+                    type: AJAX_POST,
+                    data: { file: foundFile },
+                    success: function (content) {
+                        
+                        // Output title
+                        var outputTitle = htmlTag(
+                            TAG_P,
+                            htmlTag(
+                                TAG_SMALL,
+                                TEXT_CONTENT_OF + foundFile + TEXT_COMMAND_AFTER
+                            )
+                        );
+                        
+                        // Append file content to output
+                        output.append(
+                            htmlTag(
+                                TAG_BLOCKQUOTE,
+                                outputTitle + content
+                            )
+                        );
+                        
+                        // If hidden file was opened
+                        if (showHidden) {
+                            
+                            // Set a countdown
+                            setTimeout(function() {
+                                
+                                // Clear terminal
+                                executeCommand(COMMAND_CLEAR);
+                                
+                                // Reset history
+                                history = [];
+                                historyLast = CHAR_EMPTY;
+                                historyCurrent = history.length;
+                                
+                            }, animateCountdown());
+                        }
+                    },
+                    error: function() {
+                        
+                        // Exit function if an error occured
+                        return false;
+                    }
+                });
+            }
         }
     }
     
@@ -460,6 +484,26 @@ $(document).ready(function() {
                 )
             );
         });
+    }
+    
+    /*
+     * Function: Print connection error.
+     * Adds an error message to the output, signaling
+     * a lost connection to the server; prints the used
+     * command alongside the error.
+     */
+    function printConnectionError(command) {
+        
+        // Append error to output
+        output.append(
+            htmlTag(
+                TAG_BLOCKQUOTE,
+                command + TEXT_COMMAND_AFTER +
+                htmlTag(TAG_STRONG, TEXT_ERROR_SERVER ) +
+                CHAR_DOT + TEXT_BREAK +
+                htmlTag(TAG_U, TEXT_HINT) + TEXT_INTERNET
+            )
+        );
     }
     
     /*
@@ -651,19 +695,32 @@ $(document).ready(function() {
                     // Show hidden files if '-a' command is executed
                     if (command[1] === COMMAND_ALL) { showHiddenFiles = true; }
                     
-                    // Iterate all files, add name to output
-                    $.each(getFileList(showHiddenFiles), function(key, value) {
-                        var tag = TAG_INS;
-                        if (value.substring(0, 1) === CHAR_DOT) {
-                            tag = TAG_SMALL;
-                        }
-                        listOutput += htmlTag(tag, value) + TEXT_BREAK;
-                    });
+                    // Get available files
+                    var fileList = getFileList(showHiddenFiles);
                     
-                    // Append output
-                    output.append(
-                        htmlTag(TAG_BLOCKQUOTE, listOutput)
-                    );
+                    // If an error occured while fetching file list
+                    if (fileList === false) {
+                        
+                        // Print connection error
+                        printConnectionError(command[0]);
+
+                    // If a file list is found
+                    } else {
+                        
+                        // Iterate all files, add name to output
+                        $.each(fileList, function(key, value) {
+                            var tag = TAG_INS;
+                            if (value.substring(0, 1) === CHAR_DOT) {
+                                tag = TAG_SMALL;
+                            }
+                            listOutput += htmlTag(tag, value) + TEXT_BREAK;
+                        });
+                        
+                        // Append output
+                        output.append(
+                            htmlTag(TAG_BLOCKQUOTE, listOutput)
+                        );
+                    }
                     
                     // Break
                     break;
@@ -677,8 +734,12 @@ $(document).ready(function() {
                     // If a filename is given
                     if (command[1] !== undefined) {
                         
-                        // Open file
-                        openFile(command[1]);
+                        // Try to open file
+                        if (openFile(command[1]) === false) {
+                            
+                            // If an error occured, print connection error
+                            printConnectionError(command[0]);
+                        }
                         
                     // If no filename is given
                     } else {
@@ -766,6 +827,7 @@ $(document).ready(function() {
                             TAG_BLOCKQUOTE,
                             command[0] + TEXT_COMMAND_AFTER +
                             htmlTag(TAG_STRONG, TEXT_COM_NOT_FOUND) +
+                            CHAR_DOT + TEXT_BREAK + htmlTag(TAG_U, TEXT_HINT) +
                             TEXT_USE + htmlTag(TAG_I, TEXT_HELP) +
                             TEXT_LIST_AVAILABLE +
                             htmlTag(TAG_EM, TEXT_COMMANDS) + CHAR_DOT
