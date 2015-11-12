@@ -50,6 +50,7 @@ $(document).ready(function() {
     var TAG_DFN             = "dfn";
     var TAG_SPAN            = "span";
     var TAG_BODY            = "body";
+    var TAG_HTML            = "html";
     var TAG_SMALL           = "small";
     var TAG_BLOCKQUOTE      = "blockquote";
     var TAG_STRONG          = "strong";
@@ -170,7 +171,7 @@ $(document).ready(function() {
     var CHAR_GT             = ">";
     
     // Initialize important jQuery objects
-    var body                = $(TAG_BODY);
+    var body                = $(TAG_BODY + TEXT_COMMA + TAG_HTML);
     var computer            = $(ID_COMPUTER);
     var navigation          = $(ID_NAVIGATION);
     var logo                = $(ID_LOGO);
@@ -430,7 +431,7 @@ $(document).ready(function() {
         
         // Scroll to bottom
         body.animate({
-            scrollTop: computer.height()
+            scrollTop: $(document).height()
         }, TIME_SCROLL);
     }
     
