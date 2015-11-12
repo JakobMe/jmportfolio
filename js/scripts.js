@@ -127,16 +127,16 @@ $(document).ready(function() {
         [COMMAND_HELP,       "Display this help"],
         [COMMAND_LS,         "List all available files"],
         [COMMAND_OPEN,       "Display file content"],
-        [COMMAND_CLEAR,      "Clear terminal"],
-        [COMMAND_RANDOM,     "Display random file"],
         [COMMAND_ABOUT,      "Show info about me"],
         [COMMAND_CONTACT,    "Show contact info"],
-        [COMMAND_DISCLOSURE, "Show legal disclosure"]
+        [COMMAND_DISCLOSURE, "Show legal disclosure"],
+        [COMMAND_RANDOM,     "Display random file"],
+        [COMMAND_CLEAR,      "Clear terminal"]
     ];
     
     // Constants: Times
-    var TIME_SCROLL         = 0;
     var TIME_TYPE           = 0;
+    var TIME_SCROLL         = 250;
     var TIME_SECOND         = 1000;
     var TIME_PAUSE          = 2000;
     
@@ -171,7 +171,8 @@ $(document).ready(function() {
     var CHAR_GT             = ">";
     
     // Initialize important jQuery objects
-    var body                = $(TAG_BODY + TEXT_COMMA + TAG_HTML);
+    var body                = $(TAG_BODY);
+    var bodyhtml            = $(TAG_BODY + TEXT_COMMA + TAG_HTML);
     var computer            = $(ID_COMPUTER);
     var navigation          = $(ID_NAVIGATION);
     var logo                = $(ID_LOGO);
@@ -190,9 +191,10 @@ $(document).ready(function() {
     var historyLast = CHAR_EMPTY;
     var historyCurrent = history.length;
     
-    // Initialize list of available files and file cache
+    // Initialize list of available files, file cache and scroll-allowance
     var files = [];
     var cache = [];
+    var scroll = true;
     
     /*
      * Function: Get file list.
@@ -425,14 +427,27 @@ $(document).ready(function() {
     
     /*
      * Function: Scroll to bottom.
-     * Scrolls the page to the bottom.
+     * Scrolls the page to the bottom, if it has not
+     * been scrolled recently; locks and unlocks scrolling.
      */
     function scrollToBottom() {
         
-        // Scroll to bottom
-        body.animate({
-            scrollTop: $(document).height()
-        }, TIME_SCROLL);
+        // If scrolling is not locked
+        if (scroll) {
+            
+            // Lock scroll
+            scroll = false;
+            
+            // Scroll to bottom
+            bodyhtml.animate({
+                scrollTop: $(document).height() - $(window).height()
+            }, TIME_SCROLL);
+            
+            // Unlock scrolling
+            setTimeout(function() {
+                scroll = true;
+            }, TIME_SCROLL);
+        }
     }
     
     /*
@@ -673,7 +688,7 @@ $(document).ready(function() {
                  */
                 case COMMAND_CLEAR:
                     
-                    // Scroll to top, empty output
+                    // Scroll to top, clear output
                     body.animate({
                         scrollTop: 0 }, TIME_SCROLL,
                         function() { output.html(CHAR_EMPTY); }
@@ -891,12 +906,11 @@ $(document).ready(function() {
             }
             
             // Scroll to last output
-            body.animate({
+            bodyhtml.animate({
                 scrollTop:
-                    $(ID_LAST_ADDED).offset().top - 20 -
+                    $(ID_LAST_ADDED).position().top - 20 -
                     navigation.height() + fixNavigation
-                },
-                TIME_SCROLL
+                }, TIME_SCROLL
             );
         }
     }
