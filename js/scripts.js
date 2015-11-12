@@ -82,7 +82,8 @@ $(document).ready(function() {
     var TEXT_09             = "[0-9]";
     var TEXT_SPCHARS        = "[._-]";
     var TEXT_NOT_FOUND      = "' not found";
-    var TEXT_AVAILABLE      = "Available files:";
+    var TEXT_AVAIL_COMMANDS = "Available commands:";
+    var TEXT_AVAIL_FILES    = "Available files:";
     var TEXT_COM_NOT_FOUND  = "Command not found";
     var TEXT_CONTENT_OF     = "Content of ";
     var TEXT_ERROR_SERVER   = "Error: Lost connection to server";
@@ -105,7 +106,7 @@ $(document).ready(function() {
     var TEXT_TO_EXECUTE     = " to execute it.";
     
     // Constants: Commands
-    var COMMAND_LS          = "ls";
+    var COMMAND_FILES       = "files";
     var COMMAND_OPEN        = "open";
     var COMMAND_HELP        = "help";
     var COMMAND_CLEAR       = "clear";
@@ -117,7 +118,7 @@ $(document).ready(function() {
     
     // Constants: Strings for AJAX calls
     var AJAX_OPEN           = "php/open.php";
-    var AJAX_LS             = "php/ls.php";
+    var AJAX_FILES          = "php/files.php";
     var AJAX_POST           = "POST";
     var AJAX_JSON           = "json";
     var AJAX_TXT            = "txt";
@@ -125,7 +126,7 @@ $(document).ready(function() {
     // List of available commands
     var commands = [
         [COMMAND_HELP,       "Display this help"],
-        [COMMAND_LS,         "List all available files"],
+        [COMMAND_FILES,      "List all available files"],
         [COMMAND_OPEN,       "Display file content"],
         [COMMAND_ABOUT,      "Show info about me"],
         [COMMAND_CONTACT,    "Show contact info"],
@@ -212,7 +213,7 @@ $(document).ready(function() {
             // Make AJAX call to PHP script
             $.ajax({
                 async: false,
-                url: AJAX_LS,
+                url: AJAX_FILES,
                 data: { reveal: showHidden },  
                 type: AJAX_POST,
                 dataType: AJAX_JSON,
@@ -258,7 +259,7 @@ $(document).ready(function() {
         if (fileList === false) {
             
             // Print connection error
-            printConnectionError(COMMAND_LS);
+            printConnectionError(COMMAND_FILES);
     
         // If a file list is found
         } else {
@@ -276,7 +277,7 @@ $(document).ready(function() {
             output.append(
                 htmlTag(
                     TAG_BLOCKQUOTE,
-                    htmlTag(TAG_SMALL, TEXT_AVAILABLE) +
+                    htmlTag(TAG_SMALL, TEXT_AVAIL_FILES) +
                     TEXT_BREAK + TEXT_BREAK + listOutput
                 )
             );
@@ -377,7 +378,7 @@ $(document).ready(function() {
                             htmlTag(TAG_STRONG, TEXT_FILE + filename +
                             TEXT_NOT_FOUND) + CHAR_DOT + TEXT_BREAK +
                             htmlTag(TAG_U, TEXT_HINT) + TEXT_USE +
-                            htmlTag(TAG_I, COMMAND_LS) +
+                            htmlTag(TAG_I, COMMAND_FILES) +
                             TEXT_LIST_AVAILABLE +
                             htmlTag(TAG_DFN, TEXT_FILES) + CHAR_DOT
                         )
@@ -446,7 +447,7 @@ $(document).ready(function() {
             // Unlock scrolling
             setTimeout(function() {
                 scroll = true;
-            }, TIME_SCROLL);
+            }, (TIME_SCROLL * 2));
         }
     }
     
@@ -575,6 +576,49 @@ $(document).ready(function() {
     }
     
     /*
+     * Function: Autocomplete.
+     * Searches in an array of possible values, tries to match
+     * a given needle to a value, returns autocompleted matching
+     * value or false, if none is found.
+     */
+    function autocomplete(search, needle) {
+        
+        // Initialize autocompleted value as false
+        var autocompletedValue = false;
+        
+        // Iterate search-array, try autocomplete
+        $.each(search, function(key, value) {
+            
+            // If value is an array itself, replace with first value
+            if (Array.isArray(value)) { value = value[0]; }
+            
+            // Search array
+            if (value.substring(0, needle.length) === needle) {
+                
+                // Replace autocomplete value, exit loop
+                autocompletedValue = value;
+                return false;
+            }
+        });
+        
+        // Return value
+        return autocompletedValue;
+    }
+    
+    /*
+     * Function: Replace input.
+     * Clears current input command and replaces
+     * it with given text.
+     */
+    function replaceInput(text) {
+        
+        // Replace current input
+        inputBefore.text(text);
+        inputCurrent.text(CHAR_NBSP);
+        inputAfter.text(CHAR_EMPTY);
+    }
+    
+    /*
      * Function: Print connection error.
      * Adds an error message to the output, signaling
      * a lost connection to the server; prints the used
@@ -615,13 +659,9 @@ $(document).ready(function() {
             loadLast = true;
         }
         
-        // Clear current input
-        inputAfter.text(CHAR_EMPTY);
-        inputCurrent.text(CHAR_NBSP);
-        
         // Display loaded input
-        if (loadLast) { inputBefore.text(historyLast); }
-        else { inputBefore.text(history[historyCurrent]); }
+        if (loadLast) { replaceInput(historyLast); }
+        else { replaceInput(history[historyCurrent]); }
     }
     
     /*
@@ -648,7 +688,7 @@ $(document).ready(function() {
                                 command[1];
             
             // If first command is 'ls'
-            } else if (command[0] === COMMAND_LS &&
+            } else if (command[0] === COMMAND_FILES &&
                       (command[1] === COMMAND_ALL)) {
                 
                 // Keep second command
@@ -704,7 +744,8 @@ $(document).ready(function() {
                 case COMMAND_HELP:
                     
                     // Initialize output
-                    var helpOutput = CHAR_EMPTY;
+                    var helpOutput = htmlTag(TAG_SMALL, TEXT_AVAIL_COMMANDS) +
+                                     TEXT_BREAK + TEXT_BREAK;
                     
                     // Iterate commands
                     $.each(commands, function(key, value) {
@@ -770,7 +811,7 @@ $(document).ready(function() {
                  * Command "ls".
                  * List all files.
                  */
-                case COMMAND_LS:
+                case COMMAND_FILES:
                     
                     // Show hidden files if '-a' command is executed
                     var showHiddenFiles = false;
@@ -1005,38 +1046,43 @@ $(document).ready(function() {
                                      inputAfter.text();
                 
                 // Trim spaces, split command
-                currentCommand = currentCommand.trim()
-                    .split(CHAR_NBSP);
+                currentCommand = currentCommand.trim().split(CHAR_NBSP);
                 
                 // If current command is 'open'
                 if ((currentCommand[0] === COMMAND_OPEN) &&
                     (currentCommand[1] !== undefined)) {
                     
-                    // Initialize autocomplete file
-                    var file = CHAR_EMPTY;
+                    // Get available files
+                    var fileList = getFileList(false);
                     
-                    // Iterate all available files, try autocomplete
-                    $.each(getFileList(false), function(key, value) {
-                        if (value.substring(0, currentCommand[1].length) ===
-                            currentCommand[1]) {
-                            
-                            // Replace autocomplete file
-                            file = value;
-                        }
-                    });
-                    
-                    // If file was found
-                    if (file !== CHAR_EMPTY) {
+                    // If there occured no error
+                    if (fileList !== false) {
                         
-                        // Replace current command with autocompleted
-                        inputBefore.text(
-                            COMMAND_OPEN + CHAR_NBSP +
-                            file
+                        // Try to autocomplete filename
+                        var autocompletedFile = autocomplete(
+                            fileList, currentCommand[1]
                         );
                         
-                        // Clear end of command
-                        inputCurrent.text(CHAR_NBSP);
-                        inputAfter.text(CHAR_EMPTY);
+                        // If file was found, replace current input
+                        if (autocompletedFile !== false) {
+                            replaceInput(
+                                COMMAND_OPEN + CHAR_NBSP +
+                                autocompletedFile
+                            );
+                        }
+                    }
+                    
+                // If current command is something else
+                } else {
+                    
+                    // Try to autocomplete command
+                    var autocompletedCommand = autocomplete(
+                        commands, currentCommand[0]
+                    );
+
+                    // If command was found, replace current input
+                    if (autocompletedCommand !== false) {
+                        replaceInput(autocompletedCommand);
                     }
                 }
                 

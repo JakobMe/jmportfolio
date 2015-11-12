@@ -52,14 +52,14 @@ omNMMMMMMMMMMMMNNmmNNNdhs-
     I like to code and develop in HTML, CSS/LESS, PHP and JavaScript/jQuery
     and design user interfaces, webdesigns and icons. I work as a web developer at
     <a href="http://spieler-internet.de" target="_blank">Spieler Internet</a>
-    in my free time (we make websites).<br/>
-    Use the <i>contact</i> command to get in touch with me.
+    in my free time (we make websites). Use the <i>contact</i> command to get
+    in touch with me.
 </p>
 <p>
-    You can take a look at some of my recent works by opening <dfn>.html</dfn> files.<br/>
+    You can take a look at some of my recent works by opening <dfn>.html</dfn> files.
     Or just use the <i>random</i> command if you feel lucky!<br/>
     <br/>
-    <u>Hint:</u> Use the <i>ls</i> command to show all available <dfn>files</dfn>.
+    <u>Hint:</u> Use the <i>files</i> command to show all available <dfn>files</dfn>.
 </p>
 <table>
     <thead>
