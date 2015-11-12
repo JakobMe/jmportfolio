@@ -113,7 +113,7 @@ $(document).ready(function() {
     var COMMAND_RANDOM      = "random";
     var COMMAND_ABOUT       = "about";
     var COMMAND_CONTACT     = "contact";
-    var COMMAND_DISCLOSURE  = "disclosure";
+    var COMMAND_LEGAL       = "legal";
     var COMMAND_ALL         = "-a";
     
     // Constants: Strings for AJAX calls
@@ -130,7 +130,7 @@ $(document).ready(function() {
         [COMMAND_OPEN,       "Display file content"],
         [COMMAND_ABOUT,      "Show info about me"],
         [COMMAND_CONTACT,    "Show contact info"],
-        [COMMAND_DISCLOSURE, "Show legal disclosure"],
+        [COMMAND_LEGAL, "Show legal disclosure"],
         [COMMAND_RANDOM,     "Display random file"],
         [COMMAND_CLEAR,      "Clear terminal"]
     ];
@@ -905,13 +905,13 @@ $(document).ready(function() {
                     break;
                 
                 /*
-                 * Command "notice".
+                 * Command "legal".
                  * Display legal information.
                  */
-                case COMMAND_DISCLOSURE:
+                case COMMAND_LEGAL:
                     
                     // Open 'notice.txt' file
-                    openFile(COMMAND_DISCLOSURE + CHAR_DOT + AJAX_TXT);
+                    openFile(COMMAND_LEGAL + CHAR_DOT + AJAX_TXT);
                     
                     // Break
                     break;
