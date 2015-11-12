@@ -194,6 +194,9 @@ body {
         &:last-child, &:empty { margin: 0; }
     }
     
+    // Pre
+    pre { word-wrap: normal !important; }
+    
     // Cursor
     .cursor {
         background: fade(@color-text, @fade-cursor);
@@ -354,6 +357,7 @@ body {
     
     // Terminal
     #terminal {
+        margin-bottom: 0;
         
         // Title/terminal
         &, p, h1, #input p span, small, table th { font-size: @font-small; }

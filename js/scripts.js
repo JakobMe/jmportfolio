@@ -440,7 +440,7 @@ $(document).ready(function() {
             
             // Scroll to bottom
             bodyhtml.animate({
-                scrollTop: $(document).height() - $(window).height()
+                scrollTop: $(document).height()
             }, TIME_SCROLL);
             
             // Unlock scrolling
@@ -1293,8 +1293,8 @@ $(document).ready(function() {
     $(ID_TYPE_MOBILE).add(input).click(function() {
         
         // Focus on mobile input, scroll to bottom
-        inputMobile.focus();
         scrollToBottom();
+        inputMobile.focus();
     });
     
     /*
