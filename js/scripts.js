@@ -605,13 +605,9 @@ $(document).ready(function() {
             output.append(
                 htmlTag(
                     TAG_P,
-                    htmlTag(
-                        TAG_SPAN,
-                        htmlTag(TAG_B, TEXT_TITLE) +
-                        TEXT_PROMPT +
-                        htmlTag(TAG_SMALL, TEXT_USER) +
-                        CHAR_SPACE + commandOutput
-                    )
+                    htmlTag(TAG_B, TEXT_TITLE) + TEXT_PROMPT +
+                    htmlTag(TAG_SMALL, TEXT_USER) +
+                    CHAR_SPACE + commandOutput
                 )
             );
             
