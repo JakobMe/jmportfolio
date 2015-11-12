@@ -81,6 +81,7 @@ $(document).ready(function() {
     var TEXT_09             = "[0-9]";
     var TEXT_SPCHARS        = "[._-]";
     var TEXT_NOT_FOUND      = "' not found";
+    var TEXT_AVAILABLE      = "Available files:";
     var TEXT_COM_NOT_FOUND  = "Command not found";
     var TEXT_CONTENT_OF     = "Content of ";
     var TEXT_ERROR_SERVER   = "Error: Lost connection to server";
@@ -123,7 +124,7 @@ $(document).ready(function() {
     // List of available commands
     var commands = [
         [COMMAND_HELP,       "Display this help"],
-        [COMMAND_LS,         "List all files"],
+        [COMMAND_LS,         "List all available files"],
         [COMMAND_OPEN,       "Display file content"],
         [COMMAND_CLEAR,      "Clear terminal"],
         [COMMAND_RANDOM,     "Display random file"],
@@ -235,6 +236,48 @@ $(document).ready(function() {
         
         // Return global file list
         return foundFiles;
+    }
+    
+    /*
+     * Function: Print file list.
+     * Fetches list of all available files and appends it
+     * to the output container.
+     */
+    function printFileList(showHidden) {
+        
+        // Initialize empty output
+        var listOutput = CHAR_EMPTY;
+        
+        // Get available files
+        var fileList = getFileList(showHidden);
+        
+        // If an error occured while fetching file list
+        if (fileList === false) {
+            
+            // Print connection error
+            printConnectionError(COMMAND_LS);
+    
+        // If a file list is found
+        } else {
+            
+            // Iterate all files, add name to output
+            $.each(fileList, function(key, value) {
+                var tag = TAG_INS;
+                if (value.substring(0, 1) === CHAR_DOT) {
+                    tag = TAG_SMALL;
+                }
+                listOutput += htmlTag(tag, value) + TEXT_BREAK;
+            });
+            
+            // Append output
+            output.append(
+                htmlTag(
+                    TAG_BLOCKQUOTE,
+                    htmlTag(TAG_SMALL, TEXT_AVAILABLE) +
+                    TEXT_BREAK + TEXT_BREAK + listOutput
+                )
+            );
+        }
     }
     
     /*
@@ -713,39 +756,12 @@ $(document).ready(function() {
                  */
                 case COMMAND_LS:
                     
-                    // Initialize empty output
-                    var showHiddenFiles = false;
-                    var listOutput = CHAR_EMPTY;
-                    
                     // Show hidden files if '-a' command is executed
+                    var showHiddenFiles = false;
                     if (command[1] === COMMAND_ALL) { showHiddenFiles = true; }
                     
-                    // Get available files
-                    var fileList = getFileList(showHiddenFiles);
-                    
-                    // If an error occured while fetching file list
-                    if (fileList === false) {
-                        
-                        // Print connection error
-                        printConnectionError(command[0]);
-
-                    // If a file list is found
-                    } else {
-                        
-                        // Iterate all files, add name to output
-                        $.each(fileList, function(key, value) {
-                            var tag = TAG_INS;
-                            if (value.substring(0, 1) === CHAR_DOT) {
-                                tag = TAG_SMALL;
-                            }
-                            listOutput += htmlTag(tag, value) + TEXT_BREAK;
-                        });
-                        
-                        // Append output
-                        output.append(
-                            htmlTag(TAG_BLOCKQUOTE, listOutput)
-                        );
-                    }
+                    // Print file list
+                    printFileList(showHiddenFiles);
                     
                     // Break
                     break;
@@ -781,6 +797,9 @@ $(document).ready(function() {
                                 htmlTag(TAG_DFN, TEXT_FILENAME)
                             )
                         );
+                        
+                        // Print file list
+                        printFileList(false);
                     }
                     
                     // Break
