@@ -1053,7 +1053,7 @@ $(document).ready(function() {
                     (currentCommand[1] !== undefined)) {
                     
                     // Get available files
-                    var fileList = getFileList(false);
+                    var fileList = getFileList(true);
                     
                     // If there occured no error
                     if (fileList !== false) {
