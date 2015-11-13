@@ -99,7 +99,7 @@ $(document).ready(function() {
     var TEXT_AND            = " and ";
     var TEXT_MOVE_CURSOR    = " arrow keys to move the cursor";
     var TEXT_HISTORY        = " arrow keys to navigate your command history";
-    var TEXT_AUTOCOMPLETE   = " to autocomplete filenames";
+    var TEXT_AUTOCOMPLETE   = " to autocomplete filenames/commands";
     var TEXT_EXECUTE_YOUR   = " to execute your ";
     var TEXT_LIST_AVAILABLE = " to list available ";
     var TEXT_BELOW_PRESS    = " below and press ";
