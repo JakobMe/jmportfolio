@@ -584,7 +584,7 @@ $(document).ready(function() {
     function autocomplete(search, needle) {
         
         // Initialize autocompleted value as false
-        var autocompletedValue = false;
+        var autocompleted = [];
         
         // Iterate search-array, try autocomplete
         $.each(search, function(key, value) {
@@ -595,14 +595,46 @@ $(document).ready(function() {
             // Search array
             if (value.substring(0, needle.length) === needle) {
                 
-                // Replace autocomplete value, exit loop
-                autocompletedValue = value;
-                return false;
+                // Replace autocomplete value
+                autocompleted.push(value);
             }
         });
         
-        // Return value
-        return autocompletedValue;
+        // If a value to autocomplete was found
+        if (autocompleted.length > 0) {
+            
+            // If there are multiple matching values
+            if (autocompleted.length > 1) {
+                
+                // Initialize variables for finding shared string
+                var ac = autocompleted.concat().sort();
+                var ac1 = ac[0];
+                var ac2 = ac[ac.length - 1];
+                var acL = ac1.length;
+                var i = 0;
+                
+                // Find length of shared string
+                while((ac1.charAt(i) === ac2.charAt(i)) && (i < acL)) { i++; }
+                
+                // Return shared string
+                return ac1.substring(0, i);
+                
+            // If there is just a single matching value
+            } else {
+                
+                // Return that value
+                return autocompleted[0];
+            }
+            
+            // Return value
+            return autocompleted;
+            
+        // If no value was found
+        } else {
+            
+            // Return error
+            return false;
+        }
     }
     
     /*
