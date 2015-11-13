@@ -125,14 +125,14 @@ $(document).ready(function() {
     
     // List of available commands
     var commands = [
-        [COMMAND_HELP,       "Display this help"],
-        [COMMAND_FILES,      "List all available files"],
-        [COMMAND_OPEN,       "Display file content"],
-        [COMMAND_ABOUT,      "Show info about me"],
-        [COMMAND_CONTACT,    "Show contact info"],
-        [COMMAND_LEGAL, "Show legal disclosure"],
-        [COMMAND_RANDOM,     "Display random file"],
-        [COMMAND_CLEAR,      "Clear terminal"]
+        [COMMAND_HELP,    "Display this help"],
+        [COMMAND_FILES,   "List all available files"],
+        [COMMAND_OPEN,    "Display file content"],
+        [COMMAND_ABOUT,   "Show info about me"],
+        [COMMAND_CONTACT, "Show contact info"],
+        [COMMAND_LEGAL,   "Show legal disclosure"],
+        [COMMAND_RANDOM,  "Display random file"],
+        [COMMAND_CLEAR,   "Clear terminal"]
     ];
     
     // Constants: Times
@@ -197,10 +197,17 @@ $(document).ready(function() {
     var cache = [];
     var scroll = true;
     
-    /*
+    // Check for mobile devices
+    var isMobileDevice =
+        (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)
+            .test(navigator.userAgent);
+    
+    /**
      * Function: Get file list.
      * If global file-array is empty, make an AJAX call to
      * retrieve a list of available files; return array of files.
+     * @param {boolean} showHidden Include hidden files
+     * @returns {array|boolean} Array of available files or false
      */
     function getFileList(showHidden) {
         
@@ -242,10 +249,11 @@ $(document).ready(function() {
         return foundFiles;
     }
     
-    /*
+    /**
      * Function: Print file list.
      * Fetches list of all available files and appends it
      * to the output container.
+     * @param {boolean} showHidden Include hidden files
      */
     function printFileList(showHidden) {
         
@@ -267,9 +275,7 @@ $(document).ready(function() {
             // Iterate all files, add name to output
             $.each(fileList, function(key, value) {
                 var tag = TAG_INS;
-                if (value.substring(0, 1) === CHAR_DOT) {
-                    tag = TAG_SMALL;
-                }
+                if (value.substring(0, 1) === CHAR_DOT) { tag = TAG_SMALL; }
                 listOutput += htmlTag(tag, value) + TEXT_BREAK;
             });
             
@@ -284,10 +290,13 @@ $(document).ready(function() {
         }
     }
     
-    /*
+    /**
      * Function: Print file content.
      * Creates file output for given filename and content;
      * starts terminal reset countdown if hidden file was displayed.
+     * @param {string} fileName Name of file
+     * @param {string} fileContent Content of file
+     * @param {boolean} showHidden A hidden file is printed
      */
     function printFileContent(fileName, fileContent, showHidden) {
         
@@ -326,11 +335,13 @@ $(document).ready(function() {
         }
     }
     
-    /*
+    /**
      * Function: Open file.
      * Searches for given filename in list of available files
      * and file cache, tries to open that file with an AJAX call to
      * display its content, throws error message if file is not found.
+     * @param {string} filename Name of file to open
+     * @return {boolean} False if AJAX error, else true
      */
     function openFile(filename) {
         
@@ -346,6 +357,9 @@ $(document).ready(function() {
             
             // Print cached file content
             printFileContent(filename, cache[filename], showHidden);
+            
+            // Return success
+            return true;
             
         // If file is not yet cached
         } else {
@@ -384,6 +398,9 @@ $(document).ready(function() {
                         )
                     );
                     
+                    // Return success
+                    return true;
+                    
                 // If file is found
                 } else {
                     
@@ -402,6 +419,9 @@ $(document).ready(function() {
                             
                             // Print file content
                             printFileContent(foundFile, content, showHidden);
+                            
+                            // Return success
+                            return true;
                         },
                         error: function() {
                             
@@ -414,10 +434,13 @@ $(document).ready(function() {
         }
     }
     
-    /*
+    /**
      * Function: Compose HTML tag.
      * Encases given content string in given
      * HTML tag and returns it.
+     * @param {string} tag HTML-tag to use
+     * @param {string} content Text to insert
+     * @returns {string} Composed output
      */
     function htmlTag(tag, content) {
         
@@ -426,7 +449,7 @@ $(document).ready(function() {
                CHAR_LT + CHAR_SLASH + tag + CHAR_GT;
     }
     
-    /*
+    /**
      * Function: Scroll to bottom.
      * Scrolls the page to the bottom, if it has not
      * been scrolled recently; locks and unlocks scrolling.
@@ -451,7 +474,7 @@ $(document).ready(function() {
         }
     }
     
-    /*
+    /**
      * Function: Pause blinking of cursor.
      * Removes the "blink"-class form the cursor
      * and adds it again two seconds later, causing a short
@@ -466,10 +489,11 @@ $(document).ready(function() {
         }, TIME_PAUSE);
     }
     
-    /*
+    /**
      * Function: Animate countdown.
      * Decrements the displayed time of a countdown element
      * every second until it reaches zero.
+     * @returns {number} Remaining countdown time in milliseconds
      */
     function animateCountdown() {
         
@@ -491,10 +515,12 @@ $(document).ready(function() {
         return (timeCurrent * TIME_SECOND);
     }
     
-    /*
+    /**
      * Function: Animate typing a text.
      * Inserts a text character by character to a container to
      * animate someone typing it.
+     * @param {object} container jQuery object to apply function to
+     * @param {callback} callback Function to execute after finishing
      */
     function typeText(container, callback) {
 
@@ -539,17 +565,12 @@ $(document).ready(function() {
         }());
     }
     
-    /*
+    /**
      * Function: Create navigation.
      * Checks for mobile device and fills the navigation
      * with available commands; removes 'type' command on non-mobile.
      */
     function createNavigation() {
-        
-        // Check for mobile devices
-        var isMobileDevice =
-            (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)
-                .test(navigator.userAgent);
         
         // If a mobile device is detected, remove initial navigation list
         if (!isMobileDevice) {
@@ -575,11 +596,14 @@ $(document).ready(function() {
         });
     }
     
-    /*
+    /**
      * Function: Autocomplete.
      * Searches in an array of possible values, tries to match
      * a given needle to a value, returns autocompleted matching
      * value or false, if none is found.
+     * @param {array} search Array of possible values
+     * @param {string} needle Keyword to autocomplete
+     * @returns {string|boolean} Autocompleted value or false if none is found
      */
     function autocomplete(search, needle) {
         
@@ -637,10 +661,11 @@ $(document).ready(function() {
         }
     }
     
-    /*
+    /**
      * Function: Replace input.
      * Clears current input command and replaces
      * it with given text.
+     * @param {string} text Text to insert to input
      */
     function replaceInput(text) {
         
@@ -650,11 +675,12 @@ $(document).ready(function() {
         inputAfter.text(CHAR_EMPTY);
     }
     
-    /*
+    /**
      * Function: Print connection error.
      * Adds an error message to the output, signaling
      * a lost connection to the server; prints the used
      * command alongside the error.
+     * @param {string} command Command to include in error output
      */
     function printConnectionError(command) {
         
@@ -670,10 +696,11 @@ $(document).ready(function() {
         );
     }
     
-    /*
+    /**
      * Function: Load command from history.
      * Loads a command from history and displays it
      * in current input field.
+     * @param {boolean} backward Go backward in history, else go forward
      */
     function loadCommand(backward) {
         
@@ -696,11 +723,12 @@ $(document).ready(function() {
         else { replaceInput(history[historyCurrent]); }
     }
     
-    /*
+    /**
      * Function: Execute command.
      * Takes a command input and tries to execute it;
      * checks if command is available/correct and creates
      * the appropriate output.
+     * @param {string} command Command to execute
      */
     function executeCommand(command) {
         
