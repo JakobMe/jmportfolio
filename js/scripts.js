@@ -39,6 +39,7 @@ $(document).ready(function() {
     var EVENT_KEYDOWN       = "keydown";
     
     // Constants: HTML attributes
+    var ATTR_SRC            = "src";
     var ATTR_WIDTH          = "width";
     var ATTR_HEIGHT         = "height";
     
@@ -128,6 +129,7 @@ $(document).ready(function() {
     var AJAX_POST           = "POST";
     var AJAX_JSON           = "json";
     var AJAX_TXT            = "txt";
+    var AJAX_TH             = "-th";
     
     // List of available commands
     var commands = [
@@ -357,6 +359,18 @@ $(document).ready(function() {
         
         // Iterate all images
         images.each(function() {
+            
+            // Get image source and lengths of source
+            var imgSrc = $(this).attr(ATTR_SRC).split(CHAR_DOT);
+            var imgSrcLen = imgSrc[0].length;
+            var imgSrcZoomLen = (imgSrcLen - AJAX_TH.length);
+            
+            // If source ends with thumbnail-suffix, preload fullsize image
+            if (imgSrc[0].substring(imgSrcZoomLen, imgSrcLen) === AJAX_TH) {
+                $(CHAR_LT + TAG_IMG + CHAR_SLASH + CHAR_GT)[0].src =
+                    imgSrc[0].substring(0, imgSrcZoomLen) +
+                    CHAR_DOT + imgSrc[1];
+            }
             
             // Halve width and height on mobile devices
             if (isMobileDevice) {
@@ -1152,7 +1166,7 @@ $(document).ready(function() {
                     (currentCommand[1] !== undefined)) {
                     
                     // Get available files
-                    var fileList = getFileList(true);
+                    var fileList = getFileList(false);
                     
                     // If there occured no error
                     if (fileList !== false) {
