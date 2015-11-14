@@ -26,14 +26,12 @@ body {
 // Terminal
 #terminal {
     word-wrap: break-word;
+    line-height: 1.3;
     margin: @size-navigation auto;
     font-size: @font-medium;
     padding: @padding-terminal;
     max-width: @size-terminal;
     .border-box();
-    
-    // Type text
-    .type { display: none; }
     
     // Logo
     #logo {
@@ -50,68 +48,32 @@ body {
         &.blink { .animation-logo(); }
     }
     
-    // Title
-    h1 {
+    // Shared properties of text
+    h1, i, b, u, em, dfn, ins, a, small, th {
+        font-style: normal;
         font-weight: normal;
+        text-decoration: none;
         margin: 0;
         padding: 0;
         font-size: @font-medium;
     }
     
-    // Commands
-    em {
-        font-style: normal;
-        font-weight: normal;
-        color: @color-command;
-    }
+    // Text colors
+    b { color: @color-highlight; }
+    strong { color: @color-error; }
+    i, em { color: @color-command; }
+    u, small, th { color: @color-comment; }
+    dfn, ins, a { color: @color-hint; }
     
-    // Command links
-    i {
-        cursor: pointer;
-        font-style: normal;
-        text-decoration: none;
-        color: @color-command;
-        
-        // Hover
-        &:hover, &:active { background: fade(@color-command, @fade-cursor); }
-    }
+    // Special text properties
+    a:after { content: "→"; }
+    u, th { text-transform: uppercase; }
+    ins, i, a { cursor: pointer; }
+    .type { display: none; }
     
-    // Highlighted text
-    b {
-        font-weight: normal;
-        color: @color-highlight;
-    }
-    
-    // Hint text
-    dfn {
-        font-style: normal;
-        color: @color-hint;
-    }
-    
-    // Hint links
-    ins, a {
-        cursor: pointer;
-        font-style: normal;
-        text-decoration: none;
-        color: @color-hint;
-        
-        // Hover
-        &:hover, &:active { background: fade(@color-hint, @fade-cursor); }
-    }
-    
-    // Links
-    a:not(.image) {
-        &:before { content: "["; }
-        &:after  { content: "]"; }
-    }
-    
-    // Image links
-    a.image {
-        display: inline-block;
-        background: transparent;
-        font-size: 0;
-        margin-right: @font-medium;
-    }
+    // Text hover
+    i:hover { background: fade(@color-command, @fade-cursor); }
+    ins:hover, a:hover { background: fade(@color-hint, @fade-cursor); }
     
     // Images
     img {
@@ -120,27 +82,19 @@ body {
         max-width: 100%;
     }
     
-    // Error text
-    strong {
-        font-weight: normal;
-        color: @color-error;
-    }
-    
-    // Comment text
-    u {
-        text-decoration: none;
-        text-transform: uppercase;
-        color: @color-comment;
-    }
-    
-    // Comment text small
-    small {
-        color: @color-comment;
-        font-size: @font-medium;
-    }
-    
-    // Output
+    // Text containers
+    pre { word-wrap: normal !important; }
     blockquote { padding: 0 0 0 (4 * @font-medium); }
+    
+    // Paragraph/output and sections
+    p, blockquote, .section, pre, table {
+        clear: both;
+        overflow: hidden;
+        margin: 0 0 (2 * @font-medium) 0;
+        
+        // Last or empty paragraph/output/section
+        &:last-child, &:empty { margin: 0; }
+    }
     
     // Tables
     table {
@@ -149,9 +103,9 @@ body {
         &, tr, td, th, thead, tbody {
             border-collapse: collapse;
             border: none;
-            border-spacing: 0;
-            padding: 0;
             margin: 0;
+            padding: 0;
+            border-spacing: 0;
             -webkit-border-horizontal-spacing: 0;
             -webkit-border-vertical-spacing: 0;
         }
@@ -159,10 +113,6 @@ body {
         // Head column
         th {
             text-align: left;
-            font-weight: normal;
-            text-transform: uppercase;
-            font-size: @font-medium;
-            color: @color-comment;
             margin-bottom: @font-medium;
         }
         
@@ -184,18 +134,17 @@ body {
         }
     }
     
-    // Paragraph/output and sections
-    p, blockquote, .section, pre, table {
-        clear: both;
-        overflow: hidden;
-        margin: 0 0 (2 * @font-medium) 0;
+    // Galleries
+    .gallery {
+        font-size: 0;
         
-        // Last or empty paragraph/output/section
-        &:last-child, &:empty { margin: 0; }
+        // Images
+        img {
+            display: inline-block;
+            margin: 0 @font-medium @font-medium 0;
+            &:last-child { margin-right: 0; }
+        }
     }
-    
-    // Pre
-    pre { word-wrap: normal !important; }
     
     // Cursor
     .cursor {
@@ -359,27 +308,30 @@ body {
     #terminal {
         margin-bottom: 0;
         
-        // Title/terminal
-        &, p, h1, #input p span, small, table th { font-size: @font-small; }
+        // Small font-size
+        &, p, h1, i, b, u, em, dfn, ins, a, small, th, #input p span {
+            font-size: @font-small;
+        }
         
-        // Table columns
+        // Table
         table {
+            thead:not(:first-child) th { padding-top: @font-small; }
             th { margin-bottom: @font-small; }
             td {
                 padding: 0 @font-small;
                 &:first-child { padding-left: 0; }
                 &:last-child { padding-right: 0; }
             }
-            thead:not(:first-child) th {
-                padding-top: @font-small;
-            }
         }
         
         // Output
         blockquote { padding-left: @font-small; }
         
-        // Image link
-        a.image { margin-right: @font-small; }
+        // Gallery images
+        .gallery img {
+            margin: 0 @font-small @font-small 0;
+            &:last-child { margin-right: 0; }
+        }
         
         // Paragraph/output and sections
         p, blockquote, .section, pre, table {
@@ -394,5 +346,7 @@ body {
        screen and (min-resolution: 144dpi) {
 
     // Logo
-    #terminal #logo { background-image: url("../img/layout/logo-retina.png"); }
+    #terminal #logo {
+        background-image: url("../img/layout/logo-retina.png");
+    }
 }
