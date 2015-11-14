@@ -11,6 +11,94 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/files\/img\/project01-itarchitect-01-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1709,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-01-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-01-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-01.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 33608,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-01.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-01.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-02-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2813,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-02-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-02-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-02.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 81934,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-02.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-02.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-03-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2462,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-03-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-03-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-03.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 74126,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-03.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-03.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-04-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3720,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-04-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-04-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/files\/img\/project01-itarchitect-04.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 114088,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-04.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-04.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/files\/project01-itarchitect.html": {
 		"fileType": 8192,
 		"ignore": 0,

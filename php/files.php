@@ -11,7 +11,7 @@ $path = "../files/";
 $files = array();
 
 // Read all files, save filename in array
-foreach (glob("$path*") as $file) {
+foreach (glob("$path*.*") as $file) {
     array_push($files, basename($file));
 }
 

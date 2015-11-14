@@ -39,6 +39,7 @@ $(document).ready(function() {
     var EVENT_KEYDOWN       = "keydown";
     
     // Constants: HTML attributes
+    var ATTR_SRC            = "src";
     var ATTR_WIDTH          = "width";
     var ATTR_HEIGHT         = "height";
     
@@ -125,6 +126,7 @@ $(document).ready(function() {
     // Constants: Strings for AJAX calls
     var AJAX_OPEN           = "php/open.php";
     var AJAX_FILES          = "php/files.php";
+    var AJAX_FILES_D        = "files/";
     var AJAX_POST           = "POST";
     var AJAX_JSON           = "json";
     var AJAX_TXT            = "txt";
@@ -340,27 +342,35 @@ $(document).ready(function() {
             }, animateCountdown());
         }
     }
-    
+
     /*
-     * Function: Halve image dimensions.
-     * Finds all image tags in an HTML string and halves
-     * the width and height attributes of each image; returns
-     * fixed HTML-string.
+     * Function: Fix file images.
+     * Finds all image tags in an HTML string and fixes the source URLs;
+     * halves the width and height attributes of each image if on mobile
+     * device; returns fixed HTML-string.
      * @param {string} html String of HTML to fix
      * @returns {string} Fixed HTML-string
      */
-    function halveImageDimensions(html) {
+    function fixFileImages(html) {
         
         // Create jQuery object for html, find images
         var input = $(CHAR_LT + TAG_DIV + CHAR_SLASH + CHAR_GT).html(html);
         var images = input.find(TAG_IMG);
         
-        // Iterate all images, halve width and height
+        // Iterate all images
         images.each(function() {
-            var imageWidth = Math.floor($(this).attr(ATTR_WIDTH) / 2);
-            var imageHeight = Math.floor($(this).attr(ATTR_HEIGHT) / 2);
-            $(this).attr(ATTR_WIDTH, imageWidth);
-            $(this).attr(ATTR_HEIGHT, imageHeight);
+            
+            // Fix source path
+            var imageSrc = $(this).attr(ATTR_SRC);
+            $(this).attr(ATTR_SRC, AJAX_FILES_D + imageSrc);
+            
+            // Halve width and height on mobile devices
+            if (isMobileDevice) {
+                var imageWidth = Math.floor($(this).attr(ATTR_WIDTH) / 2);
+                var imageHeight = Math.floor($(this).attr(ATTR_HEIGHT) / 2);
+                $(this).attr(ATTR_WIDTH, imageWidth);
+                $(this).attr(ATTR_HEIGHT, imageHeight);
+            }
         });
         
         // Return fixed html
@@ -444,10 +454,8 @@ $(document).ready(function() {
                         data: { file: foundFile },
                         success: function (content) {
                             
-                            // If on mobile device, halve image dimensions
-                            if (isMobileDevice) {
-                                content = halveImageDimensions(content);
-                            }
+                            // Fix file images
+                            content = fixFileImages(content);
                             
                             // Push file to cache-array
                             if (typeof cache[foundFile] === TEXT_UNDEFINED) {
