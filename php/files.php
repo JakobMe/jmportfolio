@@ -7,7 +7,7 @@
  */
 
 // Initialize file array and path
-$path = "../files/";
+$path = "../files/txt/";
 $files = array();
 
 // Read all files, save filename in array

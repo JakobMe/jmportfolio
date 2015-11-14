@@ -99,20 +99,20 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/files\/project01-itarchitect.html": {
+	"\/files\/txt\/project01-itarchitect.html": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/files\/project01-itarchitect.html",
+		"inputAbbreviatedPath": "\/files\/txt\/project01-itarchitect.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/files\/project02-lichtblick.html": {
+	"\/files\/txt\/project02-lichtblick.html": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/files\/project02-lichtblick.html",
+		"inputAbbreviatedPath": "\/files\/txt\/project02-lichtblick.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
