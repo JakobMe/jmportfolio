@@ -35,9 +35,9 @@
 }
 
 // Gradient vertical
-.gradient-vertical(@fade-top, @fade-bottom, @color: @color-background) {
-    background-image: -webkit-linear-gradient(top, fade(@color, @fade-top), fade(@color, @fade-bottom));
-    background-image:    -moz-linear-gradient(top, fade(@color, @fade-top), fade(@color, @fade-bottom));
-    background-image:      -o-linear-gradient(top, fade(@color, @fade-top), fade(@color, @fade-bottom));
-    background-image:         linear-gradient(top, fade(@color, @fade-top), fade(@color, @fade-bottom));
+.gradient-vertical(@fade-top, @fade-bottom, @color: @color-background, @pos-top: 0%, @pos-bottom: 100%) {
+    background-image: -webkit-linear-gradient(top, fade(@color, @fade-top) @pos-top, fade(@color, @fade-bottom) @pos-bottom);
+    background-image:    -moz-linear-gradient(top, fade(@color, @fade-top) @pos-top, fade(@color, @fade-bottom) @pos-bottom);
+    background-image:      -o-linear-gradient(top, fade(@color, @fade-top) @pos-top, fade(@color, @fade-bottom) @pos-bottom);
+    background-image:         linear-gradient(top, fade(@color, @fade-top) @pos-top, fade(@color, @fade-bottom) @pos-bottom);
 }

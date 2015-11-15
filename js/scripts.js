@@ -28,6 +28,7 @@ $(document).ready(function() {
     var ID_NAVIGATION       = "#navigation";
     var ID_TYPE_MOBILE      = "#type-mobile";
     var ID_LIGHTBOX         = "#lightbox";
+    var ID_LIGHTBOX_CAPTION = "#lightbox-caption";
     var ID_OVERLAY          = "#overlay";
     
     // Constants: CSS-classes
@@ -48,6 +49,7 @@ $(document).ready(function() {
     var ATTR_TOP            = "top";
     var ATTR_WIDTH          = "width";
     var ATTR_STYLE          = "style";
+    var ATTR_TITLE          = "title";
     var ATTR_HEIGHT         = "height";
     var ATTR_DATA_ZOOM      = "data-zoom";
     var ATTR_DATA_WIDTH     = "data-width";
@@ -208,6 +210,7 @@ $(document).ready(function() {
     var inputAfter          = $(ID_INPUT_AFTER);
     var inputMobile         = $(ID_INPUT_MOBILE);
     var lightbox            = $(ID_LIGHTBOX);
+    var lightboxCaption     = $(ID_LIGHTBOX_CAPTION);
     var overlay             = $(ID_OVERLAY);
     
     // Command history
@@ -387,8 +390,13 @@ $(document).ready(function() {
                 var imgSrcZoom = imgSrc[0].substring(0, imgSrcZoomLen) +
                                  CHAR_DOT + imgSrc[1];
                 
+                // Get file name of zoom source
+                var imgSrcFile = imgSrcZoom.split(CHAR_SLASH);
+                imgSrcFile = imgSrcFile[imgSrcFile.length - 1];
+                
                 // Preload zoom image, add source to image attributes
                 $(this).attr(ATTR_DATA_ZOOM, imgSrcZoom);
+                $(this).attr(ATTR_TITLE, imgSrcFile);
                 $(HTML_IMG)[0].src = imgSrcZoom;
             }
             
@@ -1502,29 +1510,32 @@ $(document).ready(function() {
         // Empty lightbox
         lightbox.html(CHAR_EMPTY);
         
-        // Get image source, create jQuery image object
+        // Get image source
         var zoomSrc = $(this).attr(ATTR_DATA_ZOOM);
-        var zoomImg = $(HTML_IMG);
-        
-        // Get zoom image size
-        var zoomWidth = $(this).attr(ATTR_DATA_WIDTH);
-        var zoomHeight = $(this).attr(ATTR_DATA_HEIGHT);
-        
-        // Halve zoom image sizes if on mobile device
-        if (isMobileDevice) {
-            zoomWidth = (zoomWidth / 2);
-            zoomHeight = (zoomHeight / 2);
-        }
         
         // If image source is legit
         if ((zoomSrc !== CHAR_EMPTY) && (zoomSrc !== undefined)) {
+            
+            // Create jQuery image
+            var zoomImg = $(HTML_IMG);
+            
+            // Get zoom image size
+            var zoomWidth = $(this).attr(ATTR_DATA_WIDTH);
+            var zoomHeight = $(this).attr(ATTR_DATA_HEIGHT);
+            
+            // Halve zoom image sizes if on mobile device
+            if (isMobileDevice) {
+                zoomWidth = (zoomWidth / 2);
+                zoomHeight = (zoomHeight / 2);
+            }
             
             // Show lightbox
             body.css(ATTR_TOP, -($(document).scrollTop()));
             bodyhtml.addClass(CLASS_NO_SCROLL);
             overlay.addClass(CLASS_VISIBLE);
             
-            // Set zoom image attributes, append to lightbox
+            // Set zoom image attributes, set caption, append to lightbox
+            lightboxCaption.text($(this).attr(ATTR_TITLE));
             zoomImg.attr(ATTR_SRC, zoomSrc);
             zoomImg.attr(ATTR_WIDTH, zoomWidth);
             zoomImg.attr(ATTR_HEIGHT, zoomHeight);
@@ -1537,7 +1548,7 @@ $(document).ready(function() {
      * Remove images from lightbox container, remove classes from
      * body and overlay, returning to normal view.
      */
-    lightbox.click(function() {
+    overlay.click(function() {
         
         // Get current top position of body, remove attribute
         var scrollCurrent = -(parseInt(body.css(ATTR_TOP)));
@@ -1547,7 +1558,9 @@ $(document).ready(function() {
         bodyhtml.removeClass(CLASS_NO_SCROLL);
         bodyhtml.scrollTop(scrollCurrent);
         
+        // Hide overlay, empty lightbox
         overlay.removeClass(CLASS_VISIBLE);
+        lightboxCaption.html(CHAR_EMPTY);
         lightbox.html(CHAR_EMPTY);
     });
 

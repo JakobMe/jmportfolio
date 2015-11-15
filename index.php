@@ -73,8 +73,15 @@
     	</div>
     	<div id="footer"></div>
     	<div id="overlay">
-        	<div id="lightbox-container">
-                <div id="lightbox"></div>
+        	<div class="lightbox-scroll">
+            	<div class="lightbox-container">
+                    <div id="lightbox"></div>
+            	</div>
+        	</div>
+        	<div class="lightbox-caption-container">
+            	<div class="lightbox-caption-scroll">
+            	    <dfn id="lightbox-caption"></dfn>
+            	</div>
         	</div>
     	</div>
 	</body>

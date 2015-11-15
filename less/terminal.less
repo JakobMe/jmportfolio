@@ -325,8 +325,6 @@ body.no-scroll {
 
 // Overlay
 #overlay {
-    -webkit-overflow-scrolling: touch;
-    overflow: scroll;
     position: fixed;
     cursor: pointer;
     cursor: -moz-zoom-out;
@@ -337,13 +335,59 @@ body.no-scroll {
     width: 100vw;
     height: 100%;
     z-index: 5000;
-    background: fade(@color-background, @fade-lightbox);
+    background: @color-background;
+    
+    // Scroll container
+    .lightbox-scroll {
+        -webkit-overflow-scrolling: touch;
+        overflow: scroll;
+        width: 100%;
+        height: 100%;
+        z-index: 500;
+        padding-top: @size-navigation;
+        .border-box();
+    }
     
     // Visible overlay
     &.visible { display: block; }
     
+    // Caption container
+    .lightbox-caption-container {
+        position: fixed;
+        text-align: left;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        font-size: @font-medium;
+        line-height: @font-medium;
+        height: @size-navigation;
+        .border-box();
+        
+        // Caption scroll container
+        .lightbox-caption-scroll {
+            -webkit-overflow-scrolling: touch;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            padding: @padding-terminal;
+            height: (@size-navigation * 1.5);
+            .border-box();
+        }
+        
+        // Text
+        dfn#lightbox-caption {
+            font-style: normal;
+            color: @color-hint;
+            background: fade(@color-background, @fade-overlay);
+            .shadow(0, @padding-terminal-half, fade(
+                    @color-background, @fade-selection));
+        }
+    }
+
     // Lightbox container
-    #lightbox-container {
+    .lightbox-container {
         text-align: center;
         width: 100%;
         height: 100%;
@@ -356,13 +400,15 @@ body.no-scroll {
             vertical-align: middle;
             max-width: 100%;
             padding: @padding-terminal;
+            padding-top: 0;
             .border-box();
             
             // Images
             img {
                 height: auto;
                 max-width: 100%;
-                .shadow(@padding-terminal-half, @padding-terminal);
+                .shadow(@padding-terminal-half, @padding-terminal,
+                        fade(@color-background, @fade-selection));
             }
         }
         
@@ -384,8 +430,8 @@ body.no-scroll {
         margin-bottom: 0;
         
         // Small font-size
-        &, p, h1, i, b, u, em, dfn, ins, a:not(#logo),
-        small, th, #input p span, blockquote {
+        &, p:not(.gallery), h1, i, b, u, em, dfn, ins, a:not(#logo),
+        small, th, #input p span, blockquote, .gallery:before {
             font-size: @font-small !important;
         }
         
@@ -404,9 +450,13 @@ body.no-scroll {
         blockquote { padding-left: @font-small; }
         
         // Gallery images
-        .gallery img {
-            margin: @font-small @font-small 0 0;
-            &:last-child { margin-right: 0; }
+        .gallery {
+            font-size: 0;
+            &:before { margin-bottom: (@font-small / 2); }
+            img {
+                margin: (@font-small / 2) (@font-small / 2) 0 0;
+                &:last-child { margin-right: 0; }
+            }
         }
         
         // Paragraph/output and sections
@@ -416,10 +466,12 @@ body.no-scroll {
         }
     }
     
-    //
-    #overlay #lightbox-container #lightbox {
-        max-width: none;
-        img { max-width: none; height: inherit; }
+    // Overlay
+    #overlay {
+        .lightbox-container #lightbox {
+            max-width: none;
+            img { max-width: none; height: inherit; }
+        }
     }
 }
 
