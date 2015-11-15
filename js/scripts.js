@@ -478,7 +478,7 @@ $(document).ready(function() {
                         url: AJAX_OPEN,
                         type: AJAX_POST,
                         data: { file: foundFile },
-                        success: function (content) {
+                        success: function(content) {
                             
                             // Fix file images
                             content = preloadFileImages(content);
@@ -678,10 +678,10 @@ $(document).ready(function() {
      */
     function autocomplete(search, needle) {
         
-        // Initialize autocompleted value as false
+        // Initialize autocompleted values as empty array
         var autocompleted = [];
         
-        // Iterate search-array, try autocomplete
+        // Iterate search-array, push matching values to array
         $.each(search, function(key, value) {
             
             // If value is an array itself, replace with first value
@@ -690,7 +690,7 @@ $(document).ready(function() {
             // Search array
             if (value.substring(0, needle.length) === needle) {
                 
-                // Replace autocomplete value
+                // Push autocomplete value
                 autocompleted.push(value);
             }
         });
@@ -720,9 +720,6 @@ $(document).ready(function() {
                 // Return that value
                 return autocompleted[0];
             }
-            
-            // Return value
-            return autocompleted;
             
         // If no value was found
         } else {
@@ -1530,9 +1527,9 @@ $(document).ready(function() {
         
         // Remove classes from lightbox and body, scroll body
         body.removeClass(CLASS_NO_SCROLL);
+        bodyhtml.scrollTop(scrollCurrent);
         overlay.removeClass(CLASS_VISIBLE);
         lightbox.html(CHAR_EMPTY);
-        bodyhtml.scrollTop(scrollCurrent);
     });
     
 });

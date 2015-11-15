@@ -326,7 +326,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: 5000;
-    background: fade(@color-background, @fade-lightbox);
+    background: fade(@color-comment, @fade-lightbox);
     
     // Visible overlay
     &.visible { display: block; }
@@ -341,10 +341,9 @@ body {
         img {
             display: inline-block;
             vertical-align: middle;
-            max-width: 100%;
-            padding: @padding-terminal;
-            .shadow(0, @padding-terminal);
-            .border-box();
+            max-width: 95%;
+            .shadow(@padding-terminal-half, @padding-terminal,
+                    fade(@color-background, @fade-selection));
         }
         
         // Vertical alignment fix
