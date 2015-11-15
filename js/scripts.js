@@ -27,12 +27,17 @@ $(document).ready(function() {
     var ID_COUNTDOWN        = "#countdown";
     var ID_NAVIGATION       = "#navigation";
     var ID_TYPE_MOBILE      = "#type-mobile";
+    var ID_LIGHTBOX         = "#lightbox";
+    var ID_OVERLAY          = "#overlay";
     
     // Constants: CSS-classes
     var CLASS_TYPE          = "type";
     var CLASS_BLINK         = "blink";
     var CLASS_READY         = "ready";
     var CLASS_ABSOLUTE      = "absolute";
+    var CLASS_LIGHTBOX      = "lightbox";
+    var CLASS_VISIBLE       = "visible";
+    var CLASS_NO_SCROLL     = "no-scroll";
     
     // Constants: Events
     var EVENT_CLICK         = "click";
@@ -42,8 +47,11 @@ $(document).ready(function() {
     var ATTR_SRC            = "src";
     var ATTR_WIDTH          = "width";
     var ATTR_HEIGHT         = "height";
+    var ATTR_DATA_ZOOM      = "data-zoom";
+    var ATTR_STYLE          = "style";
+    var ATTR_TOP            = "top";
     
-    // Constants: HTML tags
+    // Constants: HTML tag names
     var TAG_P               = "p";
     var TAG_B               = "b";
     var TAG_I               = "i";
@@ -51,7 +59,6 @@ $(document).ready(function() {
     var TAG_EM              = "em";
     var TAG_UL              = "ul";
     var TAG_LI              = "li";
-    var TAG_DIV             = "div";
     var TAG_IMG             = "img";
     var TAG_INS             = "ins";
     var TAG_DFN             = "dfn";
@@ -61,6 +68,10 @@ $(document).ready(function() {
     var TAG_SMALL           = "small";
     var TAG_BLOCKQUOTE      = "blockquote";
     var TAG_STRONG          = "strong";
+    
+    // Constants: HTML jQuery tags
+    var HTML_DIV            = "<div/>";
+    var HTML_IMG            = "<img/>";
     
     // Constants: Output texts
     var TEXT_COMMA          = ", ";
@@ -194,6 +205,8 @@ $(document).ready(function() {
     var inputCurrent        = $(ID_INPUT_CURRENT);
     var inputAfter          = $(ID_INPUT_AFTER);
     var inputMobile         = $(ID_INPUT_MOBILE);
+    var lightbox            = $(ID_LIGHTBOX);
+    var overlay             = $(ID_OVERLAY);
     
     // Command history
     var history = [];
@@ -354,7 +367,7 @@ $(document).ready(function() {
     function preloadFileImages(html) {
         
         // Create jQuery object for html, find images
-        var input = $(CHAR_LT + TAG_DIV + CHAR_SLASH + CHAR_GT).html(html);
+        var input = $(HTML_DIV).html(html);
         var images = input.find(TAG_IMG);
         
         // Iterate all images
@@ -367,9 +380,14 @@ $(document).ready(function() {
             
             // If source ends with thumbnail-suffix, preload fullsize image
             if (imgSrc[0].substring(imgSrcZoomLen, imgSrcLen) === AJAX_TH) {
-                $(CHAR_LT + TAG_IMG + CHAR_SLASH + CHAR_GT)[0].src =
-                    imgSrc[0].substring(0, imgSrcZoomLen) +
-                    CHAR_DOT + imgSrc[1];
+                
+                // Compose zoom source
+                var imgSrcZoom = imgSrc[0].substring(0, imgSrcZoomLen) +
+                                 CHAR_DOT + imgSrc[1];
+                
+                // Preload zoom image, add source to image attributes
+                $(this).attr(ATTR_DATA_ZOOM, imgSrcZoom);
+                $(HTML_IMG)[0].src = imgSrcZoom;
             }
             
             // Halve width and height on mobile devices
@@ -842,7 +860,7 @@ $(document).ready(function() {
                 case COMMAND_CLEAR:
                     
                     // Scroll to top, clear output
-                    body.animate({
+                    bodyhtml.animate({
                         scrollTop: 0 }, TIME_SCROLL,
                         function() { output.html(CHAR_EMPTY); }
                     );
@@ -1470,6 +1488,49 @@ $(document).ready(function() {
      */
     inputMobile.focusout(function() {
         navigation.removeClass(CLASS_ABSOLUTE);
+    });
+    
+    /*
+     * On click on lightbox thumbnails.
+     * Create new image and append it to lightbox container, thus
+     * displaying a zoomed in version of a thumbnail; adding classes
+     * to body and overlay.
+     */
+    body.on(EVENT_CLICK, CHAR_DOT + CLASS_LIGHTBOX, function() {
+        
+        // Empty lightbox
+        lightbox.html(CHAR_EMPTY);
+        
+        // Get image source, create jQuery image object
+        var zoomSrc = $(this).attr(ATTR_DATA_ZOOM);
+        var zoomImg = $(HTML_IMG);
+        
+        // If image source is legit, set attribute and append to lightbox
+        if ((zoomSrc !== CHAR_EMPTY) && (zoomSrc !== undefined)) {
+            body.css(ATTR_TOP, -($(document).scrollTop()));
+            body.addClass(CLASS_NO_SCROLL);
+            overlay.addClass(CLASS_VISIBLE);
+            zoomImg.attr(ATTR_SRC, zoomSrc);
+            lightbox.append(zoomImg);
+        }
+    });
+    
+    /*
+     * On click on lightbox.
+     * Remove images from lightbox container, remove classes from
+     * body and overlay, returning to normal view.
+     */
+    lightbox.click(function() {
+        
+        // Get current top position of body, remove attribute
+        var scrollCurrent = -(parseInt(body.css(ATTR_TOP)));
+        body.removeAttr(ATTR_STYLE);
+        
+        // Remove classes from lightbox and body, scroll body
+        body.removeClass(CLASS_NO_SCROLL);
+        overlay.removeClass(CLASS_VISIBLE);
+        lightbox.html(CHAR_EMPTY);
+        bodyhtml.scrollTop(scrollCurrent);
     });
     
 });
