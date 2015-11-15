@@ -391,22 +391,27 @@ body.no-scroll {
         text-align: center;
         width: 100%;
         height: 100%;
-        max-width: 100vw;
         font-size: 0;
+        max-width: 100vw;
         
         // Lightbox
         #lightbox {
             display: inline-block;
             vertical-align: middle;
             max-width: 100%;
+            font-size: 0;
+            padding: 0 @padding-terminal;
+            padding-bottom: @padding-terminal;
+            .border-box();
             
             // Images
             img {
                 height: auto;
+                border: none;
+                outline: none;
                 max-width: 100%;
-                padding: 0 @padding-terminal;
-                padding-bottom: @padding-terminal;
-                .border-box();
+                padding: 0;
+                margin: 0;
             }
         }
         
@@ -469,10 +474,16 @@ body.no-scroll {
         }
     }
     
-    // Overlay images
-    #overlay .lightbox-container #lightbox img {
-        max-width: none;
-        height: inherit;
+    // Overlay lightbox
+    #overlay .lightbox-container #lightbox {
+        padding-left: 0;
+        padding-right: 0;
+        
+        // Image
+        img {
+            max-width: none;
+            margin: 0 @padding-terminal;
+        }
     }
 }
 
