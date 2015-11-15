@@ -45,11 +45,13 @@ $(document).ready(function() {
     
     // Constants: HTML attributes
     var ATTR_SRC            = "src";
+    var ATTR_TOP            = "top";
     var ATTR_WIDTH          = "width";
+    var ATTR_STYLE          = "style";
     var ATTR_HEIGHT         = "height";
     var ATTR_DATA_ZOOM      = "data-zoom";
-    var ATTR_STYLE          = "style";
-    var ATTR_TOP            = "top";
+    var ATTR_DATA_WIDTH     = "data-width";
+    var ATTR_DATA_HEIGHT    = "data-height";
     
     // Constants: HTML tag names
     var TAG_P               = "p";
@@ -1504,12 +1506,28 @@ $(document).ready(function() {
         var zoomSrc = $(this).attr(ATTR_DATA_ZOOM);
         var zoomImg = $(HTML_IMG);
         
-        // If image source is legit, set attribute and append to lightbox
+        // Get zoom image size
+        var zoomWidth = $(this).attr(ATTR_DATA_WIDTH);
+        var zoomHeight = $(this).attr(ATTR_DATA_HEIGHT);
+        
+        // Halve zoom image sizes if on mobile device
+        if (isMobileDevice) {
+            zoomWidth = (zoomWidth / 2);
+            zoomHeight = (zoomHeight / 2);
+        }
+        
+        // If image source is legit
         if ((zoomSrc !== CHAR_EMPTY) && (zoomSrc !== undefined)) {
+            
+            // Show lightbox
             body.css(ATTR_TOP, -($(document).scrollTop()));
-            body.addClass(CLASS_NO_SCROLL);
+            bodyhtml.addClass(CLASS_NO_SCROLL);
             overlay.addClass(CLASS_VISIBLE);
+            
+            // Set zoom image attributes, append to lightbox
             zoomImg.attr(ATTR_SRC, zoomSrc);
+            zoomImg.attr(ATTR_WIDTH, zoomWidth);
+            zoomImg.attr(ATTR_HEIGHT, zoomHeight);
             lightbox.append(zoomImg);
         }
     });
@@ -1526,10 +1544,11 @@ $(document).ready(function() {
         body.removeAttr(ATTR_STYLE);
         
         // Remove classes from lightbox and body, scroll body
-        body.removeClass(CLASS_NO_SCROLL);
+        bodyhtml.removeClass(CLASS_NO_SCROLL);
         bodyhtml.scrollTop(scrollCurrent);
+        
         overlay.removeClass(CLASS_VISIBLE);
         lightbox.html(CHAR_EMPTY);
     });
-    
+
 });

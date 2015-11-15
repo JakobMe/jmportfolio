@@ -2,7 +2,7 @@
 <html id="computer" lang="en">
 	<head>
 		<title>jmportfolio — -bash — 80x24</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
 		<meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="Jakob Metzger's online portfolio">
         <meta name="keywords" content="jakob, metzger, portfolio, frontend, developer, design, graphic">
@@ -73,7 +73,9 @@
     	</div>
     	<div id="footer"></div>
     	<div id="overlay">
-            <div id="lightbox"></div>
+        	<div id="lightbox-container">
+                <div id="lightbox"></div>
+        	</div>
     	</div>
 	</body>
 </html>
