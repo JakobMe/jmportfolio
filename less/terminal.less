@@ -95,16 +95,6 @@ body.no-scroll {
     pre { word-wrap: normal !important; }
     blockquote { padding: 0 0 0 (4 * @font-medium); }
     
-    // Paragraph/output and sections
-    p, blockquote, .section, pre, table {
-        clear: both;
-        overflow: hidden;
-        margin: 0 0 (2 * @font-medium) 0;
-        
-        // Last or empty paragraph/output/section
-        &:last-child, &:empty { margin: 0; }
-    }
-    
     // Tables
     table {
         
@@ -143,6 +133,16 @@ body.no-scroll {
         }
     }
     
+    // Paragraph/output and sections
+    p, blockquote, .section, pre, table {
+        clear: both;
+        overflow: hidden;
+        margin: 0 0 (2 * @font-medium) 0;
+        
+        // Last or empty paragraph/output/section
+        &:last-child, &:empty { margin: 0; }
+    }
+    
     // Galleries
     .gallery {
         font-size: 0;
@@ -152,7 +152,7 @@ body.no-scroll {
             display: block;
             color: @color-comment;
             font-size: @font-medium;
-            content: "Picture gallery:";
+            content: "Gallery:";
         }
         
         // Images
@@ -428,9 +428,15 @@ body.no-scroll {
         margin-bottom: 0;
         
         // Small font-size
-        &, *:not(#input) p:not(.gallery), h1, i, b, u, em, dfn, ins,
-        a:not(#logo), small, th, #input p span, blockquote, .gallery:before {
+        &, p:not(.gallery), h1, i, b, u, em, dfn, ins,
+        a:not(#logo), small, th, blockquote, .gallery:before {
             font-size: @font-small !important;
+        }
+        
+        // Input font size
+        #input {
+            font-size: 0;
+            p span { font-size: @font-small !important; }
         }
         
         // Table

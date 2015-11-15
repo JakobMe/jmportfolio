@@ -55,24 +55,46 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/files\/img\/project01-itarchitect-integrationscenario-th.jpg": {
+	"\/files\/img\/project01-itarchitect-ipad-th.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 2813,
-		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-integrationscenario-th.jpg",
-		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-integrationscenario-th.jpg",
+		"initialSize": 3423,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-ipad-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-ipad-th.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/files\/img\/project01-itarchitect-integrationscenario.jpg": {
+	"\/files\/img\/project01-itarchitect-ipad.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 81934,
-		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-integrationscenario.jpg",
-		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-integrationscenario.jpg",
+		"initialSize": 209903,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-ipad.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-ipad.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project01-itarchitect-iphone-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3262,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-iphone-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-iphone-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project01-itarchitect-iphone.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 76652,
+		"inputAbbreviatedPath": "\/files\/img\/project01-itarchitect-iphone.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-iphone.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
