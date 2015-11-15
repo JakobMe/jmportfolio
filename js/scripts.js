@@ -1470,8 +1470,10 @@ $(document).ready(function() {
     $(ID_TYPE_MOBILE).add(input).click(function() {
         
         // Focus on mobile input, scroll to bottom
-        scrollToBottom();
-        inputMobile.focus();
+        if (isMobileDevice) {
+            scrollToBottom();
+            inputMobile.focus();
+        }
     });
     
     /*

@@ -20,7 +20,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-01-th.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-01.jpg": {
 		"fileType": 16384,
@@ -31,7 +31,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-01.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-02-th.jpg": {
 		"fileType": 16384,
@@ -42,7 +42,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-02-th.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-02.jpg": {
 		"fileType": 16384,
@@ -53,7 +53,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-02.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-03-th.jpg": {
 		"fileType": 16384,
@@ -64,7 +64,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-03-th.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-03.jpg": {
 		"fileType": 16384,
@@ -75,7 +75,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-03.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-04-th.jpg": {
 		"fileType": 16384,
@@ -86,7 +86,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-04-th.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/img\/project01-itarchitect-04.jpg": {
 		"fileType": 16384,
@@ -97,7 +97,7 @@
 		"outputAbbreviatedPath": "\/files\/img\/project01-itarchitect-04.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/files\/txt\/project01-itarchitect.html": {
 		"fileType": 8192,
