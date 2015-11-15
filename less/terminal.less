@@ -344,7 +344,7 @@ body.no-scroll {
         width: 100%;
         height: 100%;
         z-index: 500;
-        padding-top: @size-navigation;
+        padding: @size-navigation 0 0 0;
         .border-box();
     }
     
@@ -399,16 +399,14 @@ body.no-scroll {
             display: inline-block;
             vertical-align: middle;
             max-width: 100%;
-            padding: @padding-terminal;
-            padding-top: 0;
-            .border-box();
             
             // Images
             img {
                 height: auto;
                 max-width: 100%;
-                .shadow(@padding-terminal-half, @padding-terminal,
-                        fade(@color-background, @fade-selection));
+                padding: 0 @padding-terminal;
+                padding-bottom: @padding-terminal;
+                .border-box();
             }
         }
         
@@ -430,8 +428,8 @@ body.no-scroll {
         margin-bottom: 0;
         
         // Small font-size
-        &, p:not(.gallery), h1, i, b, u, em, dfn, ins, a:not(#logo),
-        small, th, #input p span, blockquote, .gallery:before {
+        &, *:not(#input) p:not(.gallery), h1, i, b, u, em, dfn, ins,
+        a:not(#logo), small, th, #input p span, blockquote, .gallery:before {
             font-size: @font-small !important;
         }
         
@@ -461,17 +459,14 @@ body.no-scroll {
         
         // Paragraph/output and sections
         p, blockquote, .section, pre, table {
-            margin-bottom: (2 * @font-small);
-            &:last-child, &:empty { margin: 0; }
+            &:not(:last-child) { margin-bottom: (2 * @font-small); }
         }
     }
     
-    // Overlay
-    #overlay {
-        .lightbox-container #lightbox {
-            max-width: none;
-            img { max-width: none; height: inherit; }
-        }
+    // Overlay images
+    #overlay .lightbox-container #lightbox img {
+        max-width: none;
+        height: inherit;
     }
 }
 
