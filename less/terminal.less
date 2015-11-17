@@ -17,7 +17,6 @@ body {
     width: 100vw;
     height: 100%;
     color: @color-text;
-    font-size: @font-medium;
     background: @color-background;
     .font-terminal();
 }
@@ -37,9 +36,9 @@ body.no-scroll {
     word-wrap: break-word;
     line-height: 1.3;
     margin: @size-navigation auto;
-    font-size: @font-medium;
     padding: @padding-terminal;
     max-width: @size-terminal;
+    font-size: @font-medium;
     .border-box();
     
     // Logo
@@ -101,6 +100,7 @@ body.no-scroll {
         // Reset
         &, tr, td, th, thead, tbody {
             border-collapse: collapse;
+            vertical-align: top;
             border: none;
             margin: 0;
             padding: 0;
@@ -145,8 +145,7 @@ body.no-scroll {
     
     // Galleries
     .gallery {
-        font-size: 0;
-        
+
         // Gallery title
         &:before {
             display: block;
@@ -163,6 +162,18 @@ body.no-scroll {
             
             // Last image
             &:last-child { margin-right: 0; }
+        }
+    }
+    
+    // Letter spacing fix
+    #input p, .gallery {
+        letter-spacing: -(@font-gap);
+        word-spacing: -(@font-gap);
+        
+        // Text inside
+        span, &:before {
+            word-spacing: normal;
+            letter-spacing: normal;
         }
     }
     
@@ -191,21 +202,13 @@ body.no-scroll {
             word-wrap: break-word;
         }
     }
-
-    // Input
+    
+     // Input
     #input {
         display: none;
         
         // Ready visible
         &.ready { display: block; }
-        
-        // Paragraph
-        p {
-            font-size: 0;
-            
-            // Font-size
-            span { font-size: @font-medium; }
-        }
     }
 }
 
@@ -439,8 +442,7 @@ body.no-scroll {
         margin-bottom: 0;
         
         // Small font-size
-        &, *:not(#input) p:not(.gallery), h1, i, b, u, em, dfn, ins, strong,
-        #input p span, a:not(#logo), small, th, blockquote, .gallery:before {
+        &, h1, i, b, u, em, dfn, ins, a, small, th, strong, .gallery:before {
             font-size: @font-small;
         }
         
