@@ -825,13 +825,14 @@ $(document).ready(function() {
                 commandOutput = command[0] + CHAR_NBSP +
                                 command[1];
             
-            // If first command is 'ls'
+            // If first command is 'files'
             } else if (command[0] === COMMAND_FILES &&
-                      (command[1] === COMMAND_ALL)) {
+                      (command[1] !== undefined)) {
                 
-                // Keep second command
-                commandOutput = command[0] + CHAR_NBSP +
-                                command[1];
+                // If second command is '-a', keep second command
+                if (command[1].toLowerCase() === COMMAND_ALL) {
+                    commandOutput = command[0] + CHAR_NBSP + command[1];
+                }
             
             // Else just keep first command
             } else {
@@ -953,7 +954,11 @@ $(document).ready(function() {
                     
                     // Show hidden files if '-a' command is executed
                     var showHiddenFiles = false;
-                    if (command[1] === COMMAND_ALL) { showHiddenFiles = true; }
+                    if (command[1] !== undefined) {
+                        if (command[1].toLowerCase() === COMMAND_ALL) {
+                            showHiddenFiles = true;
+                        }
+                    }
                     
                     // Print file list
                     printFileList(showHiddenFiles);

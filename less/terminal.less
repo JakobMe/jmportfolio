@@ -58,7 +58,7 @@ body.no-scroll {
     }
     
     // Shared properties of text
-    h1, i, b, u, em, dfn, ins, a, small, th, strong {
+    h1, i, b, u, em, dfn, ins, a, small, th, strong, .gallery:before {
         font-style: normal;
         font-weight: normal;
         text-decoration: none;
@@ -71,8 +71,8 @@ body.no-scroll {
     b { color: @color-highlight; }
     strong { color: @color-error; }
     i, em { color: @color-command; }
-    u, small, th { color: @color-comment; }
     dfn, ins, a { color: @color-hint; }
+    u, small, th, .gallery:before { color: @color-comment; }
     
     // Special text properties
     a:after { content: "→"; }
@@ -150,8 +150,6 @@ body.no-scroll {
         // Gallery title
         &:before {
             display: block;
-            color: @color-comment;
-            font-size: @font-medium;
             content: "Gallery:";
         }
         
@@ -162,6 +160,8 @@ body.no-scroll {
             cursor: -moz-zoom-in;
             cursor: -webkit-zoom-in;
             margin: @font-medium @font-medium 0 0;
+            
+            // Last image
             &:last-child { margin-right: 0; }
         }
     }
@@ -183,6 +183,14 @@ body.no-scroll {
             .animation-cursor();
         }
     }
+    
+    // Output and input child paragraphs
+    #output, #input {
+        & > p {
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+    }
 
     // Input
     #input {
@@ -193,8 +201,6 @@ body.no-scroll {
         
         // Paragraph
         p {
-            word-break: break-all;
-            word-wrap: break-word;
             font-size: 0;
             
             // Font-size
@@ -433,15 +439,9 @@ body.no-scroll {
         margin-bottom: 0;
         
         // Small font-size
-        &, p:not(.gallery), h1, i, b, u, em, dfn, ins,
-        a:not(#logo), small, th, blockquote, .gallery:before {
-            font-size: @font-small !important;
-        }
-        
-        // Input font size
-        #input {
-            font-size: 0;
-            p span { font-size: @font-small !important; }
+        &, *:not(#input) p:not(.gallery), h1, i, b, u, em, dfn, ins, strong,
+        #input p span, a:not(#logo), small, th, blockquote, .gallery:before {
+            font-size: @font-small;
         }
         
         // Table
