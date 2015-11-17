@@ -832,6 +832,8 @@ $(document).ready(function() {
                 // If second command is '-a', keep second command
                 if (command[1].toLowerCase() === COMMAND_ALL) {
                     commandOutput = command[0] + CHAR_NBSP + command[1];
+                } else {
+                    commandOutput = command[0];
                 }
             
             // Else just keep first command
