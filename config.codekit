@@ -121,6 +121,72 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
+	"\/files\/img\/project02-lichtblick-contentpage-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5332,
+		"inputAbbreviatedPath": "\/files\/img\/project02-lichtblick-contentpage-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project02-lichtblick-contentpage-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project02-lichtblick-contentpage.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 847282,
+		"inputAbbreviatedPath": "\/files\/img\/project02-lichtblick-contentpage.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project02-lichtblick-contentpage.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project02-lichtblick-iphone-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5252,
+		"inputAbbreviatedPath": "\/files\/img\/project02-lichtblick-iphone-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project02-lichtblick-iphone-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project02-lichtblick-iphone.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 318232,
+		"inputAbbreviatedPath": "\/files\/img\/project02-lichtblick-iphone.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project02-lichtblick-iphone.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project02-lichtblick-landingpage-th.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5464,
+		"inputAbbreviatedPath": "\/files\/img\/project02-lichtblick-landingpage-th.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project02-lichtblick-landingpage-th.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/files\/img\/project02-lichtblick-landingpage.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 939326,
+		"inputAbbreviatedPath": "\/files\/img\/project02-lichtblick-landingpage.jpg",
+		"outputAbbreviatedPath": "\/files\/img\/project02-lichtblick-landingpage.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/files\/txt\/project01-itarchitect.html": {
 		"fileType": 8192,
 		"ignore": 0,
