@@ -16,11 +16,11 @@
         </tr>
         <tr>
             <td>Street:</td>
-            <td>Brackweder Straße 79</td>
+            <td>Friedrichstr. 15a</td>
         </tr>
         <tr>
             <td>City:</td>
-            <td>33647 Bielefeld</td>
+            <td>31737 Rinteln</td>
         </tr>
     </tbody>
     <thead>

@@ -5,8 +5,8 @@
 </p>
 <p>
     Hi, I'm Jakob Metzger!<br/>
-    I am a 25 year old front-end web developer and webdesigner from Germany who
-    studies media informatics at
+    I am a 26 year old front-end web developer and webdesigner from Germany who
+    studied media informatics at
     <a href="https://www.uni-bielefeld.de/(en)/index.html"
        target="_blank">University Bielefeld</a>.
 </p>
@@ -80,18 +80,8 @@ omNMMMMMMMMMMMMNNmmNNNdhs-
         </tr>
         <tr>
             <td>Photoshop</td>
-            <td>80%</td>
-            <td class="level"><small><b>••••••••</b>••</small></td>
-        </tr>
-        <tr>
-            <td>PHP</td>
-            <td>70%</td>
-            <td class="level"><small><b>•••••••</b>•••</small></td>
-        </tr>
-        <tr>
-            <td>jQuery</td>
-            <td>70%</td>
-            <td class="level"><small><b>•••••••</b>•••</small></td>
+            <td>60%</td>
+            <td class="level"><small><b>••••••</b>••••</small></td>
         </tr>
         <tr>
             <td>JavaScript</td>
@@ -99,9 +89,14 @@ omNMMMMMMMMMMMMNNmmNNNdhs-
             <td class="level"><small><b>••••••</b>••••</small></td>
         </tr>
         <tr>
+            <td>PHP</td>
+            <td>50%</td>
+            <td class="level"><small><b>•••••</b>•••••</small></td>
+        </tr>
+        <tr>
             <td>WordPress</td>
-            <td>60%</td>
-            <td class="level"><small><b>••••••</b>••••</small></td>
+            <td>50%</td>
+            <td class="level"><small><b>•••••</b>•••••</small></td>
         </tr>
         <tr>
             <td>MySQL</td>
@@ -115,13 +110,13 @@ omNMMMMMMMMMMMMNNmmNNNdhs-
         </tr>
         <tr>
             <td>Java</td>
-            <td>50%</td>
-            <td class="level"><small><b>•••••</b>•••••</small></td>
+            <td>30%</td>
+            <td class="level"><small><b>•••</b>•••••••</small></td>
         </tr>
         <tr>
             <td>Java EE</td>
-            <td>30%</td>
-            <td class="level"><small><b>•••</b>•••••••</small></td>
+            <td>10%</td>
+            <td class="level"><small><b>•</b>•••••••••</small></td>
         </tr>
         <tr>
             <td>C</td>
@@ -147,8 +142,8 @@ omNMMMMMMMMMMMMNNmmNNNdhs-
         </tr>
         <tr>
             <td>Russian</td>
-            <td>20%</td>
-            <td class="level"><small><b>••</b>••••••••</small></td>
+            <td>10%</td>
+            <td class="level"><small><b>•</b>•••••••••</small></td>
         </tr>
     </tbody>
 </table>
